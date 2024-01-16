@@ -2,10 +2,13 @@
   "name": "cryptochords",
   "version": "1.0.0",
   "description": "cryptochords",
-  "main": "api/index.js",
+  "main": "api/src/index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon api/server.js"
+    "test": "vitest run api/src",
+    "test:cov": "vitest run api/src --coverage",
+    "test:watch": "vitest watch api/src",
+    "start": "nodemon",
+    "build": "tsc -p tsconfig.build.json"
   },
   "author": "",
   "license": "ISC",
@@ -15,8 +18,16 @@
     "web3": "^4.3.0"
   },
   "devDependencies": {
+    "@types/dotenv": "^8.2.0",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.11.2",
+    "@types/ws": "^8.5.10",
+    "@vitest/coverage-v8": "^1.2.0",
     "eslint": "^8.56.0",
     "eslint-config-google": "^0.14.0",
-    "nodemon": "^3.0.2"
+    "nodemon": "^3.0.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3",
+    "vitest": "^1.2.0"
   }
 }
