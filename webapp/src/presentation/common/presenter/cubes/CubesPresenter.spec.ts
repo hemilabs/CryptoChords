@@ -1,10 +1,10 @@
-import { CubesPresenter } from './CubesPresenter'
-import { CreateRandomCubeService } from '../../application/CreateRandomCube/CreateRandomCubeService'
-import { GetCubesService } from '../../application/GetCubes/GetCubesService'
-import { MoveCubesUpService } from '../../application/MoveCubesUp/MoveCubesUpService'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
-import { InMemoryCubeRepository } from '../../infrastructure/repositories/InMemoryCubeRepository'
-import { CreateCubeService } from '../../application/CreateCube/CreateCubeService'
+import { CreateCubeService } from '../../../../application/CreateCube/CreateCubeService'
+import { CreateRandomCubeService } from '../../../../application/CreateRandomCube/CreateRandomCubeService'
+import { GetCubesService } from '../../../../application/GetCubes/GetCubesService'
+import { MoveCubesUpService } from '../../../../application/MoveCubesUp/MoveCubesUpService'
+import { InMemoryCubeRepository } from '../../../../infrastructure/repositories/InMemoryCubeRepository'
+import { CubesPresenter } from './CubesPresenter'
 
 describe('src/presentation/common/CubesPresenter', () => {
   let cubeRepository: InMemoryCubeRepository

@@ -1,41 +1,26 @@
-import { Cubes } from './components/Cubes'
-import { Card } from './components/Card'
+import { useEffect, useState } from 'react'
+import { AppPresenter } from '../common/presenter/app/AppPresenter'
+import { AppPresenterState } from '../common/presenter/app/AppPresenterState'
 import { Header } from './components/Header'
-import { Piano } from './components/Piano'
-import { Social } from './components/Social'
-import { SoundController } from './components/SoundController'
-import { Transactions } from './components/Transactions'
-import desktopBackground from '/image/background/desktop.svg'
-import mobileBackground from '/image/background/mobile.svg'
+import { MainContent } from './components/MainContent'
+import { NavMenu } from './components/NavMenu'
 
-// This constant is used to multiply the y position of the cubes
-// to allow the cubes extrapolate the top of the component
-const CUBES_Y_MULTIPLIER = 2
-// This constant is used to offset the cubes from the bottom of the component
-// to hide the creation of the cubes avoiding a visual glitch
-const CUBES_BOTTOM_OFFSET = 0.15
+const presenter = new AppPresenter()
 
 function App() {
+  const [{
+    navMenuVisible,
+  }, setState] = useState<AppPresenterState>(presenter.state)
+
+  useEffect(() => {
+    presenter.subscribe(setState)
+  }, [])
+
   return (
     <>
-      <Header className='relative z-10'/>
-      <main className="grow text-white pb-20">
-        <img src={mobileBackground} className='sm:hidden w-full absolute pointer-events-none' />
-        <img src={desktopBackground} className='max-sm:hidden w-full absolute pointer-events-none' />
-        <div className='relative w-[78.34vw] mx-auto'>
-          <Cubes className='relative w-[90.63%] mx-auto h-[25vw] mb-0' yMultiplier={CUBES_Y_MULTIPLIER} bottomOffset={CUBES_BOTTOM_OFFSET}/>
-          <Piano className='relative w-[97.88%] mx-auto z-10' />
-          <div className='flex max-md:flex-col md:flex-row justify-between md:mt-24 max-md:mt-8'>
-            <Card className='md:basis-[30%] md:grow-0 max-md:mb-5 md:mb-auto'>
-              <SoundController />
-            </Card>
-            <Card className='md:basis-[67.88%] grow-0 break-words overflow-hidden'>
-              <Transactions/>
-            </Card>
-          </div>
-          <Social className='mt-8 md:justify-end max-md:justify-center' />
-        </div>
-      </main>
+      <Header className='relative z-40' onNavButtonClick={() => presenter.navButtonClicked()}/>
+      <NavMenu onCloseButtonClick={() => presenter.closeButtonClicked()} className={`${navMenuVisible ? '' : 'hidden'} md:hidden`} />
+      <MainContent className={navMenuVisible ? 'max-md:hidden' : ''} />
     </>
   )
 }

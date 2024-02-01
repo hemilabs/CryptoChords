@@ -1,6 +1,6 @@
 import { NavItem } from './NavItem'
 
-export const Nav = function (props: {
+export const NavItems = function (props: {
   className?: string
 }) {
   return (
