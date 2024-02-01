@@ -2,11 +2,11 @@
   "name": "cryptochords",
   "version": "1.0.0",
   "description": "cryptochords",
-  "main": "api/src/index.ts",
+  "main": "src/server.ts",
   "scripts": {
-    "test": "vitest run api/src",
-    "test:cov": "vitest run api/src --coverage",
-    "test:watch": "vitest watch api/src",
+    "test": "vitest run src",
+    "test:cov": "vitest run src --coverage",
+    "test:watch": "vitest watch src",
     "start": "nodemon",
     "build": "tsc -p tsconfig.build.json"
   },
