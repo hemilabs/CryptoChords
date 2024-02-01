@@ -4,8 +4,8 @@ import { CreateRandomCubeService } from '../../../application/CreateRandomCube/C
 import { GetCubesService } from '../../../application/GetCubes/GetCubesService'
 import { MoveCubesUpService } from '../../../application/MoveCubesUp/MoveCubesUpService'
 import { InMemoryCubeRepository } from '../../../infrastructure/repositories/InMemoryCubeRepository'
-import { CubesPresenter } from '../../common/CubesPresenter'
-import { CubesPresenterState } from '../../common/CubesPresenterState'
+import { CubesPresenter } from '../../common/presenter/cubes/CubesPresenter'
+import { CubesPresenterState } from '../../common/presenter/cubes/CubesPresenterState'
 import { Cube } from './Cube'
 
 const cubeRepository = new InMemoryCubeRepository()

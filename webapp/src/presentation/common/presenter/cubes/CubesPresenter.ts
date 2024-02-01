@@ -1,8 +1,8 @@
-import { CreateRandomCubeService } from '../../application/CreateRandomCube/CreateRandomCubeService'
-import { GetCubesService } from '../../application/GetCubes/GetCubesService'
-import { MoveCubesUpService } from '../../application/MoveCubesUp/MoveCubesUpService'
+import { CreateRandomCubeService } from '../../../../application/CreateRandomCube/CreateRandomCubeService'
+import { GetCubesService } from '../../../../application/GetCubes/GetCubesService'
+import { MoveCubesUpService } from '../../../../application/MoveCubesUp/MoveCubesUpService'
 import { CubesPresenterState } from './CubesPresenterState'
-import { Presenter } from './base/Presenter'
+import { Presenter } from '../../base/Presenter'
 
 const initalState: CubesPresenterState = {
   cubes: [],
