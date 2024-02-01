@@ -1,18 +1,20 @@
 {
-  "name": "cryptochords",
+  "name": "crypto-chords-api",
   "version": "1.0.0",
-  "description": "cryptochords",
+  "description": "CryptoChords API",
   "main": "src/server.ts",
   "scripts": {
     "test": "vitest run src",
     "test:cov": "vitest run src --coverage",
     "test:watch": "vitest watch src",
     "start": "nodemon",
-    "build": "tsc -p tsconfig.build.json"
+    "build": "tsc -p tsconfig.build.json",
+    "lint": "eslint . --ext ts --report-unused-disable-directives --max-warnings 0"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.20.0",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "web3": "^4.3.0"
@@ -24,7 +26,6 @@
     "@types/ws": "^8.5.10",
     "@vitest/coverage-v8": "^1.2.0",
     "eslint": "^8.56.0",
-    "eslint-config-google": "^0.14.0",
     "nodemon": "^3.0.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3",

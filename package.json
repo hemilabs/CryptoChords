@@ -1,0 +1,23 @@
+{
+  "name": "crypto-chords-monorepo",
+  "private": true,
+  "scripts": {
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "lint": "turbo lint",
+    "test": "turbo run test",
+    "test:cov": "turbo run test --coverage"
+  },
+  "devDependencies": {
+    "prettier": "^3.1.1",
+    "turbo": "^1.12.2"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "packageManager": "yarn@1.22.19",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ]
+}
