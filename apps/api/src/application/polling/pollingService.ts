@@ -13,4 +13,8 @@ export class PollingService {
     this.blockRepository.on(TxTypesEnum.Block, (pianoSound: PianoSound) => BroadcastToClients(wss, pianoSound));
     this.blockRepository.on(TxTypesEnum.Eth, (pianoSound: PianoSound) => BroadcastToClients(wss, pianoSound));
   }
+
+  stop() {
+    this.blockRepository.stop()
+  }
 }

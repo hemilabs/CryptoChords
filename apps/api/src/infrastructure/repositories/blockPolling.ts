@@ -10,11 +10,20 @@ import { PianoChordsEnum } from "../../domain/enums/PianoChordsEnum";
 import { BlockTypesEnum } from "../../domain/enums/BlockTypesEnum";
 
 export class BlockPollingRepository extends EventEmitter implements BlockRepository {
-  private latestBlockNumber: bigint = BigInt(0)
+  private latestBlockNumber = BigInt(0)
+  private pollingIntervalId: NodeJS.Timeout | null = null;
 
-  execute(websocketUrl: string, pollingInterval: number = 5000): void {
+  execute(websocketUrl: string, pollingInterval = 5000): void {
     const web3 = new Web3(websocketUrl);
     this.poll(web3, pollingInterval)
+  }
+
+  stop() {
+    if (this.pollingIntervalId) {
+      clearInterval(this.pollingIntervalId);
+      this.pollingIntervalId = null;
+    }
+    console.log('Polling stopped.');
   }
 
   async checkNewBlocks(web3: Web3): Promise<void> {
@@ -34,6 +43,7 @@ export class BlockPollingRepository extends EventEmitter implements BlockReposit
         }));
 
         if (block.transactions) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           block.transactions.forEach((tx: any) => {
             if (tx.type.toString() === BlockTypesEnum.EIP1559) {
               console.log('New eth tx from', tx.from);
@@ -50,6 +60,6 @@ export class BlockPollingRepository extends EventEmitter implements BlockReposit
   }
 
   poll(web3: Web3, pollingInterval: number) {
-    setInterval(() => this.checkNewBlocks(web3), pollingInterval);
+    this.pollingIntervalId = setInterval(() => this.checkNewBlocks(web3), pollingInterval);
   }
 }
