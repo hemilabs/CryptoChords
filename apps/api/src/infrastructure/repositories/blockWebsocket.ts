@@ -1,13 +1,11 @@
 import Web3, { BlockHeaderOutput } from 'web3';
 import { EventEmitter } from 'events';
-import { PianoSound } from '../../domain/entities/PianoSound';
 import { TxType } from '../../domain/valueObjects/Txtype';
 import { TxTypesEnum } from '../../domain/enums/TxTypesEnum';
 import { Address } from '../../domain/valueObjects/Address';
-import { PianoChord } from '../../domain/valueObjects/PianoChord';
-import { PianoChordsEnum } from '../../domain/enums/PianoChordsEnum';
 import { BlockTypesEnum } from '../../domain/enums/BlockTypesEnum';
 import { BlockRepository } from '../../domain/repositories/BlockRepository';
+import { L2Block } from '../../domain/entities/L2Block';
 
 export class BlockWebsocketRepository extends EventEmitter implements BlockRepository {
   private web3: Web3 | null = null;
@@ -40,10 +38,9 @@ export class BlockWebsocketRepository extends EventEmitter implements BlockRepos
 
   private async handleNewBlockHeader(web3: Web3 | null, blockHeader: BlockHeaderOutput): Promise<void> {
     console.log('New block header:', blockHeader.hash);
-    this.emit(TxTypesEnum.Block, PianoSound.create({
+    this.emit(TxTypesEnum.Block, L2Block.create({
       txType: TxType.create(TxTypesEnum.Block), 
-      address: Address.create(blockHeader.hash ? blockHeader.hash.toString() : ''), 
-      pianoChord: PianoChord.create(PianoChordsEnum.FMajor)
+      address: Address.create(blockHeader.hash ? blockHeader.hash.toString() : '')
     }));
 
     const block = await web3?.eth.getBlock(blockHeader.hash, true);
@@ -52,10 +49,9 @@ export class BlockWebsocketRepository extends EventEmitter implements BlockRepos
       block.transactions.forEach((tx: any) => {
         if (tx.type.toString() === BlockTypesEnum.EIP1559) {
           console.log('New eth tx from', tx.from);
-          this.emit(TxTypesEnum.Eth, PianoSound.create({
+          this.emit(TxTypesEnum.Eth, L2Block.create({
             txType: TxType.create(TxTypesEnum.Eth), 
-            address: Address.create(tx.from), 
-            pianoChord: PianoChord.create(PianoChordsEnum.CMajor)
+            address: Address.create(tx.from)
           }));
         }
       });

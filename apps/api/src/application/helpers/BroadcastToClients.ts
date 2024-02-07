@@ -1,10 +1,10 @@
 import WebSocket, { WebSocketServer } from 'ws';
-import { PianoSound } from '../../domain/entities/PianoSound';
+import { L2Block } from '../../domain/entities/L2Block';
 
-const BroadcastToClients = (wss: WebSocketServer, pianoSound: PianoSound): void => {
+const BroadcastToClients = (wss: WebSocketServer, l2Block: L2Block): void => {
   wss.clients.forEach((client: WebSocket) => {
     if (client.readyState === WebSocket.OPEN) {
-      client.send(JSON.stringify(pianoSound));
+      client.send(JSON.stringify(l2Block.toJSON()));
     }
   });
 };

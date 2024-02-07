@@ -14,13 +14,12 @@
 
         ws.onmessage = function(event) {
             const data = JSON.parse(event.data);
-            console.log(data.props)
-            if (data.props.txType.props.value === 'block') {
-                document.getElementById('block-hash').textContent = data.props.address.props.value;
+            if (data.txType === 'block') {
+                document.getElementById('block-hash').textContent = data.address;
             }
 
-            if (data.props.txType.props.value === 'eth') {
-                document.getElementById('block-eth-tx').textContent = data.props.address.props.value;
+            if (data.txType === 'eth') {
+                document.getElementById('block-eth-tx').textContent = data.address;
             }
             
             document.getElementById('piano-note').textContent = data.pianoNote;

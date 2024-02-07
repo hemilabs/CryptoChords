@@ -2,12 +2,10 @@ import { EventEmitter } from "stream";
 import { BlockRepository } from "../../domain/repositories/BlockRepository";
 import Web3 from "web3";
 import { TxTypesEnum } from "../../domain/enums/TxTypesEnum";
-import { PianoSound } from "../../domain/entities/PianoSound";
 import { TxType } from "../../domain/valueObjects/Txtype";
 import { Address } from "../../domain/valueObjects/Address";
-import { PianoChord } from "../../domain/valueObjects/PianoChord";
-import { PianoChordsEnum } from "../../domain/enums/PianoChordsEnum";
 import { BlockTypesEnum } from "../../domain/enums/BlockTypesEnum";
+import { L2Block } from "../../domain/entities/L2Block";
 
 export class BlockPollingRepository extends EventEmitter implements BlockRepository {
   private latestBlockNumber = BigInt(0)
@@ -36,10 +34,9 @@ export class BlockPollingRepository extends EventEmitter implements BlockReposit
       const block = await web3.eth.getBlock(currentBlockNumber, true);
       if (block) {
         console.log('New block header:', block.hash);
-        this.emit(TxTypesEnum.Block, PianoSound.create({
+        this.emit(TxTypesEnum.Block, L2Block.create({
           txType: TxType.create(TxTypesEnum.Block), 
-          address: Address.create(block.hash ? block.hash.toString() : ''), 
-          pianoChord: PianoChord.create(PianoChordsEnum.FMajor)
+          address: Address.create(block.hash ? block.hash.toString() : '')
         }));
 
         if (block.transactions) {
@@ -47,10 +44,9 @@ export class BlockPollingRepository extends EventEmitter implements BlockReposit
           block.transactions.forEach((tx: any) => {
             if (tx.type.toString() === BlockTypesEnum.EIP1559) {
               console.log('New eth tx from', tx.from);
-              this.emit(TxTypesEnum.Eth, PianoSound.create({
+              this.emit(TxTypesEnum.Eth, L2Block.create({
                 txType: TxType.create(TxTypesEnum.Eth), 
-                address: Address.create(tx.from), 
-                pianoChord: PianoChord.create(PianoChordsEnum.CMajor)
+                address: Address.create(tx.from)
               }));
             }
           });
