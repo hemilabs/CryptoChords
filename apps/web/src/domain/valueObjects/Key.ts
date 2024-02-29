@@ -1,4 +1,4 @@
-import { ValueObject } from '../base/ValueObject'
+import { ValueObject } from '@cryptochords/shared'
 import { KeyShape } from './KeyShape'
 import { Pitch } from './Pitch'
 import { UnitInterval } from './UnitInterval'
@@ -7,6 +7,8 @@ export interface KeyProps {
   keyShape: KeyShape
   pitch: Pitch
   x: UnitInterval
+  color: string
+  pressed: boolean
 }
 
 export class Key extends ValueObject<KeyProps> {
@@ -16,6 +18,14 @@ export class Key extends ValueObject<KeyProps> {
 
   static create(props: KeyProps) {
     return new Key(props)
+  }
+
+  press() {
+    this.props.pressed = true
+  }
+
+  release() {
+    this.props.pressed = false
   }
 
   get keyShape() {
@@ -28,5 +38,13 @@ export class Key extends ValueObject<KeyProps> {
 
   get x() {
     return this.props.x
+  }
+
+  get color() {
+    return this.props.color
+  }
+
+  get pressed() {
+    return this.props.pressed
   }
 }

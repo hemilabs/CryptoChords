@@ -1,4 +1,4 @@
-import { ValueObject } from '../base/ValueObject'
+import { ValueObject } from '@cryptochords/shared'
 import { KeyShapeEnum } from '../enum/KeyShapeEnum'
 
 interface KeyShapeProps {

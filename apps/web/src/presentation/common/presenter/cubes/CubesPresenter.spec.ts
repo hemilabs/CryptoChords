@@ -1,47 +1,54 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
-import { CreateCubeService } from '../../../../application/CreateCube/CreateCubeService'
-import { CreateRandomCubeService } from '../../../../application/CreateRandomCube/CreateRandomCubeService'
-import { GetCubesService } from '../../../../application/GetCubes/GetCubesService'
-import { MoveCubesUpService } from '../../../../application/MoveCubesUp/MoveCubesUpService'
+import { CreateKeyboardService } from '../../../../application/services/CreateKeyboard/CreateKeyboardService'
+import { GetCubesService } from '../../../../application/services/GetCubes/GetCubesService'
+import { MoveCubesUpService } from '../../../../application/services/MoveCubesUp/MoveCubesUpService'
+import { KeyboardRepository } from '../../../../domain/repositories/KeyboardRepository'
 import { InMemoryCubeRepository } from '../../../../infrastructure/repositories/InMemoryCubeRepository'
+import { InMemoryKeyboardRepository } from '../../../../infrastructure/repositories/InMemoryKeyboardRepository'
 import { CubesPresenter } from './CubesPresenter'
+import { CreateCubeService } from '../../../../application/services/CreateCube/CreateCubeService'
 
 describe('src/presentation/common/CubesPresenter', () => {
   let cubeRepository: InMemoryCubeRepository
   let getCubesService: GetCubesService
-  let createCubeService: CreateCubeService
-  let createRandomCubeService: CreateRandomCubeService
   let moveCubesUpService: MoveCubesUpService
   let presenter: CubesPresenter
+  let keyboardRepository: KeyboardRepository
+  let createKeyboardService: CreateKeyboardService
+  let createCubeService: CreateCubeService
+
+
   const options = {
+    timeToFirstBlock: 100,
     maxCubeCreationInterval: 10,
     tickInterval: 5,
     cubeStep: 0.001
   }
 
-  beforeEach(() => {
+
+  beforeEach(async () => {
+    keyboardRepository = new InMemoryKeyboardRepository()
+    createKeyboardService = new CreateKeyboardService(keyboardRepository)
+    await createKeyboardService.execute({
+      numberOfKeys: 88,
+      initialPitchClass: 'A',
+      initialOctave: 1
+    })
     cubeRepository = new InMemoryCubeRepository()
     getCubesService = new GetCubesService(cubeRepository)
-    createCubeService = new CreateCubeService(cubeRepository)
-    createRandomCubeService = new CreateRandomCubeService(createCubeService)
     moveCubesUpService = new MoveCubesUpService(cubeRepository)
-    presenter = new CubesPresenter(getCubesService, createRandomCubeService, moveCubesUpService, options)
+    createCubeService = new CreateCubeService(cubeRepository)
+    presenter = new CubesPresenter(getCubesService, moveCubesUpService, options)
+    await createCubeService.execute({ color: 'blue', x: 0.5 })
   })
 
   afterEach(() => {
     presenter.stop()
   })
 
-  it('should create at least a random cube every in the predetermined interval', async () => {
-    presenter.run()
-    await new Promise(resolve => setTimeout(resolve, 3 * options.maxCubeCreationInterval))
-    const cubes = await cubeRepository.list()
-    expect(cubes.length).toBeGreaterThanOrEqual(3)
-  })
-
   it('should move cubes up every predetermined interval', async () => {
     presenter.run()
-    await new Promise(resolve => setTimeout(resolve, options.maxCubeCreationInterval + options.tickInterval))
+    await new Promise(resolve => setTimeout(resolve, options.timeToFirstBlock))
     const cubes = await cubeRepository.list()
     expect(cubes[0].y.value).toBeGreaterThan(0)
   })
@@ -58,7 +65,7 @@ describe('src/presentation/common/CubesPresenter', () => {
 
   it('should stop moving cubes when stopped', async () => {
     presenter.run()
-    await new Promise(resolve => setTimeout(resolve, options.maxCubeCreationInterval + options.tickInterval))
+    await new Promise(resolve => setTimeout(resolve, options.timeToFirstBlock))
     presenter.stop()
     const cubes = await cubeRepository.list()
     const firstCubeY = cubes[0].y.value
@@ -68,10 +75,8 @@ describe('src/presentation/common/CubesPresenter', () => {
 
   it('should not create new runners if is already running', async () => {
     presenter.run()
-    const creationLoop = presenter['creationLoop']
     const tickLoop = presenter['tickLoop']
     presenter.run()
-    expect(presenter['creationLoop']).toBe(creationLoop)
     expect(presenter['tickLoop']).toBe(tickLoop)
   })
 })

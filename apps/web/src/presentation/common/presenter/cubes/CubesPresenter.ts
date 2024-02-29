@@ -1,8 +1,7 @@
-import { CreateRandomCubeService } from '../../../../application/CreateRandomCube/CreateRandomCubeService'
-import { GetCubesService } from '../../../../application/GetCubes/GetCubesService'
-import { MoveCubesUpService } from '../../../../application/MoveCubesUp/MoveCubesUpService'
-import { CubesPresenterState } from './CubesPresenterState'
+import { GetCubesService } from '../../../../application/services/GetCubes/GetCubesService'
+import { MoveCubesUpService } from '../../../../application/services/MoveCubesUp/MoveCubesUpService'
 import { Presenter } from '../../base/Presenter'
+import { CubesPresenterState } from './CubesPresenterState'
 
 const initalState: CubesPresenterState = {
   cubes: [],
@@ -23,53 +22,42 @@ const defaultOptions: CubesPresenterOptions = {
 export class CubesPresenter extends Presenter<CubesPresenterState> {
 
   private readonly getCubesService: GetCubesService
-  private readonly createCubeService: CreateRandomCubeService
   private readonly moveCubesUpService: MoveCubesUpService
 
   private options: CubesPresenterOptions
-  
-  private creationLoop: NodeJS.Timeout | undefined
+
   private tickLoop: NodeJS.Timeout | undefined
 
 
   constructor(
     getCubesService: GetCubesService,
-    createRandomCubeService: CreateRandomCubeService,
     moveCubesUpService: MoveCubesUpService,
     options?: Partial<CubesPresenterOptions>
   ) {
     super(initalState)
     this.getCubesService = getCubesService
-    this.createCubeService = createRandomCubeService
     this.moveCubesUpService = moveCubesUpService
     this.options = {
       ...defaultOptions,
       ...options
     }
+
+    this.run()
   }
 
-  run() {
-    if(this.isRunning()) {
+  async run() {
+    if (this.isRunning()) {
       return
     }
-    this.runCreationLoop()
     this.runTickLoop()
   }
 
   stop() {
-    this.stopCreationLoop()
     this.stopTickLoop()
   }
 
   private isRunning() {
-    return !!this.creationLoop && !!this.tickLoop
-  }
-
-  private stopCreationLoop() {
-    if (this.creationLoop) {
-      clearInterval(this.creationLoop)
-      this.creationLoop = undefined
-    }
+    return !!this.tickLoop
   }
 
   private stopTickLoop() {
@@ -77,12 +65,6 @@ export class CubesPresenter extends Presenter<CubesPresenterState> {
       clearInterval(this.tickLoop)
       this.tickLoop = undefined
     }
-  }
-
-  private runCreationLoop() {
-    this.creationLoop = setInterval(async () => {
-      await this.createCubeService.execute()
-    }, Math.floor(Math.random() * this.options.maxCubeCreationInterval))
   }
 
   private runTickLoop() {

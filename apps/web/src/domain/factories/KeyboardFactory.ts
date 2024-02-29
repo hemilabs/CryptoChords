@@ -1,11 +1,12 @@
-import { Key } from '../valueObjects/Key'
+import { KeyShapeEnum } from '../enum/KeyShapeEnum'
+import { PitchClassEnum } from '../enum/PitchClassEnum'
+import { TransactionColorEnum } from '../enum/TransactionColorEnum'
+import { Key, KeyProps } from '../valueObjects/Key'
 import { KeyShape } from '../valueObjects/KeyShape'
+import { Keyboard } from '../valueObjects/Keyboard'
 import { Pitch } from '../valueObjects/Pitch'
 import { PitchClass } from '../valueObjects/PitchClass'
-import { Keyboard } from '../valueObjects/Keyboard'
 import { UnitInterval } from '../valueObjects/UnitInterval'
-import { PitchClassEnum } from '../enum/PitchClassEnum'
-import { KeyShapeEnum } from '../enum/KeyShapeEnum'
 
 
 enum KeyPosition {
@@ -22,7 +23,7 @@ export interface CreateProps {
 
 export class KeyboardFactory {
   static create(props: CreateProps) {
-    const keysProps: { keyShape: KeyShape, pitch: Pitch }[] = []
+    const keysProps: Pick<KeyProps, 'color' | 'keyShape' | 'pitch' | 'pressed'>[] = []
     let pitchClassValue = props.initialPitchClass
     let octave = props.initialOctave
     for (let i = 0; i < props.numberOfKeys; i++) {
@@ -31,8 +32,9 @@ export class KeyboardFactory {
       const position = isFirstKey ? KeyPosition.Beginning : isLastKey ? KeyPosition.End : KeyPosition.Middle
       const keyShape = KeyShape.create(KeyboardFactory.getKeyShape(pitchClassValue, position))
       const pitchClass = PitchClass.create(pitchClassValue)
-      const pitch = Pitch.create({ class: pitchClass, octave })
-      const key = { pitch, keyShape }
+      const pitch = Pitch.create({ pitchClass: pitchClass, octave })
+      const color = KeyboardFactory.getColor(props.numberOfKeys, i)
+      const key = { pitch, keyShape, pressed: false, color }
       keysProps.push(key)
       pitchClassValue = KeyboardFactory.getNextNoteEnum(pitchClassValue)
       if (pitchClassValue === PitchClassEnum.C) {
@@ -46,7 +48,14 @@ export class KeyboardFactory {
     return Keyboard.create({ keys })
   }
 
-  private static calculatePositions(keysProps: { keyShape: KeyShape, pitch: Pitch }[]) {
+  private static getColor(numberOfKeys: number, keyNumber: number) {
+    const quarter = numberOfKeys / 4
+    const keyQuarter = Math.floor(keyNumber / quarter)
+
+    return Object.values(TransactionColorEnum)[keyQuarter]
+  }
+
+  private static calculatePositions(keysProps: Pick<KeyProps, 'color' | 'keyShape' | 'pitch' | 'pressed'>[]) {
     const whiteKeysCount = keysProps.filter(key => key.keyShape.value !== KeyShapeEnum.Black).length
     const minKeyCenterSpacing = 1 / (whiteKeysCount * 2 - 1)
     const result = []

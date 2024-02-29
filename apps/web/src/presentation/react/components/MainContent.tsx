@@ -1,6 +1,6 @@
 import { Card } from './Card'
 import { Cubes } from './Cubes'
-import { Piano } from './Piano'
+import { Keyboard } from './Keyboard'
 import { Social } from './Social'
 import { SoundController } from './SoundController'
 import { Transactions } from './Transactions'
@@ -22,8 +22,8 @@ export function MainContent(props: {
       <img src={mobileBackground} className='sm:hidden w-full absolute pointer-events-none' />
       <img src={desktopBackground} className='max-sm:hidden w-full absolute pointer-events-none' />
       <div className='relative w-[78.34vw] mx-auto'>
-        <Cubes className='relative w-[90.63%] mx-auto h-[25vw] mb-0' yMultiplier={CUBES_Y_MULTIPLIER} bottomOffset={CUBES_BOTTOM_OFFSET} />
-        <Piano className='relative w-[97.88%] mx-auto z-10' />
+        <Cubes className='relative w-[96%] mx-auto h-[25vw] mb-0' yMultiplier={CUBES_Y_MULTIPLIER} bottomOffset={CUBES_BOTTOM_OFFSET} />
+        <Keyboard className='relative w-[97.88%] mx-auto z-10' />
         <div className='flex max-md:flex-col md:flex-row justify-between md:mt-24 max-md:mt-8'>
           <Card className='md:basis-[30%] md:grow-0 max-md:mb-5 md:mb-auto'>
             <SoundController />
