@@ -23,51 +23,51 @@ describe('src/domain/factories/KeyboardFactory', () => {
       numberOfKeys: 12,
       initialPitchClass: PitchClassEnum.F
     })
-    expect(keyboard.keys[0].pitch.class.value).toBe(PitchClassEnum.F)
+    expect(keyboard.keys[0].pitch.pitchClass.value).toBe(PitchClassEnum.F)
     expect(keyboard.keys[0].pitch.octave).toBe(1)
     expect(keyboard.keys[0].keyShape.value).toBe(KeyShapeEnum.WhiteLeft)
 
-    expect(keyboard.keys[1].pitch.class.value).toBe(PitchClassEnum.F_SHARP)
+    expect(keyboard.keys[1].pitch.pitchClass.value).toBe(PitchClassEnum.F_SHARP)
     expect(keyboard.keys[1].pitch.octave).toBe(1)
     expect(keyboard.keys[1].keyShape.value).toBe(KeyShapeEnum.Black)
     
-    expect(keyboard.keys[2].pitch.class.value).toBe(PitchClassEnum.G)
+    expect(keyboard.keys[2].pitch.pitchClass.value).toBe(PitchClassEnum.G)
     expect(keyboard.keys[2].pitch.octave).toBe(1)
     expect(keyboard.keys[2].keyShape.value).toBe(KeyShapeEnum.WhiteMiddle)
     
-    expect(keyboard.keys[3].pitch.class.value).toBe(PitchClassEnum.G_SHARP)
+    expect(keyboard.keys[3].pitch.pitchClass.value).toBe(PitchClassEnum.G_SHARP)
     expect(keyboard.keys[3].pitch.octave).toBe(1)
     expect(keyboard.keys[3].keyShape.value).toBe(KeyShapeEnum.Black)
     
-    expect(keyboard.keys[4].pitch.class.value).toBe(PitchClassEnum.A)
+    expect(keyboard.keys[4].pitch.pitchClass.value).toBe(PitchClassEnum.A)
     expect(keyboard.keys[4].pitch.octave).toBe(1)
     expect(keyboard.keys[4].keyShape.value).toBe(KeyShapeEnum.WhiteMiddle)
     
-    expect(keyboard.keys[5].pitch.class.value).toBe(PitchClassEnum.A_SHARP)
+    expect(keyboard.keys[5].pitch.pitchClass.value).toBe(PitchClassEnum.A_SHARP)
     expect(keyboard.keys[5].pitch.octave).toBe(1)
     expect(keyboard.keys[5].keyShape.value).toBe(KeyShapeEnum.Black)
     
-    expect(keyboard.keys[6].pitch.class.value).toBe(PitchClassEnum.B)
+    expect(keyboard.keys[6].pitch.pitchClass.value).toBe(PitchClassEnum.B)
     expect(keyboard.keys[6].pitch.octave).toBe(1)
     expect(keyboard.keys[6].keyShape.value).toBe(KeyShapeEnum.WhiteRight)
     
-    expect(keyboard.keys[7].pitch.class.value).toBe(PitchClassEnum.C)
+    expect(keyboard.keys[7].pitch.pitchClass.value).toBe(PitchClassEnum.C)
     expect(keyboard.keys[7].pitch.octave).toBe(2)
     expect(keyboard.keys[7].keyShape.value).toBe(KeyShapeEnum.WhiteLeft)
     
-    expect(keyboard.keys[8].pitch.class.value).toBe(PitchClassEnum.C_SHARP)
+    expect(keyboard.keys[8].pitch.pitchClass.value).toBe(PitchClassEnum.C_SHARP)
     expect(keyboard.keys[8].pitch.octave).toBe(2)
     expect(keyboard.keys[8].keyShape.value).toBe(KeyShapeEnum.Black)
     
-    expect(keyboard.keys[9].pitch.class.value).toBe(PitchClassEnum.D)
+    expect(keyboard.keys[9].pitch.pitchClass.value).toBe(PitchClassEnum.D)
     expect(keyboard.keys[9].pitch.octave).toBe(2)
     expect(keyboard.keys[9].keyShape.value).toBe(KeyShapeEnum.WhiteMiddle)
     
-    expect(keyboard.keys[10].pitch.class.value).toBe(PitchClassEnum.D_SHARP)
+    expect(keyboard.keys[10].pitch.pitchClass.value).toBe(PitchClassEnum.D_SHARP)
     expect(keyboard.keys[10].pitch.octave).toBe(2)
     expect(keyboard.keys[10].keyShape.value).toBe(KeyShapeEnum.Black)
     
-    expect(keyboard.keys[11].pitch.class.value).toBe(PitchClassEnum.E)
+    expect(keyboard.keys[11].pitch.pitchClass.value).toBe(PitchClassEnum.E)
     expect(keyboard.keys[11].pitch.octave).toBe(2)
     expect(keyboard.keys[11].keyShape.value).toBe(KeyShapeEnum.WhiteRight)
   })

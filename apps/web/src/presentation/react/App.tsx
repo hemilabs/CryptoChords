@@ -1,25 +1,23 @@
-import { useEffect, useState } from 'react'
+import { useContext } from 'react'
 import { AppPresenter } from '../common/presenter/app/AppPresenter'
 import { AppPresenterState } from '../common/presenter/app/AppPresenterState'
 import { Header } from './components/Header'
 import { MainContent } from './components/MainContent'
 import { NavMenu } from './components/NavMenu'
-
-const presenter = new AppPresenter()
+import { presenters } from './context'
+import { usePresenter } from './hooks/usePresenter'
 
 function App() {
-  const [{
-    navMenuVisible,
-  }, setState] = useState<AppPresenterState>(presenter.state)
+  const { appPresenter } = useContext(presenters)
 
-  useEffect(() => {
-    presenter.subscribe(setState)
-  }, [])
+  const {
+    navMenuVisible,
+  } = usePresenter<AppPresenter, AppPresenterState>(appPresenter)
 
   return (
     <>
-      <Header className='relative z-40' onNavButtonClick={() => presenter.navButtonClicked()}/>
-      <NavMenu onCloseButtonClick={() => presenter.closeButtonClicked()} className={`${navMenuVisible ? '' : 'hidden'} md:hidden`} />
+      <Header className='relative z-40' onNavButtonClick={() => appPresenter.navButtonClicked()} />
+      <NavMenu onCloseButtonClick={() => appPresenter.closeButtonClicked()} className={`${navMenuVisible ? '' : 'hidden'} md:hidden`} />
       <MainContent className={navMenuVisible ? 'max-md:hidden' : ''} />
     </>
   )

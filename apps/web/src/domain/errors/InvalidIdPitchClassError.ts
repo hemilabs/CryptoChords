@@ -1,4 +1,4 @@
-import { DomainError } from '../base/DomainError'
+import { DomainError } from '@cryptochords/shared'
 
 export class InvalidPitchClassError extends DomainError {
   constructor() {

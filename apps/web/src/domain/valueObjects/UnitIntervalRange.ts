@@ -1,4 +1,4 @@
-import { ValueObject } from '../base/ValueObject'
+import { ValueObject } from '@cryptochords/shared'
 import { UnitInterval } from './UnitInterval'
 
 

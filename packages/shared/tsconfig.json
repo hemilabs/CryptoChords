@@ -1,7 +1,7 @@
 {
   "include": [
     "src/**/*"
-, "../../apps/web/src/domain/enum/KeyShapeEnum.ts", "../../apps/web/src/domain/enum/PitchClassEnum.ts"  ],
+  ],
 
   "compilerOptions": {
     /* Visit https://aka.ms/tsconfig to read more about this file */

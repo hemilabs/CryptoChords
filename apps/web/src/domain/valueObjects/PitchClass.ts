@@ -1,4 +1,4 @@
-import { ValueObject } from '../base/ValueObject'
+import { ValueObject } from '@cryptochords/shared'
 import { PitchClassEnum } from '../enum/PitchClassEnum'
 import { InvalidPitchClassError } from '../errors/InvalidIdPitchClassError'
 
@@ -24,5 +24,15 @@ export class PitchClass extends ValueObject<PitchClassProps> {
 
   get value() {
     return this.props.value
+  }
+
+  get next() {
+    const nextIndex = (Object.values(PitchClassEnum).indexOf(this.props.value) + 1) % Object.values(PitchClassEnum).length
+    return PitchClass.create(Object.values(PitchClassEnum)[nextIndex])
+  }
+
+  get previous() {
+    const previousIndex = (Object.values(PitchClassEnum).indexOf(this.props.value) - 1 + Object.values(PitchClassEnum).length) % Object.values(PitchClassEnum).length
+    return PitchClass.create(Object.values(PitchClassEnum)[previousIndex])
   }
 }

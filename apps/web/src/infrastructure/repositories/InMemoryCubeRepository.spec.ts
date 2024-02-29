@@ -1,7 +1,7 @@
 import { InMemoryCubeRepository } from './InMemoryCubeRepository'
 import { Cube } from '../../domain/entities/Cube'
-import { Id } from '../../domain/valueObjects/Id'
 import { beforeEach, describe, expect, it } from 'vitest'
+import { Uuid } from '@cryptochords/shared'
 
 describe('src/infrastructure/repositories/InMemoryCubeRepository', () => {
   let repository: InMemoryCubeRepository
@@ -29,7 +29,7 @@ describe('src/infrastructure/repositories/InMemoryCubeRepository', () => {
     it('should remove the cube with the given id', async () => {
       const cube: Cube = Cube.random()
       await repository.create(cube)
-      await repository.delete(cube.id)
+      await repository.delete(cube.uuid)
       const cubes = await repository.list()
       expect(cubes).toEqual([])
     })
@@ -37,8 +37,9 @@ describe('src/infrastructure/repositories/InMemoryCubeRepository', () => {
 
   describe('update', () => {
     it('should update the cube and return it', async () => {
+      const id = Uuid.create()
       const cube: Cube = {
-        id: Id.create('some-id'),
+        uuid: id,
         x: { value: 0.5 },
         y: { value: 0 },
         color: { value: 'blue' },
@@ -47,7 +48,7 @@ describe('src/infrastructure/repositories/InMemoryCubeRepository', () => {
       await repository.create(cube)
 
       const updatedCube = {
-        id: Id.create('some-id'),
+        uuid: id,
         x: { value: 0.7 },
         y: { value: 0.1 },
         color: { value: 'orange' },

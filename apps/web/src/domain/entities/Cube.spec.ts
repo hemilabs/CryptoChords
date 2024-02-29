@@ -1,13 +1,13 @@
 import { describe, it, expect } from 'vitest'
 import { Cube } from './Cube'
-import { CubeColor } from '../valueObjects/CubeColor'
+import { TransactionColor } from '../valueObjects/TransactionColor'
 import { UnitInterval } from '../valueObjects/UnitInterval'
 import { InvalidCubePositionError } from '../errors/InvalidCubePositionError'
-import { CubeColorEnum } from '../enum/CubeColorEnum'
+import { TransactionColorEnum } from '../enum/TransactionColorEnum'
 
 describe('src/domain/entities/Cube', () => {
   it('should create a cube with valid position', () => {
-    const color = CubeColor.create(CubeColorEnum.Orange)
+    const color = TransactionColor.create(TransactionColorEnum.Orange)
     const x = UnitInterval.create(0)
     const cube = Cube.create(color, x)
 
@@ -16,12 +16,12 @@ describe('src/domain/entities/Cube', () => {
     expect(cube.y).toBeInstanceOf(UnitInterval)
     expect(cube.creation).toBeCloseTo(Date.now(), -2)
     expect(cube.mirrored).toBeDefined()
-    expect(cube.id).toBeDefined()
+    expect(cube.uuid).toBeDefined()
     expect(cube.age).toBeGreaterThan(0)
   })
 
   it('should not find the range of color', () => {
-    const color = CubeColor.create('red' as CubeColorEnum)
+    const color = TransactionColor.create('red' as TransactionColorEnum)
     const x = UnitInterval.create(0)
 
     expect(() => {
@@ -30,7 +30,7 @@ describe('src/domain/entities/Cube', () => {
   })
 
   it('should not create a cube with invalid position for orange', () => {
-    const color = CubeColor.create(CubeColorEnum.Orange)
+    const color = TransactionColor.create(TransactionColorEnum.Orange)
     const x = UnitInterval.create(0.7)
 
     expect(() => {
@@ -39,7 +39,7 @@ describe('src/domain/entities/Cube', () => {
   })
 
   it('should not create a cube with invalid position for blue', () => {
-    const color = CubeColor.create(CubeColorEnum.Blue)
+    const color = TransactionColor.create(TransactionColorEnum.Blue)
     const x = UnitInterval.create(0.1)
 
     expect(() => {
@@ -48,7 +48,7 @@ describe('src/domain/entities/Cube', () => {
   })
 
   it('should not create a cube with invalid position for purple', () => {
-    const color = CubeColor.create(CubeColorEnum.Purple)
+    const color = TransactionColor.create(TransactionColorEnum.Purple)
     const x = UnitInterval.create(0.3)
 
     expect(() => {
@@ -57,7 +57,7 @@ describe('src/domain/entities/Cube', () => {
   })
 
   it('should not create a cube with invalid position for green', () => {
-    const color = CubeColor.create(CubeColorEnum.Green)
+    const color = TransactionColor.create(TransactionColorEnum.Green)
     const x = UnitInterval.create(0.4)
 
     expect(() => {
@@ -66,7 +66,7 @@ describe('src/domain/entities/Cube', () => {
   })
 
   it('should create a cube with y equals 0', () => {
-    const color = CubeColor.create(CubeColorEnum.Orange)
+    const color = TransactionColor.create(TransactionColorEnum.Orange)
     const x = UnitInterval.create(0)
     const cube = Cube.create(color, x)
 

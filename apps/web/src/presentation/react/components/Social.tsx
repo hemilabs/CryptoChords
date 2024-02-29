@@ -1,4 +1,4 @@
-import linkedin from '/image/social/linkedin.svg'
+import discord from '/image/social/discord.svg'
 import twitter from '/image/social/twitter.svg'
 
 export const Social = function (props: {
@@ -7,11 +7,11 @@ export const Social = function (props: {
 }) {
   return (
     <div className={`${props.className ?? ''} flex flex-row md:gap-10 max-md:gap-7`}>
-      <a href="https://linkedin.com" target="_blank" className='h-auto'>
-        <img src={linkedin} className={`md:w-10 max-md:w-${props.large ? 16 : 7}`} alt="Crypto Chords Linkedin" />
+      <a href="https://discord.gg/RyhaPp7NvQ" target="_blank" className='h-auto'>
+        <img src={discord} className={`md:w-10 max-md:w-${props.large ? 16 : 7}`} alt="Crypto Chords Discord" />
       </a>
-      <a href="https://twitter.com" target="_blank" className='h-auto'>
-        <img src={twitter} className={`md:w-10 max-md:w-${props.large ? 16 : 7}`} alt="Crypto Chords twitter" />
+      <a href="https://twitter.com/hemi_xyz" target="_blank" className='h-auto'>
+        <img src={twitter} className={`md:w-10 max-md:w-${props.large ? 16 : 7}`} alt="Crypto Chords Twitter" />
       </a>
     </div>
   )

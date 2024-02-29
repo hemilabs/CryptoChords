@@ -1,20 +1,19 @@
-import { Entity } from '../base/Entity'
+import { Entity, Uuid } from '@cryptochords/shared'
+import { TransactionColorEnum } from '../enum/TransactionColorEnum'
 import { InvalidCubePositionError } from '../errors/InvalidCubePositionError'
-import { CubeColor } from '../valueObjects/CubeColor'
-import { CubeColorEnum } from '../enum/CubeColorEnum'
-import { Id } from '../valueObjects/Id'
+import { TransactionColor } from '../valueObjects/TransactionColor'
 import { UnitInterval } from '../valueObjects/UnitInterval'
 import { UnitIntervalRange } from '../valueObjects/UnitIntervalRange'
 
-export const CubeXRange = new Map<CubeColorEnum, UnitIntervalRange>([
-  [CubeColorEnum.Orange, UnitIntervalRange.create(0, 0.25)],
-  [CubeColorEnum.Blue, UnitIntervalRange.create(0.25, 0.5)],
-  [CubeColorEnum.Purple, UnitIntervalRange.create(0.5, 0.75)],
-  [CubeColorEnum.Green, UnitIntervalRange.create(0.75, 1)],
+export const CubeXRange = new Map<TransactionColorEnum, UnitIntervalRange>([
+  [TransactionColorEnum.Orange, UnitIntervalRange.create(0, 0.25)],
+  [TransactionColorEnum.Blue, UnitIntervalRange.create(0.25, 0.5)],
+  [TransactionColorEnum.Purple, UnitIntervalRange.create(0.5, 0.75)],
+  [TransactionColorEnum.Green, UnitIntervalRange.create(0.75, 1)],
 ])
 
 interface CubeProps {
-  color: CubeColor
+  color: TransactionColor
   x: UnitInterval
   y: UnitInterval
   creation: number
@@ -22,29 +21,29 @@ interface CubeProps {
 }
 
 export class Cube extends Entity<CubeProps> {
-  private constructor(color: CubeColor, x: UnitInterval, id: Id) {
+  private constructor(color: TransactionColor, x: UnitInterval, uuid: Uuid) {
     super({
       color,
       x: x,
       y: UnitInterval.create(0),
       creation: Date.now(),
       mirrored: Cube.randomMirrored()
-    }, id)
+    }, uuid)
   }
 
   private static randomMirrored() {
     return Math.random() > 0.5
   }
 
-  static create(color: CubeColor, x: UnitInterval) {
+  static create(color: TransactionColor, x: UnitInterval) {
     if (!this.isValidPosition(color, x)) {
       throw new InvalidCubePositionError()
     }
 
-    return new Cube(color, x, Id.create())
+    return new Cube(color, x, Uuid.create())
   }
 
-  private static isValidPosition(color: CubeColor, x: UnitInterval): boolean {
+  private static isValidPosition(color: TransactionColor, x: UnitInterval): boolean {
     const range = CubeXRange.get(color.value)
 
     if (!range) {
@@ -59,11 +58,11 @@ export class Cube extends Entity<CubeProps> {
   }
 
   static random() {
-    const color = CubeColor.random()
-    return new Cube(color, this.randomX(color), Id.create())
+    const color = TransactionColor.random()
+    return new Cube(color, this.randomX(color), Uuid.create())
   }
 
-  private static randomX(color: CubeColor) {
+  private static randomX(color: TransactionColor) {
     if (color.value === 'orange') {
       return UnitInterval.random(0, 0.25)
     } else if (color.value === 'blue') {
