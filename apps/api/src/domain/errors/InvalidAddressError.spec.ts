@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { DomainError } from '../base/DomainError'
+import { DomainError } from '@cryptochords/shared'
 import { InvalidAddressError } from './InvalidAddressError'
 
 describe('src/domain/errors/InvalidAddressError', () => {

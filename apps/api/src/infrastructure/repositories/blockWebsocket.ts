@@ -1,11 +1,11 @@
 import Web3, { BlockHeaderOutput } from 'web3';
 import { EventEmitter } from 'events';
-import { TxType } from '../../domain/valueObjects/Txtype';
-import { TxTypesEnum } from '../../domain/enums/TxTypesEnum';
-import { Address } from '../../domain/valueObjects/Address';
+import { TxType } from '@cryptochords/shared';
+import { TxTypesEnum } from '@cryptochords/shared';
+import { Address } from '@cryptochords/shared';
 import { BlockTypesEnum } from '../../domain/enums/BlockTypesEnum';
 import { BlockRepository } from '../../domain/repositories/BlockRepository';
-import { L2Block } from '../../domain/entities/L2Block';
+import { L2Block } from '@cryptochords/shared';
 
 export class BlockWebsocketRepository extends EventEmitter implements BlockRepository {
   private web3: Web3 | null = null;

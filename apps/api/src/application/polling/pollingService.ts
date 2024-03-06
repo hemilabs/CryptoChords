@@ -1,8 +1,8 @@
 import { WebSocketServer } from "ws";
 import { BlockRepository } from "../../domain/repositories/BlockRepository";
 import BroadcastToClients from "../helpers/BroadcastToClients";
-import { TxTypesEnum } from "../../domain/enums/TxTypesEnum";
-import { L2Block } from "../../domain/entities/L2Block";
+import { TxTypesEnum } from "@cryptochords/shared";
+import { L2Block } from "@cryptochords/shared";
 export class PollingService {
   constructor(private blockRepository: BlockRepository) {}
 
