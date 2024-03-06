@@ -1,11 +1,11 @@
 import { EventEmitter } from "stream";
 import { BlockRepository } from "../../domain/repositories/BlockRepository";
 import Web3 from "web3";
-import { TxTypesEnum } from "../../domain/enums/TxTypesEnum";
-import { TxType } from "../../domain/valueObjects/Txtype";
-import { Address } from "../../domain/valueObjects/Address";
+import { TxTypesEnum } from "@cryptochords/shared";
+import { TxType } from "@cryptochords/shared";
+import { Address } from "@cryptochords/shared";
 import { BlockTypesEnum } from "../../domain/enums/BlockTypesEnum";
-import { L2Block } from "../../domain/entities/L2Block";
+import { L2Block } from "@cryptochords/shared";
 
 export class BlockPollingRepository extends EventEmitter implements BlockRepository {
   private latestBlockNumber = BigInt(0)

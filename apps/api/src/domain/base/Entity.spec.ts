@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { Entity } from './Entity'
-import { ValueObject } from './ValueObject'
+import { ValueObject } from '@cryptochords/shared'
 
 interface TestProps {
   value: string
