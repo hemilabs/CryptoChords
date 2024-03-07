@@ -18,7 +18,7 @@ function mockBlock() {
     const randomAddress = '0x' + Math.random().toString(16).slice(2)
     notifyPresenters(randomTxType, randomAddress)
     mockBlock()
-  }, Math.random() * 5000)
+  }, Math.random() * 3000)
 }
 
 function startWebsocket() {

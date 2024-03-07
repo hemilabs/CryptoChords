@@ -8,6 +8,7 @@ import { CreateCubeService } from '../CreateCube/CreateCubeService'
 import { PressKeyService } from '../PressKey/PressKeyService'
 import { ReleaseKeyService } from '../ReleaseKey/ReleaseKeyService'
 import { CreateTransactionRequest } from './CreateTransactionDtos'
+import { InstrumentEnum } from '../../../domain/enum/InstrumentEnum'
 
 export class CreateTransactionService extends ObservableService<CreateTransactionRequest, void> {
   private readonly keyboardRepository: KeyboardRepository
@@ -33,13 +34,14 @@ export class CreateTransactionService extends ObservableService<CreateTransactio
 
   protected async process(request: CreateTransactionRequest): Promise<void> {
     const transaction = await this.createTransaction(request)
-    const key = await this.pressKey(transaction)
+    const [ key, instrument ] = await this.pressKey(transaction)
     if (!key)
       return
     await this.createCube(key)
+
     setTimeout(() => {
-      this.releaseKey(key)
-    }, 2000)
+      this.releaseKey(key, instrument)
+    }, 100 + Math.random() * 3_000)
   }
 
   async createTransaction(request: CreateTransactionRequest): Promise<Transaction> {
@@ -60,25 +62,26 @@ export class CreateTransactionService extends ObservableService<CreateTransactio
     })
   }
 
-  async pressKey(transaction: Transaction): Promise<Key | undefined> {
+  async pressKey(transaction: Transaction): Promise<[Key  | undefined, (InstrumentEnum | undefined) ] > {
     const keyboard = this.keyboardRepository.getKeyboard()
     if (!keyboard)
-      return
+      return [undefined, undefined]
 
     const randomKey = keyboard.getRandomWhiteKeyByTxType(transaction.txType.value)   
 
-    this.pressKeyService.execute({
-      pitchKey: randomKey.pitch.pitchClass.value,
+    const { instrument } = await this.pressKeyService.execute({
+      pitchClass: randomKey.pitch.pitchClass.value,
       octave: randomKey.pitch.octave
     })
     
-    return randomKey
+    return [randomKey, instrument as InstrumentEnum]
   }
 
-  async releaseKey(key: Key): Promise<void> {
+  async releaseKey(key: Key, instrument?: InstrumentEnum): Promise<void> {
     this.releaseKeyService.execute({
-      pitchKey: key.pitch.pitchClass.value,
-      octave: key.pitch.octave
+      pitchClass: key.pitch.pitchClass.value,
+      octave: key.pitch.octave,
+      instrument
     })
   }
 }

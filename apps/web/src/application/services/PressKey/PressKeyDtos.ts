@@ -1,4 +1,8 @@
 export interface PressKeyRequest {
-  pitchKey: string
+  pitchClass: string
   octave: number
+}
+
+export interface PressKeyResponse {
+  instrument?: string
 }
