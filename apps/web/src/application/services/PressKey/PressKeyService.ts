@@ -1,25 +1,35 @@
 import { KeyboardRepository } from '../../../domain/repositories/KeyboardRepository'
 import { ObservableService } from '../../ObservableService'
-import { PressKeyRequest } from './PressKeyDtos'
+import { PlaySoundService } from '../PlaySound/PlaySoundService'
+import { PressKeyRequest, PressKeyResponse } from './PressKeyDtos'
 
-export class PressKeyService extends ObservableService<PressKeyRequest, void>{
+export class PressKeyService extends ObservableService<PressKeyRequest, PressKeyResponse>{
 
   private keyboardRepository: KeyboardRepository
+  private playSound: PlaySoundService
 
-  constructor(keyboardRepository: KeyboardRepository) {
+  constructor(keyboardRepository: KeyboardRepository, playSound: PlaySoundService) {
     super()
     this.keyboardRepository = keyboardRepository
+    this.playSound = playSound
   }
 
-  protected async process(request: PressKeyRequest): Promise<void> {
+  protected async process(request: PressKeyRequest): Promise<PressKeyResponse> {
     const keyboard = this.keyboardRepository.getKeyboard()
     if (!keyboard)
-      return
+      return {}
 
-    const key = keyboard.findKey(request.pitchKey, request.octave)
+    const key = keyboard.findKey(request.pitchClass, request.octave)
     if (!key)
-      return
+      return {}
 
     key.press()
+
+    const { instrument } = await this.playSound.execute({
+      pitchClass: request.pitchClass,
+      octave: request.octave
+    })
+
+    return { instrument }
   }
 }

@@ -1,4 +1,5 @@
 export interface ReleaseKeyRequest {
-  pitchKey: string
+  pitchClass: string
   octave: number
+  instrument?: string
 }

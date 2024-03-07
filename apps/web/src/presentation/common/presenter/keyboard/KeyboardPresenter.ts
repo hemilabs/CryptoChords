@@ -17,7 +17,7 @@ interface KeyboardPresenterOptions {
 const defaultOptions: KeyboardPresenterOptions = {
   numberOfKeys: 88,
   initialPitchClass: 'A',
-  initialOctave: 1
+  initialOctave: 0
 }
 
 export class KeyboardPresenter extends Presenter<KeyboardPresenterState> {

@@ -8,6 +8,13 @@ import { MoveCubesUpService } from '../../../application/services/MoveCubesUp/Mo
 import { PressKeyService } from '../../../application/services/PressKey/PressKeyService'
 import { ReleaseKeyService } from '../../../application/services/ReleaseKey/ReleaseKeyService'
 import { repositories } from './repositories'
+import { domainServices } from './domainServices'
+import { PlaySoundService } from '../../../application/services/PlaySound/PlaySoundService'
+import { StopSoundService } from '../../../application/services/StopSound/StopSoundService'
+import { GetOptionsService } from '../../../application/services/GetOptions/GetOptionsService'
+import { SetMutedService } from '../../../application/services/SetMuted/SetMutedService'
+import { SetInstrumentService } from '../../../application/services/SetInstrument/SetInstrumentService'
+import { LoadInstrumentService } from '../../../application/services/LoadInstrument/LoadInstrumentService'
 
 export interface Services {
   createTransaction: CreateTransactionService
@@ -19,14 +26,20 @@ export interface Services {
   releaseKey: ReleaseKeyService
   listTransactions: ListTransactionsService
   getKeyboard: GetKeyboardService
+  getOptions: GetOptionsService
+  setMuted: SetMutedService
+  setInstrument: SetInstrumentService
+  loadInstrument: LoadInstrumentService
 }
 
 const getCubes = new GetCubesService(repositories.cubeRepository)
 const createCube = new CreateCubeService(repositories.cubeRepository)
 const moveCubesUp = new MoveCubesUpService(repositories.cubeRepository)
 const createKeyboard = new CreateKeyboardService(repositories.keyboardRepository)
-const pressKey = new PressKeyService(repositories.keyboardRepository)
-const releaseKey = new ReleaseKeyService(repositories.keyboardRepository)
+const playSound = new PlaySoundService(domainServices.soundService, repositories.optionsRepository)
+const stopSound = new StopSoundService(domainServices.soundService)
+const pressKey = new PressKeyService(repositories.keyboardRepository, playSound)
+const releaseKey = new ReleaseKeyService(repositories.keyboardRepository, stopSound)
 const createTransaction = new CreateTransactionService(
   repositories.keyboardRepository,
   repositories.transactionRepository,
@@ -36,6 +49,10 @@ const createTransaction = new CreateTransactionService(
 )
 const listTransactions = new ListTransactionsService(repositories.transactionRepository)
 const getKeyboard = new GetKeyboardService(repositories.keyboardRepository)
+const getOptions = new GetOptionsService(repositories.optionsRepository)
+const setMuted = new SetMutedService(repositories.optionsRepository)
+const setInstrument = new SetInstrumentService(repositories.optionsRepository)
+const loadInstrument = new LoadInstrumentService(domainServices.soundService)
 
 export const services: Services = {
   createTransaction,
@@ -46,5 +63,9 @@ export const services: Services = {
   pressKey,
   releaseKey,
   listTransactions,
-  getKeyboard
+  getKeyboard,
+  getOptions,
+  setMuted,
+  setInstrument,
+  loadInstrument
 }
