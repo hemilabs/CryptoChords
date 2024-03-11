@@ -1,0 +1,34 @@
+name: '[cryptochords] dockerhub api push'
+
+on:
+  push:
+    tags:
+      - 'v*'
+    branch:
+      - 'ad_dockerize'
+
+jobs:
+  dockerhubpush:
+    name: '[cryptochords] dockerhub api push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get tag
+        id: vars
+        run: echo "tag=0.0.0" >> $GITHUB_OUTPUT
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18'
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Build and push cryptochords-api
+        uses: docker/build-push-action@v3
+        with:
+          tags: arturdolzan/cryptochords-api:${{ steps.vars.outputs.tag }}
+          context: "{{defaultContext}}:apps/api"
+          push: true

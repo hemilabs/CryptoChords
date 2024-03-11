@@ -9,7 +9,8 @@
     "test:watch": "vitest watch src",
     "dev": "nodemon",
     "build": "tsc -p tsconfig.build.json",
-    "lint": "eslint . --ext ts --report-unused-disable-directives --max-warnings 0"
+    "lint": "eslint . --ext ts --report-unused-disable-directives --max-warnings 0",
+    "start:api": "ts-node ./src/server.ts"
   },
   "author": "",
   "license": "ISC",
