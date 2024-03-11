@@ -2,7 +2,7 @@
 set -e
 
 ENV=$2
-BASE='arturdolzan/'
+BASE='hemilabs/'
 
 if [ "$ENV" = 'local' ]; then
     BASE=''
