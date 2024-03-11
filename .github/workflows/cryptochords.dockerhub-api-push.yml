@@ -4,8 +4,6 @@ on:
   push:
     tags:
       - 'v*'
-    branches:
-      - 'ad_dockerize'
 
 jobs:
   dockerhubpush:
@@ -14,7 +12,7 @@ jobs:
     steps:
       - name: Get tag
         id: vars
-        run: echo "tag=0.0.0" >> $GITHUB_OUTPUT
+        run: echo "tag=${GITHUB_REF#refs/*/v}" >> $GITHUB_OUTPUT
       - name: Setup node
         uses: actions/setup-node@v2
         with:
@@ -29,6 +27,6 @@ jobs:
       - name: Build and push cryptochords-api
         uses: docker/build-push-action@v3
         with:
-          tags: arturdolzan/cryptochords-api:${{ steps.vars.outputs.tag }}
+          tags: hemilabs/cryptochords-api:${{ steps.vars.outputs.tag }}
           context: "{{defaultContext}}:apps/api"
           push: true
