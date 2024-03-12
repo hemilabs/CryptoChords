@@ -1,3 +1,4 @@
+## -*- docker-image-name: "hemilabs/cryptochords-api:1.0.0" -*-
 FROM node:20
 
 COPY package*.json ./
