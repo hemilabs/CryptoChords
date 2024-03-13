@@ -2,7 +2,7 @@ import { Card } from './Card'
 import { Cubes } from './Cubes'
 import { Keyboard } from './Keyboard'
 import { Social } from './Social'
-import { SoundController } from './SoundController'
+import { Options } from './Options'
 import { Transactions } from './Transactions'
 import desktopBackground from '/image/background/desktop.svg'
 import mobileBackground from '/image/background/mobile.svg'
@@ -24,15 +24,15 @@ export function MainContent(props: {
       <div className='relative w-[78.34vw] mx-auto'>
         <Cubes className='relative w-[96%] mx-auto h-[25vw] mb-0' yMultiplier={CUBES_Y_MULTIPLIER} bottomOffset={CUBES_BOTTOM_OFFSET} />
         <Keyboard className='relative w-[97.88%] mx-auto z-10' />
-        <div className='flex max-md:flex-col md:flex-row justify-between md:mt-24 max-md:mt-8'>
-          <Card className='md:basis-[30%] md:grow-0 max-md:mb-5 md:mb-auto'>
-            <SoundController />
+        <div className='flex max-lg:flex-col lg:flex-row lg:gap-4 justify-between lg:mt-24 max-lg:mt-8'>
+          <Card className='lg:basis-[30%] lg:grow-0 max-lg:mb-5 lg:mb-auto'>
+            <Options />
           </Card>
-          <Card className='md:basis-[67.88%] grow-0 break-words overflow-hidden'>
+          <Card className='lg:basis-[67.88%] grow-0 break-words overflow-hidden'>
             <Transactions />
           </Card>
         </div>
-        <Social className='mt-8 md:justify-end max-md:justify-center' />
+        <Social className='mt-8 lg:justify-end max-lg:justify-center' />
       </div>
     </main>
   )

@@ -6,10 +6,10 @@ import { Presenter } from '../../base/Presenter'
 import { OptionsPresenterState } from './OptionsPresenterState'
 
 const INSTRUMENTS = [
-  { name: 'Piano', id: 'piano' },
-  { name: 'Saxophone', id: 'saxophone' },
-  { name: 'Organ', id: 'organ' },
-  { name: 'Harmonium', id: 'harmonium' },
+  { label: 'Piano', value: 'piano' },
+  { label: 'Saxophone', value: 'saxophone' },
+  { label: 'Organ', value: 'organ' },
+  { label: 'Harmonium', value: 'harmonium' },
 ]
 
 const initalState: OptionsPresenterState = {
