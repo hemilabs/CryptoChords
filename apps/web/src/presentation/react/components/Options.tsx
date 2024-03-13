@@ -3,8 +3,10 @@ import { usePresenter } from '../hooks/usePresenter'
 import { presenters } from '../context'
 import { OptionsPresenter } from '../../common/presenter/options/OptionsPresenter'
 import { OptionsPresenterState } from '../../common/presenter/options/OptionsPresenterState'
+import { Checkbox } from './Checkbox'
+import { Select } from './Select'
 
-export const SoundController = function (props: {
+export const Options = function (props: {
   className?: string
 }) {
   const { optionsPresenter } = useContext(presenters)
@@ -19,29 +21,25 @@ export const SoundController = function (props: {
   }, [optionsPresenter])
 
   return (
-    <div className={`${props.className ?? ''}`}>
-      <span className='md:size-8 max-md:size-7 font-extrabold'>Sound</span>
-      <input type="checkbox" className='mx-6' checked={!muted} onChange={(e) => optionsPresenter.setMuted(!e.target.checked)} />
+    <div className={`
+      ${props.className ?? ''}
+      inline-flex
+      vertical-middle
+      w-full
+    `}>
+      <span className='my-auto md:text-2xl max-md:text-xl flex-grow font-extrabold'>Sound</span>
+      <Checkbox className='mx-6 my-auto' value={!muted} onClick={() => optionsPresenter.setMuted(!muted)} />
       {
-        displayLoadingMessage
-          ? <span>Loading instrument sounds...</span>
-          : <></>
+        displayLoadingMessage && <span>Loading instrument sounds...</span>
       }
       {
-        displayInstrumentPicker
-          ? <select
-            value={selectedInstrument}
-            onChange={(e) => optionsPresenter.setInstrument(e.target.value)}>
-            {instruments.map(instrument =>
-              <option
-                key={instrument.id}
-                value={instrument.id}
-              >
-                {instrument.name}
-              </option>
-            )}
-          </select>
-          : <></>
+        displayInstrumentPicker && <Select
+          className='min-w-40'
+          value={selectedInstrument}
+          onChange={(value) => value && optionsPresenter.setInstrument(value)}
+          options={instruments}
+        />
+        
       }
 
     </div>

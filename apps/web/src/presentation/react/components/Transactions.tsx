@@ -13,8 +13,8 @@ export const Transactions = function (props: {
 
   return (
     <div className={`${props.className ?? ''}`}>
-      <span className='md:size-8 max-md:size-7 font-extrabold'>Transactions</span>
-      <ul className='flex flex-col-reverse'>
+      <span className='inline-block md:text-2xl max-md:text-xl font-extrabold mt-1'>Transactions</span>
+      <ul className='flex flex-col-reverse mt-4'>
         {
           transactions.map((transaction) => (
             <li key={`${transaction.id}`}>

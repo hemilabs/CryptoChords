@@ -1,6 +1,6 @@
 export type InstrumentState = {
-  id: string
-  name: string
+  value: string
+  label: string
 }
 
 export type OptionsPresenterState = {
