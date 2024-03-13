@@ -1,0 +1,22 @@
+## -*- docker-image-name: "hemilabs/cryptochords-web:1.0.0" -*-
+FROM node:20 as build
+
+COPY package*.json ./
+
+RUN mkdir -p /usr/src/app
+
+WORKDIR /usr/src/app
+
+COPY . .
+
+RUN npm install
+
+WORKDIR /usr/src/app/apps/web
+
+RUN npm run build
+
+FROM nginx:alpine
+
+COPY --from=build /usr/src/app/apps/web/dist /usr/share/nginx/html
+
+EXPOSE 80
