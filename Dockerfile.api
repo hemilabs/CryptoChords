@@ -1,0 +1,16 @@
+## -*- docker-image-name: "hemilabs/cryptochords-api:1.0.0" -*-
+FROM node:20
+
+COPY package*.json ./
+
+RUN mkdir -p /usr/src/app
+
+WORKDIR /usr/src/app
+
+COPY . .
+
+RUN npm install
+
+EXPOSE 3000
+
+CMD [ "npm", "run", "start:api" ]
