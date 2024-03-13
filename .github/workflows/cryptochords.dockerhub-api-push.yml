@@ -28,5 +28,6 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           tags: hemilabs/cryptochords-api:${{ steps.vars.outputs.tag }}
-          context: "{{defaultContext}}:apps/api"
+          context: "{{defaultContext}}"
+          file: "Dockerfile.api"
           push: true
