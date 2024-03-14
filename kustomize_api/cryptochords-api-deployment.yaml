@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cryptochords-api
+  labels:
+    app: cryptochords-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cryptochords-api
+  template:
+    metadata:
+      labels:
+        app: cryptochords-api
+    spec:
+      containers:
+      - name: cryptochords-api
+        image: hemilabs/cryptochords-api:1.0.0
+        ports:
+        - containerPort: 3000
+      imagePullSecrets:
+      - name: dockerhub-secret
