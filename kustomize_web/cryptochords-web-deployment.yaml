@@ -29,7 +29,7 @@ spec:
           valueFrom:
             configMapKeyRef:
               name: cryptochords-config
-              key: VITE_USE_API_MOCKs
+              key: VITE_USE_API_MOCK
       imagePullSecrets:
       - name: dockerhub-secret
     
