@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: cryptochords-api
-        image: hemilabs/cryptochords-api:1.0.0
+        image: hemilabs/cryptochords-api:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 3000
