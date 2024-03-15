@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: cryptochords-web
-        image: hemilabs/cryptochords-web:1.0.0
+        image: hemilabs/cryptochords-web:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 80

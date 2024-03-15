@@ -72,6 +72,11 @@ jobs:
               kustomize edit set image hemilabs/cryptochords-api:latest=hemilabs/cryptochords-api:${{ steps.vars.outputs.tag }}
               kustomize edit set namespace ${{ env.namespace }}
         working-directory: ./kustomize_api
+
+      - name: Checking Kustomize
+        run: |
+          kustomize build ./kustomize_api
+          kubectl get all --namespace=${{ env.namespace }}
     
       - name: Deploy to VKE
         run: kubectl apply -k ./kustomize_api
