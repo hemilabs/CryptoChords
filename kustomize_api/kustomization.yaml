@@ -1,2 +1,3 @@
 resources:
   - cryptochords-api-deployment.yaml
+  - cryptochords-api-service.yaml
