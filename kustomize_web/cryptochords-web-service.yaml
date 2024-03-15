@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: cryptochords-web-service
+spec:
+  type: LoadBalancer # Use NodePort or ClusterIP if you don't have a LoadBalancer provider.
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+  selector:
+    app: cryptochords-web
