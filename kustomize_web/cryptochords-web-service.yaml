@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: cryptochords-web-service
 spec:
-  type: LoadBalancer # Use NodePort or ClusterIP if you don't have a LoadBalancer provider.
+  type: ClusterIP
   ports:
   - port: 80
     targetPort: 80
