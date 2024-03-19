@@ -2,20 +2,21 @@ import { GetOptionsService } from '../../../../application/services/GetOptions/G
 import { LoadInstrumentService } from '../../../../application/services/LoadInstrument/LoadInstrumentService'
 import { SetInstrumentService } from '../../../../application/services/SetInstrument/SetInstrumentService'
 import { SetMutedService } from '../../../../application/services/SetMuted/SetMutedService'
+import { InstrumentEnum, instrumentLabels } from '../../../../domain/enum/InstrumentEnum'
 import { Presenter } from '../../base/Presenter'
 import { OptionsPresenterState } from './OptionsPresenterState'
 
-const INSTRUMENTS = [
-  { label: 'Piano', value: 'piano' },
-  { label: 'Saxophone', value: 'saxophone' },
-  { label: 'Organ', value: 'organ' },
-  { label: 'Harmonium', value: 'harmonium' },
-]
+const instruments: { label: string, value: string }[] = Object.values(InstrumentEnum).map(
+  (instrument) => ({
+    label: instrumentLabels.get(instrument) ?? instrument,
+    value: instrument
+  })
+)
 
 const initalState: OptionsPresenterState = {
   muted: true,
   selectedInstrument: '',
-  instruments: INSTRUMENTS,
+  instruments,
   displayLoadingMessage: false,
   displayInstrumentPicker: false
 }
@@ -48,7 +49,7 @@ export class OptionsPresenter extends Presenter<OptionsPresenterState> {
     this.setState({
       muted: options.muted,
       selectedInstrument: options.instrument,
-      instruments: INSTRUMENTS,
+      instruments,
       displayLoadingMessage: false,
       displayInstrumentPicker: true
     })
@@ -66,12 +67,12 @@ export class OptionsPresenter extends Presenter<OptionsPresenterState> {
   async setInstrument(instrument: string) {
     await this.loadInstrument(instrument)
     await this.setInstrumentService.execute({ instrument })
-    this.changeState({ selectedInstrument: instrument})
+    this.changeState({ selectedInstrument: instrument })
   }
 
   private async loadInstrument(instrument: string) {
     this.changeState({ displayLoadingMessage: true, displayInstrumentPicker: false })
     await this.loadInstrumentService.execute({ instrument })
-    this.changeState({ displayLoadingMessage: false, displayInstrumentPicker: true})
+    this.changeState({ displayLoadingMessage: false, displayInstrumentPicker: true })
   }
 }
