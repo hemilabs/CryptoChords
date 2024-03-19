@@ -22,7 +22,8 @@ function mockBlock() {
 }
 
 function startWebsocket() {
-  const ws = new WebSocket(import.meta.env.VITE_API_WEBSERVICE_URL!)
+  const websocketUrl = import.meta.env.VITE_API_WEBSERVICE_URL!.replace('${host}', document.location.host)
+  const ws = new WebSocket(websocketUrl)
   ws.onmessage = (event: MessageEvent) => {
     const data = JSON.parse(event.data)
     notifyPresenters(data.txType, data.address)
