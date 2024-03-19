@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: cryptochords-api-service
 spec:
-  type: LoadBalancer # Use NodePort or ClusterIP if you don't have a LoadBalancer provider.
+  type: ClusterIP # Use NodePort or ClusterIP if you don't have a LoadBalancer provider.
   ports:
   - port: 3000
     targetPort: 3000

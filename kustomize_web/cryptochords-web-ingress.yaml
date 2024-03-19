@@ -3,10 +3,11 @@ kind: Ingress
 metadata:
   name: cryptochords-web-ingress
   annotations:
-    cert-manager.io/issuer: letsencrypt-nginx
+    cert-manager.io/cluster-issuer: letsencrypt-nginx
 spec:
+  ingressClassName: nginx
   rules:
-  - host: cryptochords.web.hemi.xyz
+  - host: cryptochords.hemi.xyz
     http:
       paths:
       - path: /
@@ -16,3 +17,7 @@ spec:
             name: cryptochords-web-service
             port:
               number: 80
+  tls:
+  - hosts:
+    - cryptochords.hemi.xyz
+    secretName: cryptochords-tls
