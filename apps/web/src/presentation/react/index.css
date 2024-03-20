@@ -4,28 +4,9 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
-  /* Setting the font size to 1vw makes it follows the page width growth */
-  /* font-size: 1vw; */
-}
-
 :root {
   color-scheme: light dark;
   font-family: "Poppins", sans-serif;
   font-weight: 400;
   line-height: 100%;
-}
-
-button {
-  border-radius: 8px;
-  background: #FFF;
-  display: flex;
-  height: 40px;
-  padding: 20px;
-  justify-content: center;
-  align-items: center;
-  color: #1A1B23;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 500;
 }

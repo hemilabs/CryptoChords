@@ -2,6 +2,23 @@ export const JoinCommunityButton = (props: {
   className?: string
 }) => {
   return (
-    <button className={`${props.className ?? ''}`}>Join Community</button>
+    <a
+      className={`${props.className ?? ''}
+      flex
+      h-10
+      justify-center
+      items-center
+      text-[#1A1B23]
+      text-base
+      not-italic
+      font-medium
+      p-5
+      rounded-lg
+      bg-white
+      pointer
+      `}
+      href='https://discord.gg/RyhaPp7NvQ'
+      target='_blank'
+    >Join Community</a>
   )
 }
