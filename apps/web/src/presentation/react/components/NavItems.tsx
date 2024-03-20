@@ -5,9 +5,9 @@ export const NavItems = function (props: {
 }) {
   return (
     <nav className={`flex flex-row gap-8 ${props.className ?? ''}`}>
-      <NavItem href="http://github.com">Github</NavItem>
-      <NavItem href="/">Contribute</NavItem>
-      <NavItem href="/">Feedback</NavItem>
+      <NavItem href={import.meta.env.VITE_GITHUB_URL}>Github</NavItem>
+      <NavItem href={import.meta.env.VITE_CONTRIBUTORS_URL}>Contribute</NavItem>
+      <NavItem href={import.meta.env.VITE_FEEDBACK_URL}>Feedback</NavItem>
     </nav>
   )
 }

@@ -17,7 +17,7 @@ export const JoinCommunityButton = (props: {
       bg-white
       pointer
       `}
-      href='https://discord.gg/RyhaPp7NvQ'
+      href={import.meta.env.VITE_DISCORD_URL}
       target='_blank'
     >Join Community</a>
   )
