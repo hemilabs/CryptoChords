@@ -7,10 +7,10 @@ export const Social = function (props: {
 }) {
   return (
     <div className={`${props.className ?? ''} flex flex-row md:gap-10 max-md:gap-7`}>
-      <a href="https://discord.gg/RyhaPp7NvQ" target="_blank" className='h-auto'>
+      <a href={import.meta.env.VITE_DISCORD_URL} target="_blank" className='h-auto'>
         <img src={discord} className={`md:w-10 max-md:w-${props.large ? 16 : 7}`} alt="Crypto Chords Discord" />
       </a>
-      <a href="https://x.com/hemi_xyz" target="_blank" className='h-auto'>
+      <a href={import.meta.env.VITE_X_URL} target="_blank" className='h-auto'>
         <img src={x} className={`md:w-10 max-md:w-${props.large ? 16 : 7}`} alt="Crypto Chords X" />
       </a>
     </div>

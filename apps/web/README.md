@@ -34,3 +34,15 @@ The environment variables are defined in the `.env` file. The following variable
 - `VITE_API_WEBSERVICE_URL`: The URL of the web service API. If the variable contains the value `${host}` it will be replaced by the host of the web app. Make sure to escape the dollar sign `\${host}` otherwise it will expanded using [dotenv-expand](https://github.com/motdotla/dotenv-expand) as described on [Vite Docs](https://vitejs.dev/guide/env-and-mode#env-files).
 
 - `VITE_USE_API_MOCK`: A boolean that indicates if the API should be mocked.
+
+- `VITE_GITHUB_URL`: The URL of the GitHub repository. Used in the header and footer.
+
+- `VITE_CONTRIBUTORS_URL`: The URL of the contributors file. Used in the header.
+
+- `VITE_FEEDBACK_URL`: The URL of the feedback form. Used in the header.
+
+- `VITE_DISCORD_URL`: The URL of the Discord server. Used in the footer and 'Join Comunity' button.
+
+- `VITE_X_URL`: The URL of the X website. Used in the footer.
+
+- `VITE_LOGO_URL`: The URL of the logo. If it is not defined, the logo will point to the root of the web app and will not display the pointer cursor.
