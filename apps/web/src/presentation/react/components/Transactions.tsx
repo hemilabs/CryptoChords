@@ -24,6 +24,7 @@ export const Transactions = function (props: {
                 message={transaction.message}
                 id={transaction.id}
                 at={transaction.at}
+                url={transaction.url}
               />
             </li>
           ))

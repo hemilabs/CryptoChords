@@ -46,3 +46,5 @@ The environment variables are defined in the `.env` file. The following variable
 - `VITE_X_URL`: The URL of the X website. Used in the footer.
 
 - `VITE_LOGO_URL`: The URL of the logo. If it is not defined, the logo will point to the root of the web app and will not display the pointer cursor.
+
+- `VITE_EXPLORER_TX_URL`: The URL of the transaction explorer. It has to contain the string `${tx}` that will be replaced by the transaction hash. Make sure to escape the dollar sign `\${host}` otherwise it will expanded using [dotenv-expand](https://github.com/motdotla/dotenv-expand) as described on [Vite Docs](https://vitejs.dev/guide/env-and-mode#env-files).

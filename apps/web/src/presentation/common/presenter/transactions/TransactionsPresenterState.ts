@@ -6,5 +6,6 @@ export type TransactionsPresenterState = {
     message: string
     id: string
     at: string
+    url: string
   }[]
 }
