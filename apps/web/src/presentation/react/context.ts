@@ -22,13 +22,23 @@ function mockBlock() {
 }
 
 function startWebsocket() {
-  const websocketUrl = import.meta.env.VITE_API_WEBSERVICE_URL!.replace('${host}', document.location.host)
-  const ws = new WebSocket(websocketUrl)
+  const ws = new WebSocket(getWebsocketUrl())
   ws.onmessage = (event: MessageEvent) => {
     const data = JSON.parse(event.data)
     notifyPresenters(data.txType, data.address)
   }
   return ws
+}
+
+function getWebsocketUrl() {
+  const url = import.meta.env.VITE_API_WEBSERVICE_URL
+  if (!url) {
+    throw new Error('VITE_API_WEBSERVICE_URL is not defined')
+  }
+
+  // replaces ${host} with the host address ignoring spaces and tabs within the brackets
+  const regex = /\$\{[ \t]*host[ \t]*\}/i 
+  return url.replace(regex, document.location.host)
 }
 
 async function notifyPresenters(txType: TxTypesEnum, address: string) {
