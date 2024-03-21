@@ -11,8 +11,8 @@ export class BlockPollingRepository extends EventEmitter implements BlockReposit
   private latestBlockNumber = BigInt(0)
   private pollingIntervalId: NodeJS.Timeout | null = null;
 
-  execute(websocketUrl: string, pollingInterval = 5000): void {
-    const web3 = new Web3(websocketUrl);
+  execute(rpcUrl: string, pollingInterval = 5000): void {
+    const web3 = new Web3(rpcUrl);
     this.poll(web3, pollingInterval)
   }
 
