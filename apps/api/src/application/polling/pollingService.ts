@@ -6,8 +6,8 @@ import { L2Block } from "@cryptochords/shared";
 export class PollingService {
   constructor(private blockRepository: BlockRepository) {}
 
-  execute(wss: WebSocketServer, websocketUrl: string): void {
-    this.blockRepository.execute(websocketUrl)
+  execute(wss: WebSocketServer, url: string): void {
+    this.blockRepository.execute(url)
 
     this.blockRepository.on(TxTypesEnum.Block, (l2Block: L2Block) => BroadcastToClients(wss, l2Block));
     this.blockRepository.on(TxTypesEnum.Eth, (l2Block: L2Block) => BroadcastToClients(wss, l2Block));
