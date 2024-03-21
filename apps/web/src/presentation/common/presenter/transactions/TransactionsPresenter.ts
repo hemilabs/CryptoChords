@@ -42,7 +42,8 @@ export class TransactionsPresenter extends Presenter<TransactionsPresenterState>
         color: TransactionColor.createByTxType(transaction.txType).value,
         message: messageMap.get(transaction.txType as TxTypesEnum) ?? ' ',
         id: transaction.address,
-        at: this.formatDate(transaction.timestamp)
+        at: this.formatDate(transaction.timestamp),
+        url: this.buildTransactionUrl(transaction.address)
       }))
     })
   }
@@ -59,5 +60,15 @@ export class TransactionsPresenter extends Presenter<TransactionsPresenterState>
     })
 
     return formattedDate.replace(/,/g, '')
+  }
+
+  private buildTransactionUrl(address: string) {
+    const pattern = import.meta.env.VITE_EXPLORER_TX_URL
+    if(pattern) {
+      // replaces ${tx} with the address ignoring spaces and tabs within the brackets
+      const regex = /\$\{[ \t]*tx[ \t]*\}/i
+      return pattern.replace(regex, address)
+    }
+    return `#${address}`
   }
 }
