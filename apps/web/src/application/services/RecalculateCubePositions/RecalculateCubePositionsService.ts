@@ -1,8 +1,8 @@
 import { CubeRepository } from '../../../domain/repositories/CubeRepository'
 import { ObservableService } from '../../ObservableService'
-import { MoveCubesUpRequestDto, MoveCubesUpResponseDto } from './MoveCubesUpDtos'
+import { RecalculateCubePositionsRequestDto, RecalculateCubePositionsResponseDto } from './RecalculateCubePositionsDtos'
 
-export class MoveCubesUpService extends ObservableService<MoveCubesUpRequestDto, MoveCubesUpResponseDto>{
+export class RecalculateCubePositionsService extends ObservableService<RecalculateCubePositionsRequestDto, RecalculateCubePositionsResponseDto>{
   private readonly cubeRepository: CubeRepository
   
   constructor(cubeRepository: CubeRepository) {
@@ -10,15 +10,15 @@ export class MoveCubesUpService extends ObservableService<MoveCubesUpRequestDto,
     this.cubeRepository = cubeRepository
   }
 
-  protected async process(request: MoveCubesUpRequestDto): Promise<MoveCubesUpResponseDto> {
+  protected async process(request: RecalculateCubePositionsRequestDto): Promise<RecalculateCubePositionsResponseDto> {
     const cubes = await this.cubeRepository.list()
-    const response: MoveCubesUpResponseDto  = {
+    const response: RecalculateCubePositionsResponseDto  = {
       deletedCubes: 0,
       updatedCubes: 0
     }
 
-    for (const cube of cubes) {
-      cube.moveUp(request.step)
+    for await(const cube of cubes) {
+      cube.recalculateYByAge(request.maxAge)
       if(cube.isOnTop) {
         await this.cubeRepository.delete(cube.uuid)
         response.deletedCubes++
@@ -27,6 +27,7 @@ export class MoveCubesUpService extends ObservableService<MoveCubesUpRequestDto,
         response.updatedCubes++
       }
     }
+    
     return response
   }
 

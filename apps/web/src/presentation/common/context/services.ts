@@ -15,12 +15,14 @@ import { GetOptionsService } from '../../../application/services/GetOptions/GetO
 import { SetMutedService } from '../../../application/services/SetMuted/SetMutedService'
 import { SetInstrumentService } from '../../../application/services/SetInstrument/SetInstrumentService'
 import { LoadInstrumentService } from '../../../application/services/LoadInstrument/LoadInstrumentService'
+import { RecalculateCubePositionsService } from '../../../application/services/RecalculateCubePositions/RecalculateCubePositionsService'
 
 export interface Services {
   createTransaction: CreateTransactionService
   getCubes: GetCubesService
   createCube: CreateCubeService
   moveCubesUp: MoveCubesUpService
+  recalculateCubePosition: RecalculateCubePositionsService
   createKeyboard: CreateKeyboardService
   pressKey: PressKeyService
   releaseKey: ReleaseKeyService
@@ -35,6 +37,7 @@ export interface Services {
 const getCubes = new GetCubesService(repositories.cubeRepository)
 const createCube = new CreateCubeService(repositories.cubeRepository)
 const moveCubesUp = new MoveCubesUpService(repositories.cubeRepository)
+const recalculateCubePosition = new RecalculateCubePositionsService(repositories.cubeRepository)
 const createKeyboard = new CreateKeyboardService(repositories.keyboardRepository)
 const playSound = new PlaySoundService(domainServices.soundService, repositories.optionsRepository)
 const stopSound = new StopSoundService(domainServices.soundService)
@@ -59,6 +62,7 @@ export const services: Services = {
   getCubes,
   createCube,
   moveCubesUp,
+  recalculateCubePosition,
   createKeyboard,
   pressKey,
   releaseKey,

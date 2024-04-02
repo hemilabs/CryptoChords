@@ -1,17 +1,17 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
+import { CreateCubeService } from '../../../../application/services/CreateCube/CreateCubeService'
 import { CreateKeyboardService } from '../../../../application/services/CreateKeyboard/CreateKeyboardService'
 import { GetCubesService } from '../../../../application/services/GetCubes/GetCubesService'
-import { MoveCubesUpService } from '../../../../application/services/MoveCubesUp/MoveCubesUpService'
+import { RecalculateCubePositionsService } from '../../../../application/services/RecalculateCubePositions/RecalculateCubePositionsService'
 import { KeyboardRepository } from '../../../../domain/repositories/KeyboardRepository'
 import { InMemoryCubeRepository } from '../../../../infrastructure/repositories/InMemoryCubeRepository'
 import { InMemoryKeyboardRepository } from '../../../../infrastructure/repositories/InMemoryKeyboardRepository'
 import { CubesPresenter } from './CubesPresenter'
-import { CreateCubeService } from '../../../../application/services/CreateCube/CreateCubeService'
 
 describe('src/presentation/common/CubesPresenter', () => {
   let cubeRepository: InMemoryCubeRepository
   let getCubesService: GetCubesService
-  let moveCubesUpService: MoveCubesUpService
+  let recalculateCubePositionsService: RecalculateCubePositionsService
   let presenter: CubesPresenter
   let keyboardRepository: KeyboardRepository
   let createKeyboardService: CreateKeyboardService
@@ -36,9 +36,9 @@ describe('src/presentation/common/CubesPresenter', () => {
     })
     cubeRepository = new InMemoryCubeRepository()
     getCubesService = new GetCubesService(cubeRepository)
-    moveCubesUpService = new MoveCubesUpService(cubeRepository)
+    recalculateCubePositionsService = new RecalculateCubePositionsService(cubeRepository)
     createCubeService = new CreateCubeService(cubeRepository)
-    presenter = new CubesPresenter(getCubesService, moveCubesUpService, options)
+    presenter = new CubesPresenter(getCubesService, recalculateCubePositionsService, options)
     await createCubeService.execute({ color: 'blue', x: 0.5 })
   })
 
