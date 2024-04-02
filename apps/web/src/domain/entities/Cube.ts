@@ -105,6 +105,11 @@ export class Cube extends Entity<CubeProps> {
     this.props.y = this.props.y.increment(step)
   }
 
+  public recalculateYByAge(maxAge: number = 10_000) {
+    const y = Math.min(1, this.age / maxAge)
+    this.props.y = UnitInterval.create(y)
+  }
+
   get isOnTop() {
     return this.props.y.isMaxReached()
   }

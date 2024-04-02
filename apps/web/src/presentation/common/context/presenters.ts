@@ -16,7 +16,7 @@ export interface Presenters {
 
 const cubesPresenter = new CubesPresenter(
   services.getCubes,
-  services.moveCubesUp,
+  services.recalculateCubePosition
 )
 
 const appPresenter = new AppPresenter(

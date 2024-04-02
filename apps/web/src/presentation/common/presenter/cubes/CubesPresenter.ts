@@ -1,5 +1,5 @@
 import { GetCubesService } from '../../../../application/services/GetCubes/GetCubesService'
-import { MoveCubesUpService } from '../../../../application/services/MoveCubesUp/MoveCubesUpService'
+import { RecalculateCubePositionsService } from '../../../../application/services/RecalculateCubePositions/RecalculateCubePositionsService'
 import { Presenter } from '../../base/Presenter'
 import { CubesPresenterState } from './CubesPresenterState'
 
@@ -10,19 +10,20 @@ const initalState: CubesPresenterState = {
 interface CubesPresenterOptions {
   maxCubeCreationInterval: number
   tickInterval: number
-  cubeStep: number
+  maxCubeAge: number
 }
 
 const defaultOptions: CubesPresenterOptions = {
   maxCubeCreationInterval: 300,
   tickInterval: 20,
-  cubeStep: 0.001
+  maxCubeAge: 17_000
 }
 
 export class CubesPresenter extends Presenter<CubesPresenterState> {
 
   private readonly getCubesService: GetCubesService
-  private readonly moveCubesUpService: MoveCubesUpService
+  private readonly recalculateCubePositions: RecalculateCubePositionsService
+
 
   private options: CubesPresenterOptions
 
@@ -31,12 +32,12 @@ export class CubesPresenter extends Presenter<CubesPresenterState> {
 
   constructor(
     getCubesService: GetCubesService,
-    moveCubesUpService: MoveCubesUpService,
+    recalculateCubePositions: RecalculateCubePositionsService,
     options?: Partial<CubesPresenterOptions>
   ) {
     super(initalState)
     this.getCubesService = getCubesService
-    this.moveCubesUpService = moveCubesUpService
+    this.recalculateCubePositions = recalculateCubePositions
     this.options = {
       ...defaultOptions,
       ...options
@@ -75,8 +76,8 @@ export class CubesPresenter extends Presenter<CubesPresenterState> {
   }
 
   private async moveAllCubesUp() {
-    await this.moveCubesUpService.execute({
-      step: this.options.cubeStep
+    await this.recalculateCubePositions.execute({
+      maxAge: this.options.maxCubeAge
     })
   }
 
