@@ -4,7 +4,6 @@ import { CreateTransactionService } from '../../../application/services/CreateTr
 import { GetCubesService } from '../../../application/services/GetCubes/GetCubesService'
 import { GetKeyboardService } from '../../../application/services/GetKeyboard/GetKeyboardService'
 import { ListTransactionsService } from '../../../application/services/ListTransactions/ListTransactionsService'
-import { MoveCubesUpService } from '../../../application/services/MoveCubesUp/MoveCubesUpService'
 import { PressKeyService } from '../../../application/services/PressKey/PressKeyService'
 import { ReleaseKeyService } from '../../../application/services/ReleaseKey/ReleaseKeyService'
 import { repositories } from './repositories'
@@ -21,7 +20,6 @@ export interface Services {
   createTransaction: CreateTransactionService
   getCubes: GetCubesService
   createCube: CreateCubeService
-  moveCubesUp: MoveCubesUpService
   recalculateCubePosition: RecalculateCubePositionsService
   createKeyboard: CreateKeyboardService
   pressKey: PressKeyService
@@ -36,7 +34,6 @@ export interface Services {
 
 const getCubes = new GetCubesService(repositories.cubeRepository)
 const createCube = new CreateCubeService(repositories.cubeRepository)
-const moveCubesUp = new MoveCubesUpService(repositories.cubeRepository)
 const recalculateCubePosition = new RecalculateCubePositionsService(repositories.cubeRepository)
 const createKeyboard = new CreateKeyboardService(repositories.keyboardRepository)
 const playSound = new PlaySoundService(domainServices.soundService, repositories.optionsRepository)
@@ -61,7 +58,6 @@ export const services: Services = {
   createTransaction,
   getCubes,
   createCube,
-  moveCubesUp,
   recalculateCubePosition,
   createKeyboard,
   pressKey,
