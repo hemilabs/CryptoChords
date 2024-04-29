@@ -47,4 +47,10 @@ The environment variables are defined in the `.env` file. The following variable
 
 - `VITE_LOGO_URL`: The URL of the logo. If it is not defined, the logo will point to the root of the web app and will not display the pointer cursor.
 
-- `VITE_EXPLORER_TX_URL`: The URL of the transaction explorer. It has to contain the string `${tx}` that will be replaced by the transaction hash. Make sure to escape the dollar sign `\${host}` otherwise it will expanded using [dotenv-expand](https://github.com/motdotla/dotenv-expand) as described on [Vite Docs](https://vitejs.dev/guide/env-and-mode#env-files).
+- `VITE_EXPLORER_BLOCK_URL`: The URL of the block explorer. It has to contain the string `${hash}` that will be replaced by the block hash. Make sure to escape the dollar sign `\${host}` otherwise it will expanded using [dotenv-expand](https://github.com/motdotla/dotenv-expand) as described on [Vite Docs](https://vitejs.dev/guide/env-and-mode#env-files).
+
+- `VITE_EXPLORER_ETH_URL`: The URL of the ETH transaction explorer. It has to contain the string `${hash}` that will be replaced by the transaction hash. Make sure to escape the dollar sign `\${host}` otherwise it will expanded using [dotenv-expand](https://github.com/motdotla/dotenv-expand) as described on [Vite Docs](https://vitejs.dev/guide/env-and-mode#env-files).
+
+- `VITE_EXPLORER_BTC_URL`: The URL of the BTC transaction explorer. It has to contain the string `${hash}` that will be replaced by the transaction hash. Make sure to escape the dollar sign `\${host}` otherwise it will expanded using [dotenv-expand](https://github.com/motdotla/dotenv-expand) as described on [Vite Docs](https://vitejs.dev/guide/env-and-mode#env-files).
+
+- `VITE_EXPLORER_POP_URL`: The URL of the PoP transaction explorer. It has to contain the string `${hash}` that will be replaced by the transaction hash. Make sure to escape the dollar sign `\${host}` otherwise it will expanded using [dotenv-expand](https://github.com/motdotla/dotenv-expand) as described on [Vite Docs](https://vitejs.dev/guide/env-and-mode#env-files).
