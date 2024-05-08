@@ -1,6 +1,5 @@
 import { Event, Observable, TxTypesEnum } from '@cryptochords/shared'
 import { ListTransactionsService } from '../../../../application/services/ListTransactions/ListTransactionsService'
-import { TransactionColor } from '../../../../domain/valueObjects/TransactionColor'
 import { Presenter } from '../../base/Presenter'
 import { TransactionsPresenterState } from './TransactionsPresenterState'
 
@@ -13,6 +12,13 @@ const titleMap: Map<TxTypesEnum, string> = new Map([
   [TxTypesEnum.Eth, 'ETH'],
   [TxTypesEnum.Pop, 'PoP'],
   [TxTypesEnum.Btc, 'BTC']
+])
+
+const rgbMap: Map<TxTypesEnum, string> = new Map([
+  [TxTypesEnum.Block, '#10FF2A'],
+  [TxTypesEnum.Eth, '#00D3FF'],
+  [TxTypesEnum.Pop, '#DC53FF'],
+  [TxTypesEnum.Btc, '#FFB200']
 ])
 
 const messageMap: Map<TxTypesEnum, string> = new Map([
@@ -46,7 +52,7 @@ export class TransactionsPresenter extends Presenter<TransactionsPresenterState>
     this.changeState({
       transactions: response.transactions.map(transaction => ({
         type: titleMap.get(transaction.txType as TxTypesEnum) ?? 'Unknown',
-        color: TransactionColor.createByTxType(transaction.txType).value,
+        color: rgbMap.get(transaction.txType as TxTypesEnum) ?? '#fff',
         message: messageMap.get(transaction.txType as TxTypesEnum) ?? ' ',
         id: transaction.address,
         at: this.formatDate(transaction.timestamp),
