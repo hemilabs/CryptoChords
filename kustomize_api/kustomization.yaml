@@ -1,4 +1,10 @@
 resources:
-  - cryptochords-api-deployment.yaml
-  - cryptochords-api-service.yaml
-  - cryptochords-api-ingress.yaml
+- cryptochords-api-deployment.yaml
+- cryptochords-api-service.yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+images:
+- name: hemilabs/cryptochords-api:latest
+  newName: hemilabs/cryptochords-api
+  newTag: 1.0.10
+namespace: cryptochords-staging
