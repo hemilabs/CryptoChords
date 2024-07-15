@@ -1,4 +1,0 @@
-resources:
-  - cryptochords-api-deployment.yaml
-  - cryptochords-api-service.yaml
-  - cryptochords-api-ingress.yaml
