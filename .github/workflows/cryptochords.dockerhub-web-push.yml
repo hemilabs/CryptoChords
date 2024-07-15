@@ -6,10 +6,7 @@ on:
       - 'v*'
 
 jobs:
-  dockerhubpush-VKEdeploy:
-    env:
-      namespace: cryptochords
-
+  dockerhubpush:
     name: '[cryptochords] dockerhub web push'
     runs-on: ubuntu-latest
     steps:
@@ -35,6 +32,13 @@ jobs:
           file: "Dockerfile.web"
           push: true
 
+  deploy_testnet:
+    name: "Deploy Testnet to VKE"
+    runs-on: "ubuntu-latest"
+    needs: [ "dockerhubpush" ]
+    env:
+      namespace: cryptochords
+    steps:
       - name: Checkout code
         uses: actions/checkout@v3
   
@@ -66,7 +70,6 @@ jobs:
           fi
           echo "Checking Dockerhub Secret"
   
-    
       - name: Dockerhub Secrets
         run: |
           if kubectl get secret dockerhub-secret --namespace=${{ env.namespace }}; then
@@ -85,12 +88,78 @@ jobs:
         run: |
               kustomize edit set image hemilabs/cryptochords-web:latest=hemilabs/cryptochords-web:${{ steps.vars.outputs.tag }}
               kustomize edit set namespace ${{ env.namespace }}
-        working-directory: ./kustomize_web
+        working-directory: ./infrastructure/kustomize_web/overlays/testnet
 
       - name: Checking Kustomize
         run: |
-          kustomize build ./kustomize_api
+          kustomize build ./infrastructure/kustomize_web/overlays/testnet
           kubectl get all --namespace=${{ env.namespace }}
       
       - name: Deploy to VKE
-        run: kubectl apply -k ./kustomize_web
+        run: kubectl apply -k ./infrastructure/kustomize_web/overylays/testnet
+
+  deploy_staging:
+    name: "Deploy Staging to VKE"
+    runs-on: "ubuntu-latest"
+    needs: ["deploy_testnet"]
+    env:
+      namespace: cryptochords-staging
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install kubectl
+        uses: azure/k8s-set-context@v3
+        with:
+          kubeconfig: ${{ secrets.VKE_STAGING_KUBECONFIG }}
+      
+      - name: Install Kustomize
+        uses: imranismail/setup-kustomize@v2
+
+      - name: Configure K8s Cluster Access for VKE
+        env:
+          VKE_STAGING_KUBECONFIG : ${{ secrets.VKE_STAGING_KUBECONFIG }}
+        run: |
+          echo $VKE_STAGING_KUBECONFIG > ./kubeconfig.yaml
+          export KUBECONFIG=$PWD/kubeconfig.yaml
+
+      - name: Cryptochords Configmap
+        run: |
+          if kubectl get configmap cryptochords-config --namespace=${{ env.namespace }}; then
+            echo "cryptochords-config already exists"
+          else
+            echo "Creating cryptochords-config"
+            kubectl create configmap cryptochords-config \
+            --from-literal=VITE_API_WEBSERVICE_URL=${{ secrets.AWS_ACCESS__KEY_ID }} \
+            --from-literal=VITE_USE_API_MOCK=false \
+            --namespace=${{ env.namespace }}
+          fi
+          echo "Checking Dockerhub Secret"
+
+      - name: Dockerhub Secrets
+        run: |
+          if kubectl get secret dockerhub-secret --namespace=${{ env.namespace }}; then
+            echo "Dockerhub Secret already exists"
+          else
+            echo "Creating Dockerhub Secret"
+            kubectl create secret docker-registry dockerhub-secret \
+            --docker-server=https://index.docker.io/v1/ \
+            --docker-username=${{ secrets.DOCKER_USERNAME }} \
+            --docker-password=${{ secrets.DOCKER_PASSWORD }} \
+            --docker-email=${{ secrets.DOCKER_EMAIL }} \
+            --namespace=${{ env.namespace }}
+          fi
+
+      - name: Update Image Tag in deployment
+        run: |
+          kustomize edit set image hemilabs/cryptochords-web:latest=hemilabs/cryptochords-web:${{ github.event.inputs.tag }}
+          kustomize edit set namespace ${{ env.namespace }}
+        working-directory: ./infrastructure/kustomize_web/base
+
+      - name: Checking Kustomize
+        run: |
+          kustomize build ./infrastructure/kustomize_web/overlays/staging
+          kubectl get all --namespace=${{ env.namespace }}
+
+      - name: Deploy to VKE
+        run: kubectl apply -k ./infrastructure/kustomize_web/overlays/staging
