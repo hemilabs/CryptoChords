@@ -5,8 +5,8 @@ metadata:
 spec:
   type: ClusterIP # Use NodePort or ClusterIP if you don't have a LoadBalancer provider.
   ports:
-  - port: 3000
-    targetPort: 3000
-    protocol: TCP
+    - port: 3000
+      targetPort: 3000
+      protocol: TCP
   selector:
     app: cryptochords-api
