@@ -3,7 +3,7 @@ kind: Ingress
 metadata:
   name: cryptochords-web-ingress
   annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-nginx
+    cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:
   ingressClassName: nginx
   rules:
