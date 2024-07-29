@@ -52,15 +52,6 @@ jobs:
         hemilabs/cryptochords-api:${{ github.sha }}
         hemilabs/cryptochords-web:${{ github.sha }}
       preapply: |
-        # Create config map
-        if ! kubectl get configmap cryptochords-config --namespace=cryptochords > /dev/null; then
-          echo "Creating cryptochords-config"
-          kubectl create configmap cryptochords-config \
-            --from-literal=VITE_API_WEBSERVICE_URL=${{ secrets.AWS_ACCESS__KEY_ID }} \
-            --from-literal=VITE_USE_API_MOCK=false \
-            --namespace=cryptochords
-        fi
-
         # Create Docker Hub secret
         if ! kubectl get secret dockerhub-secret --namespace=cryptochords > /dev/null; then
           echo "Creating Docker Hub secret..."

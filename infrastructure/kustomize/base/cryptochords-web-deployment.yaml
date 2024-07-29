@@ -20,16 +20,5 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 80
-          env:
-            - name: VITE_API_WEBSERVICE_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: cryptochords-config
-                  key: VITE_API_WEBSERVICE_URL
-            - name: VITE_USE_API_MOCK
-              valueFrom:
-                configMapKeyRef:
-                  name: cryptochords-config
-                  key: VITE_USE_API_MOCK
       imagePullSecrets:
         - name: dockerhub-secret
