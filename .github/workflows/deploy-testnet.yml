@@ -71,11 +71,26 @@ jobs:
       DOCKERHUB_USERNAME: "${{ secrets.DOCKER_USERNAME }}"
       DOCKERHUB_PASSWORD: "${{ secrets.DOCKER_PASSWORD }}"
 
+  deploy-registry:
+    name: "Deploy registry secret"
+    uses: hemilabs/actions/.github/workflows/docker-registry-secret.yml@main
+    permissions:
+      contents: read
+    with:
+      secret-name: "dockerhub-secret"
+      namespace: "cryptochords"
+    secrets:
+      KUBECONFIG: "${{ secrets.VKE_TESTNET_KUBECONFIG }}"
+      KUBECONFIG_CONTEXT: "${{ secrets.VKE_TESTNET_KUBECONFIG_CONTEXT }}"
+      DOCKER_USERNAME: "${{ secrets.DOCKER_USERNAME }}"
+      DOCKER_PASSWORD: "${{ secrets.DOCKER_PASSWORD }}"
+      DOCKER_EMAIL: "${{ secrets.DOCKER_EMAIL }}"
+
   # Deploy to Kubernetes cluster
   deploy:
     name: "Deploy to testnet"
     uses: hemilabs/actions/.github/workflows/deploy-kustomize.yml@main
-    needs: [ "prepare", "docker" ]
+    needs: [ "prepare", "docker", "deploy-registry" ]
     permissions:
       contents: read
     with:
@@ -86,17 +101,6 @@ jobs:
       image: |
         hemilabs/cryptochords-api:${{ needs.prepare.outputs.tag }}
         hemilabs/cryptochords-web:${{ needs.prepare.outputs.tag }}
-      preapply: |
-        # Create Docker Hub secret
-        if ! kubectl get secret dockerhub-secret --namespace=cryptochords; then
-          echo "Creating Docker Hub secret..."
-          kubectl create secret docker-registry dockerhub-secret \
-            --docker-server=https://index.docker.io/v1/ \
-            --docker-username="${{ secrets.DOCKER_USERNAME }}" \
-            --docker-password="${{ secrets.DOCKER_PASSWORD }}" \
-            --docker-email="${{ secrets.DOCKER_EMAIL }}" \
-            --namespace=cryptochords
-        fi
     secrets:
       KUBECONFIG: "${{ secrets.VKE_TESTNET_KUBECONFIG }}"
       KUBECONFIG_CONTEXT: "${{ secrets.VKE_TESTNET_KUBECONFIG_CONTEXT }}"
