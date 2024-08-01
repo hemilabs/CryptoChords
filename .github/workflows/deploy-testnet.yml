@@ -1,0 +1,102 @@
+# Copyright (c) 2024 Hemi Labs, Inc.
+# Use of this source code is governed by the MIT License,
+# which can be found in the LICENSE file.
+
+# GitHub Actions workflow to deploy to the testnet prod environment.
+name: "Testnet"
+on:
+  push:
+    tags: [ "v*.*.*" ]
+
+concurrency:
+  group: "testnet-deploy-${{ github.event.number || github.ref }}"
+  cancel-in-progress: false
+
+jobs:
+  # Prepare to deploy and release
+  prepare:
+    name: "Prepare"
+    runs-on: "ubuntu-latest"
+    permissions:
+      contents: read
+    outputs:
+      version: "${{ steps.data.outputs.version }}"
+      tag: "${{ steps.data.outputs.tag }}"
+      version_type: "${{ steps.version.outputs.type }}"
+    steps:
+      - name: "Checkout repository"
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+
+      - name: "Retrieve build data"
+        id: "data"
+        env:
+          RAW_VERSION: "${{ github.ref_name }}"
+        run: |
+          VERSION=$(echo "$RAW_VERSION" | sed -e 's/^v//')
+          TAG=$(echo "$RAW_VERSION" | sed -E 's/^([^v])/v\1/g')
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+
+          TYPE=unstable
+          if echo "$VERSION" | grep -Eq '^[1-9][0-9]*\.[0-9]+\.[0-9]+$'; then
+            TYPE=stable
+          fi
+          echo "Detected that $TAG is $TYPE"
+          echo "type=$TYPE" >> "$GITHUB_OUTPUT"
+
+  # Build and push Docker image
+  docker:
+    name: "Docker (${{ matrix.component }})"
+    uses: hemilabs/actions/.github/workflows/docker.yml@main
+    needs: [ "prepare" ]
+    permissions:
+      contents: read
+      packages: write # Needed to push to the GitHub Container Registry
+    strategy:
+      matrix:
+        component: [ "api", "web" ]
+    with:
+      version: "${{ needs.prepare.outputs.version }}"
+      context: "."
+      file: "./Dockerfile.${{ matrix.component }}"
+      dockerhub: true
+      tags: |
+        hemilabs/cryptochords-${{ matrix.component }}:latest
+        hemilabs/cryptochords-${{ matrix.component }}:${{ needs.prepare.outputs.tag }}
+        hemilabs/cryptochords-${{ matrix.component }}:${{ github.sha }}
+        ghcr.io/hemilabs/cryptochords-${{ matrix.component }}:latest
+        ghcr.io/hemilabs/cryptochords-${{ matrix.component }}:${{ needs.prepare.outputs.tag }}
+        ghcr.io/hemilabs/cryptochords-${{ matrix.component }}:${{ github.sha }}
+    secrets:
+      DOCKERHUB_USERNAME: "${{ secrets.DOCKER_USERNAME }}"
+      DOCKERHUB_PASSWORD: "${{ secrets.DOCKER_PASSWORD }}"
+
+  # Deploy to Kubernetes cluster
+  deploy:
+    name: "Deploy to testnet"
+    uses: hemilabs/actions/.github/workflows/deploy-kustomize.yml@main
+    needs: [ "prepare", "docker" ]
+    permissions:
+      contents: read
+    with:
+      namespace: "cryptochords"
+      kustomize: "./infrastructure/kustomize/overlays/testnet/"
+      environment-name: "testnet"
+      environment-url: "https://cryptochords.hemi.xyz/"
+      image: |
+        hemilabs/cryptochords-api:${{ needs.prepare.outputs.tag }}
+        hemilabs/cryptochords-web:${{ needs.prepare.outputs.tag }}
+      preapply: |
+        # Create Docker Hub secret
+        if ! kubectl get secret dockerhub-secret --namespace=cryptochords; then
+          echo "Creating Docker Hub secret..."
+          kubectl create secret docker-registry dockerhub-secret \
+            --docker-server=https://index.docker.io/v1/ \
+            --docker-username="${{ secrets.DOCKER_USERNAME }}" \
+            --docker-password="${{ secrets.DOCKER_PASSWORD }}" \
+            --docker-email="${{ secrets.DOCKER_EMAIL }}" \
+            --namespace=cryptochords
+        fi
+    secrets:
+      KUBECONFIG: "${{ secrets.VKE_TESTNET_KUBECONFIG }}"
+      KUBECONFIG_CONTEXT: "${{ secrets.VKE_TESTNET_KUBECONFIG_CONTEXT }}"

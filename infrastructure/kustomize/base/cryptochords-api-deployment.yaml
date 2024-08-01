@@ -15,10 +15,10 @@ spec:
         app: cryptochords-api
     spec:
       containers:
-      - name: cryptochords-api
-        image: hemilabs/cryptochords-api:latest
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 3000
+        - name: cryptochords-api
+          image: hemilabs/cryptochords-api
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3000
       imagePullSecrets:
-      - name: dockerhub-secret
+        - name: dockerhub-secret

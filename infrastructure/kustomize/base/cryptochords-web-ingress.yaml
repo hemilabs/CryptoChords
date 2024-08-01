@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: cryptochords-web-ingress
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: cryptochords.hemi.xyz
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: cryptochords-web-service
+                port:
+                  number: 80
+  tls:
+    - hosts:
+        - cryptochords.hemi.xyz
+      secretName: cryptochords-tls

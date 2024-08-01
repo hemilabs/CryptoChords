@@ -1,0 +1,67 @@
+# Copyright (c) 2024 Hemi Labs, Inc.
+# Use of this source code is governed by the MIT License,
+# which can be found in the LICENSE file.
+
+# GitHub Actions workflow to deploy to the staging environment.
+name: "Staging"
+on:
+  push:
+    branches: [ "master" ]
+  workflow_dispatch:
+
+concurrency:
+  group: "staging-deploy-${{ github.event.number || github.ref }}"
+  cancel-in-progress: false
+
+jobs:
+  # Build and push Docker image
+  docker:
+    name: "Docker (${{ matrix.component }})"
+    uses: hemilabs/actions/.github/workflows/docker.yml@main
+    permissions:
+      contents: read
+      packages: write # Needed to push to the GitHub Container Registry
+    strategy:
+      matrix:
+        component: [ "api", "web" ]
+    with:
+      version: "${{ github.sha }}"
+      context: "."
+      file: "./Dockerfile.${{ matrix.component }}"
+      dockerhub: true
+      tags: |
+        hemilabs/cryptochords-${{ matrix.component }}:${{ github.sha }}
+        ghcr.io/hemilabs/cryptochords-${{ matrix.component }}:${{ github.sha }}
+    secrets:
+      DOCKERHUB_USERNAME: "${{ secrets.DOCKER_USERNAME }}"
+      DOCKERHUB_PASSWORD: "${{ secrets.DOCKER_PASSWORD }}"
+
+  # Deploy to Kubernetes cluster
+  deploy:
+    name: "Deploy to staging"
+    uses: hemilabs/actions/.github/workflows/deploy-kustomize.yml@main
+    needs: [ "docker" ]
+    permissions:
+      contents: read
+    with:
+      namespace: "cryptochords"
+      kustomize: "./infrastructure/kustomize/overlays/staging/"
+      environment-name: "staging"
+      environment-url: "https://cryptochords.letshamsterdance.xyz/"
+      image: |
+        hemilabs/cryptochords-api:${{ github.sha }}
+        hemilabs/cryptochords-web:${{ github.sha }}
+      preapply: |
+        # Create Docker Hub secret
+        if ! kubectl get secret dockerhub-secret --namespace=cryptochords > /dev/null; then
+          echo "Creating Docker Hub secret..."
+          kubectl create secret docker-registry dockerhub-secret \
+            --docker-server=https://index.docker.io/v1/ \
+            --docker-username="${{ secrets.DOCKER_USERNAME }}" \
+            --docker-password="${{ secrets.DOCKER_PASSWORD }}" \
+            --docker-email="${{ secrets.DOCKER_EMAIL }}" \
+            --namespace=cryptochords
+        fi
+    secrets:
+      KUBECONFIG: "${{ secrets.VKE_STAGING_KUBECONFIG }}"
+      KUBECONFIG_CONTEXT: "${{ secrets.VKE_STAGING_KUBECONFIG_CONTEXT }}"
