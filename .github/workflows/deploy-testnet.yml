@@ -5,8 +5,8 @@
 # GitHub Actions workflow to deploy to the testnet prod environment.
 name: "Testnet"
 on:
-  push:
-    tags: [ "v*.*.*" ]
+  release:
+    types: [published]
 
 concurrency:
   group: "testnet-deploy-${{ github.event.number || github.ref }}"
