@@ -62,7 +62,8 @@ jobs:
       namespace: "cryptochords"
       kustomize: "./infrastructure/kustomize/overlays/staging/"
       environment-name: "staging"
-      environment-url: "https://cryptochords.letshamsterdance.xyz/"
+      preapply: |
+        sed -i 's/HEMI_DOMAIN_STAGING/${{ vars.HEMI_DOMAIN_STAGING }}/g' staging-patch.yaml
       image: |
         hemilabs/cryptochords-api:${{ github.sha }}
         hemilabs/cryptochords-web:${{ github.sha }}
