@@ -11,10 +11,10 @@ export class ExpressServer {
   private wss: WebSocketServer | null = null;
   private port: string | number;
 
-  constructor(pollingRoute: PollingRoute) {
+  constructor(pollingRoute: PollingRoute, port: number) {
     this.pollingRoute = pollingRoute;
     this.api = express();
-    this.port = process.env['PORT'] || 3000;
+    this.port = port || 3000;
   }
 
   public start(): void {

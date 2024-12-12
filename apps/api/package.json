@@ -15,11 +15,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@cryptochords/shared": "*",
     "@typescript-eslint/eslint-plugin": "^6.20.0",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
-    "web3": "^4.3.0",
-    "@cryptochords/shared": "*"
+    "web3": "^4.3.0"
   },
   "devDependencies": {
     "@types/dotenv": "^8.2.0",

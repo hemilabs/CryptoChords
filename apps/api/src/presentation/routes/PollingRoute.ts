@@ -8,13 +8,13 @@ export class PollingRoute {
   private pollingService: PollingService;
   private url: string;
 
-  constructor() {
-    if (process.env['USE_WEBSOCKET_NODE_L2'] === 'true') {
-      this.url = process.env['WEBSOCKET_URL'] as string
+  constructor(useWebsocket: boolean, websocketUrl: string, rpcUrl: string) {
+    if (useWebsocket) {
+      this.url = websocketUrl;
       const blockWebsocketRepository = new BlockWebsocketRepository();
       this.pollingService = new PollingService(blockWebsocketRepository);
     } else {
-      this.url = process.env['RPC_URL'] as string
+      this.url = rpcUrl;
       const blockPollingRepository = new BlockPollingRepository();
       this.pollingService = new PollingService(blockPollingRepository);
     }
@@ -25,6 +25,6 @@ export class PollingRoute {
   }
 
   public stop(): void {
-    this.pollingService.stop()
+    this.pollingService.stop();
   } 
 }

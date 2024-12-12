@@ -2,12 +2,13 @@ import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { ExpressServer } from './ExpressServer';
 import { PollingRoute } from './routes/PollingRoute';
 import express from 'express';
+import { HemiTestnet } from '@cryptochords/shared';
 
 vi.mock('express', () => {
   const listenMock = vi.fn((_port, callback) => {
     callback();
     return {
-      close: vi.fn((cb) => cb()),
+      close: vi.fn((cb) => cb && cb()),
     };
   });
   return {
@@ -35,18 +36,27 @@ describe('ExpressServer', () => {
   let expressServer: ExpressServer;
   let pollingRouteMock: PollingRoute;
 
+  const MOCK_PORT = 3000;
+  const USE_WEBSOCKET = true;
+  const MOCK_WEBSOCKET_URL = HemiTestnet.rpcUrls.default.webSocket[0];
+  const MOCK_RPC_URL = HemiTestnet.rpcUrls.default.http[0];
+
   beforeEach(() => {
-    pollingRouteMock = new PollingRoute();
-    expressServer = new ExpressServer(pollingRouteMock);
+    vi.clearAllMocks();
+
+    pollingRouteMock = new PollingRoute(USE_WEBSOCKET, MOCK_WEBSOCKET_URL, MOCK_RPC_URL);
+    expressServer = new ExpressServer(pollingRouteMock, MOCK_PORT);
   });
 
   afterEach(() => {
     vi.clearAllMocks();
   });
 
-  it('should start the server correctly', async () => {
+  it('should start the server correctly', () => {
     expressServer.start();
-    expect(express().listen).toHaveBeenCalled();
+
+    const mockedExpress = express() as any;
+    expect(mockedExpress.listen).toHaveBeenCalledWith(MOCK_PORT, expect.any(Function));
     expect(pollingRouteMock.initialize).toHaveBeenCalled();
   });
 

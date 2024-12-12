@@ -2,6 +2,13 @@
 
 CryptoChords is an API developed using Domain-Driven Design (DDD) principles to facilitate interaction with the Hemi network. This document provides instructions for setting up, running, and contributing to the project.
 
+This project provides an API that exposes two distinct ports to separate environments for blockchain interaction:
+
+- Port 3000: Dedicated to the Testnet environment.
+- Port 3001: Dedicated to the Mainnet environment.
+
+This separation ensures clean isolation between testing and production environments, allowing developers to interact with the appropriate blockchain network without confusion or overlap.
+
 ## Architecture
 
 The API is organized into the following layers:
@@ -79,18 +86,16 @@ npm run test:cov
 
 The environment variables are defined in the `.env` file. The following variables are used:
 
-- `RPC_URL`: The RPC (Remote Procedure Call) URL of the Hemi network.[Hemi Docs](https://github.com/hemilabs/infrastructure/blob/main/NETWORK_INFO.md).
-
-- `WEBSOCKET_URL`: The Websocket URL of the Hemi network.[Hemi Docs](https://github.com/hemilabs/infrastructure/blob/main/NETWORK_INFO.md).
-
 - `USE_WEBSOCKET_NODE_L2`: A boolean that indicates if the API uses the WebSocket port (default is true).[Hemi Docs](https://github.com/hemilabs/infrastructure/blob/main/NETWORK_INFO.md).
+
+- `ENABLE_MAINNET`: A boolean that enables mainnet.[Hemi Docs](https://github.com/hemilabs/infrastructure/blob/main/NETWORK_INFO.md).
+
 
 Example of the .env file
 
 ```
-RPC_URL=https://testnet.rpc.hemi.network/rpc
-WEBSOCKET_URL=wss://testnet.rpc.hemi.network/wsrpc
 USE_WEBSOCKET_NODE_L2=true
+ENABLE_MAINNET=false
 ```
 
 ## Contribution
