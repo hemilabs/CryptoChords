@@ -17,7 +17,7 @@
     "test:watch": "vitest watch"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "hemi-viem": "1.7.0",
     "uuid": "^9.0.0"
