@@ -1,19 +1,58 @@
 import { CreateTransactionService } from '../../../../application/services/CreateTransaction/CreateTransactionService'
+import { GetSelectedNetworkService } from '../../../../application/services/GetSelectedNetwork/GetSelectedNetworkService'
+import { ListNetworksService } from '../../../../application/services/ListNetworks/ListNetworksService'
+import { SwitchNetworkService } from '../../../../application/services/SwitchNetwork/SwitchNetworkService'
 import { Presenter } from '../../base/Presenter'
 import { AppPresenterState } from './AppPresenterState'
 
 const initalState: AppPresenterState = {
+  networkNames: [],
+  selectedNetworkName: null,
+  selectedNetworkWsUrl: null,
   navMenuVisible: false,
 }
 
 export class AppPresenter extends Presenter<AppPresenterState> {
   private createTransactionService: CreateTransactionService
+  private switchNetworkService: SwitchNetworkService
+  private getSelectedNetworkService: GetSelectedNetworkService
+  private listNetworks: ListNetworksService
 
   constructor(
-    createTransactionService: CreateTransactionService
+    createTransactionService: CreateTransactionService,
+    switchNetworkService: SwitchNetworkService,
+    getSelectedNetworkService: GetSelectedNetworkService,
+    listNetworks: ListNetworksService,
   ) {
-    super(initalState)
+    super({
+      ...initalState,
+    })
     this.createTransactionService = createTransactionService
+    this.switchNetworkService = switchNetworkService
+    this.getSelectedNetworkService = getSelectedNetworkService
+    this.listNetworks = listNetworks
+    this.init()
+  }
+
+  private async init() {
+    await this.loadNetworkState()
+  }
+
+  private async loadNetworkState() {
+    const response = await this.listNetworks.execute()
+    const networks = response.networks
+
+    if (!networks)
+      return
+
+    const networkNames = networks.map(network => network.name)
+    const selectedNetwork = await this.getSelectedNetworkService.execute()
+
+    this.changeState({
+      networkNames,
+      selectedNetworkName: selectedNetwork.networkName,
+      selectedNetworkWsUrl: selectedNetwork.networkWsUrl
+    })
   }
 
   closeButtonClicked() {
@@ -28,10 +67,22 @@ export class AppPresenter extends Presenter<AppPresenterState> {
     })
   }
 
-  async createTransaction(txType: string, address: string): Promise<void> {
+  async selectNetwork(networkName: string) {
+    const response = await this.switchNetworkService.execute({
+      networkName
+    })
+
+    this.changeState({
+      selectedNetworkName: response.networkName,
+      selectedNetworkWsUrl: response.networkWsUrl
+    })
+  }
+
+  async createTransaction(txType: string, address: string, network: string): Promise<void> {
     return this.createTransactionService.execute({
       txType,
       address,
+      network,
       timestamp: Date.now()
     })
   }

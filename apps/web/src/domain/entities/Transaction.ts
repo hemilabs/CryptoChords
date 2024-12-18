@@ -1,8 +1,10 @@
 import { Address, Timestamp, TxType } from '@cryptochords/shared'
+import { Network } from './Network'
 
 export interface TransactionProps {
   txType: TxType
   address: Address
+  network: Network
   timestamp: Timestamp
 }
 
@@ -25,7 +27,19 @@ export class Transaction {
     return this.props.address
   }
 
+  get network() {
+    return this.props.network
+  }
+
   get timestamp() {
     return this.props.timestamp
+  }
+
+  get url() {
+    if(this.props.txType.isBlock) {
+      return `${this.props.network.blockUrl}/${this.props.address.value}`
+    }
+
+    return `${this.props.network.transactionUrl}/${this.props.address.value}`
   }
 }

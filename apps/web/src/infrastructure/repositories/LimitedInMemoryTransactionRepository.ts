@@ -4,7 +4,7 @@ import { TransactionRepository } from '../../domain/repositories/TransactionRepo
 export class LimitedInMemoryTransactionRepository implements TransactionRepository {
   private transactions: Transaction[] = []
 
-  constructor(private max = 9) {
+  constructor(private max = 99) {
     //
   }
 
@@ -21,5 +21,9 @@ export class LimitedInMemoryTransactionRepository implements TransactionReposito
 
   async list(): Promise<Transaction[]> {
     return this.transactions
+  }
+
+  async clear(): Promise<void> {
+    this.transactions = []
   }
 }

@@ -22,4 +22,8 @@ export class InMemoryCubeRepository implements CubeRepository {
     this.cubes.set(cube.uuid.value, cube)
     return cube
   }
+
+  async clear(): Promise<void> {
+    this.cubes.clear()
+  }
 }

@@ -13,6 +13,7 @@ const cubeRepositoryMock: CubeRepository = {
   delete: vi.fn(),
   update: vi.fn(),
   list: vi.fn(),
+  clear: vi.fn()
 }
 
 const create: CreateCubeService = new CreateCubeService(cubeRepositoryMock)
