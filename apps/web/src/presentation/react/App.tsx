@@ -16,8 +16,22 @@ function App() {
 
   return (
     <>
-      <Header className='relative z-40' onNavButtonClick={() => appPresenter.navButtonClicked()} />
-      <NavMenu onCloseButtonClick={() => appPresenter.closeButtonClicked()} className={`${navMenuVisible ? '' : 'hidden'} md:hidden`} />
+      <Header 
+        className='relative z-40' 
+        onNavButtonClick={() => appPresenter.navButtonClicked()} 
+        networks={appPresenter.state.networkNames} 
+        selectedNetwork={appPresenter.state.selectedNetworkName} 
+        selectNetwork={(networkName) => appPresenter.selectNetwork(networkName)}
+        enableMainnet={appPresenter.state.enableMainnet}
+      />
+      <NavMenu 
+        onCloseButtonClick={() => appPresenter.closeButtonClicked()} 
+        className={`${navMenuVisible ? '' : 'hidden'} md:hidden`} 
+        networks={appPresenter.state.networkNames} 
+        selectedNetwork={appPresenter.state.selectedNetworkName} 
+        selectNetwork={(networkName) => appPresenter.selectNetwork(networkName)}
+        enableMainnet={appPresenter.state.enableMainnet}
+      />
       <MainContent className={navMenuVisible ? 'max-md:hidden' : ''} />
     </>
   )

@@ -17,4 +17,8 @@ export class TxType extends ValueObject<TxTypeProps> {
   get value() {
     return this.props.value
   }
+
+  get isBlock() {
+    return this.props.value === TxTypesEnum.Block
+  }
 }
