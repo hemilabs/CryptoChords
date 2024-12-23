@@ -6,4 +6,5 @@ export interface CubeRepository {
   create: (cube: Cube) => Promise<Cube>
   update: (cube: Cube) => Promise<Cube>
   delete: (id: Uuid) => Promise<void>
+  clear: () => Promise<void>
 }

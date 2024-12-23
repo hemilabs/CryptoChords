@@ -20,6 +20,7 @@ const cubeRepositoryMock: CubeRepository = {
     color: { value: 'orange' },
     mirrored: false
   }]),
+  clear: vi.fn()
 }
 
 const getCubes = new GetCubesService(cubeRepositoryMock)

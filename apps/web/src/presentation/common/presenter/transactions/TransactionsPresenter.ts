@@ -28,13 +28,6 @@ const messageMap: Map<TxTypesEnum, string> = new Map([
   [TxTypesEnum.Btc, 'transaction by']
 ])
 
-const urlPatternMap: Map<TxTypesEnum, string> = new Map([
-  [TxTypesEnum.Block, import.meta.env['VITE_EXPLORER_BLOCK_URL']],
-  [TxTypesEnum.Eth, import.meta.env['VITE_EXPLORER_ETH_URL']],
-  [TxTypesEnum.Pop, import.meta.env['VITE_EXPLORER_POP_URL']],
-  [TxTypesEnum.Btc, import.meta.env['VITE_EXPLORER_BTC_URL']]
-])
-
 export class TransactionsPresenter extends Presenter<TransactionsPresenterState> {
 
   private listTransactions: ListTransactionsService
@@ -56,7 +49,7 @@ export class TransactionsPresenter extends Presenter<TransactionsPresenterState>
         message: messageMap.get(transaction.txType as TxTypesEnum) ?? ' ',
         id: transaction.address,
         at: this.formatDate(transaction.timestamp),
-        url: this.buildTransactionUrl(transaction.txType as TxTypesEnum, transaction.address)
+        url: transaction.url
       }))
     })
   }
@@ -73,15 +66,5 @@ export class TransactionsPresenter extends Presenter<TransactionsPresenterState>
     })
 
     return formattedDate.replace(/,/g, '')
-  }
-
-  private buildTransactionUrl(txType: TxTypesEnum, address: string) {
-    const pattern = urlPatternMap.get(txType)
-    if(pattern) {
-      // replaces ${hash} with the address ignoring spaces and tabs within the brackets
-      const regex = /\$\{[ \t]*hash[ \t]*\}/i
-      return pattern.replace(regex, address)
-    }
-    return `#${address}`
   }
 }

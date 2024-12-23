@@ -20,7 +20,10 @@ const cubesPresenter = new CubesPresenter(
 )
 
 const appPresenter = new AppPresenter(
-  services.createTransaction
+  services.createTransaction,
+  services.switchNetwork,
+  services.getSelectedNetwork,
+  services.listNetworks
 )
 
 const keyboardPresenter = new KeyboardPresenter(
@@ -34,7 +37,10 @@ const keyboardPresenter = new KeyboardPresenter(
 
 const transactionsPresenter = new TransactionsPresenter(
   services.listTransactions,
-  services.createTransaction
+  new ObservableSet<Event>(
+    services.createTransaction,
+    services.switchNetwork
+  )
 )
 
 const optionsPresenter = new OptionsPresenter(

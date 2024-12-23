@@ -5,7 +5,9 @@ import { ListTransactionsResponseDto } from './ListTransactionsDtos'
 export class ListTransactionsService extends ObservableService<void, ListTransactionsResponseDto>{
   private readonly transactionRepository: TransactionRepository
   
-  constructor(transactionRepository: TransactionRepository) {
+  constructor(
+    transactionRepository: TransactionRepository,
+  ) {
     super()
     this.transactionRepository = transactionRepository
   }
@@ -17,7 +19,8 @@ export class ListTransactionsService extends ObservableService<void, ListTransac
       transactions: transactions.map(transaction => ({
         txType: transaction.txType.value as string,
         address: transaction.address.value,
-        timestamp: transaction.timestamp.value
+        timestamp: transaction.timestamp.value,
+        url: transaction.url 
       }))
     }
   }
