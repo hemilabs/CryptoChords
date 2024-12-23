@@ -80,7 +80,9 @@ npm run test:cov
 
 The environment variables are defined in the `.env` file. The following variables are used:
 
-- `VITE_API_WEBSERVICE_URL`: The URL of the web service API. If the variable contains the value `${host}` it will be replaced by the host of the web app. Make sure to escape the dollar sign `\${host}` otherwise it will expanded using [dotenv-expand](https://github.com/motdotla/dotenv-expand) as described on [Vite Docs](https://vitejs.dev/guide/env-and-mode#env-files).
+- `VITE_TESTNET_API_WEBSERVICE_URL`: The URL of the testnet web service API. If the variable contains the value `${host}` it will be replaced by the host of the web app. Make sure to escape the dollar sign `\${host}` otherwise it will expanded using [dotenv-expand](https://github.com/motdotla/dotenv-expand) as described on [Vite Docs](https://vitejs.dev/guide/env-and-mode#env-files).
+
+- `VITE_MAINNET_API_WEBSERVICE_URL`: The URL of the mainnet web service API. If the variable contains the value `${host}` it will be replaced by the host of the web app. Make sure to escape the dollar sign `\${host}` otherwise it will expanded using [dotenv-expand](https://github.com/motdotla/dotenv-expand) as described on [Vite Docs](https://vitejs.dev/guide/env-and-mode#env-files).
 
 - `VITE_USE_API_MOCK`: A boolean that indicates if the API should be mocked.
 
@@ -95,14 +97,6 @@ The environment variables are defined in the `.env` file. The following variable
 - `VITE_X_URL`: The URL of the X website. Used in the footer.
 
 - `VITE_LOGO_URL`: The URL of the logo. If it is not defined, the logo will point to the root of the web app and will not display the pointer cursor.
-
-- `VITE_EXPLORER_BLOCK_URL`: The URL of the block explorer. It has to contain the string `${hash}` that will be replaced by the block hash. Make sure to escape the dollar sign `\${host}` otherwise it will expanded using [dotenv-expand](https://github.com/motdotla/dotenv-expand) as described on [Vite Docs](https://vitejs.dev/guide/env-and-mode#env-files).
-
-- `VITE_EXPLORER_ETH_URL`: The URL of the ETH transaction explorer. It has to contain the string `${hash}` that will be replaced by the transaction hash. Make sure to escape the dollar sign `\${host}` otherwise it will expanded using [dotenv-expand](https://github.com/motdotla/dotenv-expand) as described on [Vite Docs](https://vitejs.dev/guide/env-and-mode#env-files).
-
-- `VITE_EXPLORER_BTC_URL`: The URL of the BTC transaction explorer. It has to contain the string `${hash}` that will be replaced by the transaction hash. Make sure to escape the dollar sign `\${host}` otherwise it will expanded using [dotenv-expand](https://github.com/motdotla/dotenv-expand) as described on [Vite Docs](https://vitejs.dev/guide/env-and-mode#env-files).
-
-- `VITE_EXPLORER_POP_URL`: The URL of the PoP transaction explorer. It has to contain the string `${hash}` that will be replaced by the transaction hash. Make sure to escape the dollar sign `\${host}` otherwise it will expanded using [dotenv-expand](https://github.com/motdotla/dotenv-expand) as described on [Vite Docs](https://vitejs.dev/guide/env-and-mode#env-files).
 
 ## Contribution
 If you want to contribute to this project and make it better, your help is very welcome.

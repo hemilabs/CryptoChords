@@ -19,4 +19,4 @@ implements Observable<ServiceResponseEvent<Request,Response>>{
   public async listen(listener: EventSubscription<ServiceResponseEvent<Request, Response>>) {
     this.eventBus.subscribe(ServiceResponseEvent.eventKey, listener as EventSubscription<Event>)
   }
-} 
+}
