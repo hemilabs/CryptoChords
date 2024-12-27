@@ -1,6 +1,8 @@
-import { Address, Timestamp, TxType, TxTypesEnum } from '@cryptochords/shared'
+import { Address, NetworkEnum, Timestamp, TxType, TxTypesEnum } from '@cryptochords/shared'
 import { Transaction } from '../../../domain/entities/Transaction'
+import { InstrumentEnum } from '../../../domain/enum/InstrumentEnum'
 import { KeyboardRepository } from '../../../domain/repositories/KeyboardRepository'
+import { NetworkRepository } from '../../../domain/repositories/NetworkRepository'
 import { TransactionRepository } from '../../../domain/repositories/TransactionRepository'
 import { Key } from '../../../domain/valueObjects/Key'
 import { ObservableService } from '../../ObservableService'
@@ -8,7 +10,6 @@ import { CreateCubeService } from '../CreateCube/CreateCubeService'
 import { PressKeyService } from '../PressKey/PressKeyService'
 import { ReleaseKeyService } from '../ReleaseKey/ReleaseKeyService'
 import { CreateTransactionRequest } from './CreateTransactionDtos'
-import { InstrumentEnum } from '../../../domain/enum/InstrumentEnum'
 
 export class CreateTransactionService extends ObservableService<CreateTransactionRequest, void> {
   private readonly keyboardRepository: KeyboardRepository
@@ -16,13 +17,15 @@ export class CreateTransactionService extends ObservableService<CreateTransactio
   private readonly createCubeService: CreateCubeService
   private readonly pressKeyService: PressKeyService
   private readonly releaseKeyService: ReleaseKeyService
+  private readonly netwtorkRepository: NetworkRepository
 
   constructor(
     keyboardRepository: KeyboardRepository,
     transactionRepository: TransactionRepository,
     createCubeService: CreateCubeService,
     pressKeyService: PressKeyService,
-    releaseKeyService: ReleaseKeyService
+    releaseKeyService: ReleaseKeyService,
+    networkRepository: NetworkRepository
   ) {
     super()
     this.keyboardRepository = keyboardRepository
@@ -30,6 +33,7 @@ export class CreateTransactionService extends ObservableService<CreateTransactio
     this.createCubeService = createCubeService
     this.pressKeyService = pressKeyService
     this.releaseKeyService = releaseKeyService
+    this.netwtorkRepository = networkRepository
   }
 
   protected async process(request: CreateTransactionRequest): Promise<void> {
@@ -45,9 +49,15 @@ export class CreateTransactionService extends ObservableService<CreateTransactio
   }
 
   async createTransaction(request: CreateTransactionRequest): Promise<Transaction> {
+    const network = await this.netwtorkRepository.find(request.network as NetworkEnum)
+
+    if (!network)
+      throw new Error('Network not found')
+
     const transaction = Transaction.create({
       txType: TxType.create(request.txType as TxTypesEnum),
       address: Address.create(request.address),
+      network,
       timestamp: Timestamp.create(request.timestamp)
     })
     await this.transactionRepository.create(transaction)
