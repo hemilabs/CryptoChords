@@ -1,4 +1,4 @@
-import { ComponentProps, MutableRefObject, ReactNode, useState } from 'react'
+import { ComponentProps, MutableRefObject, useState } from 'react'
 import { Menu } from './Menu'
 import { useOnClickOutside } from '../hooks/useOnClickOutside'
 import { CheckMarkIcon } from './icons/CheckMark'
