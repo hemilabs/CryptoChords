@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.build.json",
+  "compilerOptions": {
+    "module": "ESNext",
+    "target": "ES2022",
+    "outDir": "./dist/esm",
+    "declaration": true,
+    "sourceMap": true,
+    "declarationMap": true,
+    "declarationDir": "./dist/types"
+  }
+}
