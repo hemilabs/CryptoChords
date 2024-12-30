@@ -2,14 +2,26 @@
   "name": "@cryptochords/shared",
   "version": "0.0.0",
   "description": "Shared package for CryptoChords Application",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "./dist/cjs/index.js",
+  "types": "./dist/types/index.d.ts",
   "exports": {
-    ".": "./src/index.ts"
+  ".": {
+      "require": {
+        "types": "./dist/types/index.d.ts",
+        "default": "./dist/cjs/index.js"
+      },
+      "import": {
+        "types": "./dist/types/index.d.ts",
+        "default": "./dist/esm/index.js"
+      }
+    },
+    "./src/*": "./src/*"
   },
   "private": true,
   "scripts": {
-    "build": "tsc -p ./tsconfig.build.json",
+    "build:cjs": "tsc -p tsconfig.build.cjs.json",
+    "build:esm": "tsc -p tsconfig.build.esm.json",
+    "build": "npm run build:cjs && npm run build:esm",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
     "test": "vitest run",

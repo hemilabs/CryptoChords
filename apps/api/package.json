@@ -10,7 +10,7 @@
     "dev": "nodemon",
     "build": "tsc -p tsconfig.build.json",
     "lint": "eslint . --ext ts --report-unused-disable-directives --max-warnings 0",
-    "start:api": "ts-node ./src/server.ts"
+    "start:api": "node dist/server.js"
   },
   "author": "",
   "license": "MIT",
