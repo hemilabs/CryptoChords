@@ -1,29 +1,29 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>WebSocket Test</title>
-</head>
-<body>
+  </head>
+  <body>
     <h1>Last block: <span id="block-hash">waiting...</span></h1>
     <h1>Last eth tx: <span id="block-eth-tx">waiting...</span></h1>
     <h1>Last piano note: <span id="piano-note">waiting...</span></h1>
 
     <script>
-        const ws = new WebSocket('ws://localhost:3000');
+      const ws = new WebSocket('ws://localhost:3000');
 
-        ws.onmessage = function(event) {
-            const data = JSON.parse(event.data);
-            if (data.txType === 'block') {
-                document.getElementById('block-hash').textContent = data.address;
-            }
+      ws.onmessage = function (event) {
+        const data = JSON.parse(event.data);
+        if (data.txType === 'block') {
+          document.getElementById('block-hash').textContent = data.address;
+        }
 
-            if (data.txType === 'eth') {
-                document.getElementById('block-eth-tx').textContent = data.address;
-            }
-            
-            document.getElementById('piano-note').textContent = data.pianoNote;
-        };
+        if (data.txType === 'eth') {
+          document.getElementById('block-eth-tx').textContent = data.address;
+        }
+
+        document.getElementById('piano-note').textContent = data.pianoNote;
+      };
     </script>
-</body>
+  </body>
 </html>

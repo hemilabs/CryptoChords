@@ -1,7 +1,7 @@
-import { DomainError } from '../base/DomainError'
+import { DomainError } from '../base/DomainError';
 
 export class InvalidAddressError extends DomainError {
   constructor() {
-    super('INVALID_ADDRESS', true)
+    super('INVALID_ADDRESS', true);
   }
 }

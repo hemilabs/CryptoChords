@@ -1,29 +1,38 @@
 # CryptoChords Web App
+
 This is the web application of the CryptoChords project. It is a front-end application that allows users to visualize activities on the [Hemi network](https://hemi.xyz).
 
 ## Architecture
+
 It is built using DDD principles with the following layers:
+
 - Application
 - Domain
 - Infrastructure
 - Presentation
 
 ### Application
+
 This layer contains the use cases of the application. It is the entry point of the application and it is responsible for coordinating the domain layer and the infrastructure layer.
 
 ### Domain
+
 This layer contains the business logic of the application. It is the core of the application and it is responsible for the entities, value objects, and domain services.
 
 ### Infrastructure
+
 This layer contains the implementation of the application. It is responsible for the database and the external services.
 
 ### Presentation
+
 This layer contains the user interface of the application.
 
 #### Presenters
+
 This sublayer contains the presenters of the application. It is responsible for the whole user interface logic.
 
 #### React
+
 This sublayer contains the React implementation of the application. Its components are responsible for the style and the interface with the presenters, displaying its state and redirecting the user actions.
 
 ## Getting Started
@@ -99,8 +108,10 @@ The environment variables are defined in the `.env` file. The following variable
 - `VITE_LOGO_URL`: The URL of the logo. If it is not defined, the logo will point to the root of the web app and will not display the pointer cursor.
 
 ## Contribution
+
 If you want to contribute to this project and make it better, your help is very welcome.
 You can find more information about how to contribute in the [`CONTRIBUTING.md`](../../CONTRIBUTING.md) file.
 
 ## License
+
 This project is licensed under the MIT License - see the [LICENSE](../../LICENSE) file for details.

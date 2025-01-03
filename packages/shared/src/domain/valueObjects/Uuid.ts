@@ -1,24 +1,24 @@
-import { v4, validate } from 'uuid'
-import { ValueObject } from '../base/ValueObject'
-import { InvalidUuidError } from '../errors/InvalidUuidError'
+import { v4, validate } from 'uuid';
+import { ValueObject } from '../base/ValueObject';
+import { InvalidUuidError } from '../errors/InvalidUuidError';
 
 interface UuidProps {
-  value: string
+  value: string;
 }
 export class Uuid extends ValueObject<UuidProps> {
   private constructor(id: string) {
-    super({ value: id })
+    super({ value: id });
   }
 
   static create(id?: string): Uuid {
     if (id && !validate(id)) {
-      throw new InvalidUuidError()
+      throw new InvalidUuidError();
     }
 
-    return new Uuid(id || v4())
+    return new Uuid(id || v4());
   }
 
   get value(): string {
-    return this.props.value
+    return this.props.value;
   }
 }

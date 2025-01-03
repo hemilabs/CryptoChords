@@ -1,4 +1,4 @@
-import React from "react"
+import React from 'react';
 
 const ChevronBase = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
@@ -15,25 +15,25 @@ const ChevronBase = (props: React.SVGProps<SVGSVGElement>) => (
       strokeWidth={1.2}
     />
   </svg>
-)
+);
 
-type Props = { className?: string }
+type Props = { className?: string };
 
 const Left = ({ className = '' }: Props) => (
   <ChevronBase className={`rotate-180 ${className}`} />
-)
+);
 
 const Bottom = ({ className = '' }: Props) => (
   <ChevronBase className={`rotate-90 ${className}`} />
-)
+);
 
 const Up = ({ className = '' }: Props) => (
   <ChevronBase className={`-rotate-90 ${className}`} />
-)
+);
 
 export const Chevron = {
+  Bottom,
   Left,
   Right: ChevronBase,
-  Bottom,
   Up,
-}
+};

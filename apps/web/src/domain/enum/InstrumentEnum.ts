@@ -40,4 +40,4 @@ export const instrumentLabels: Map<InstrumentEnum, string> = new Map([
   [InstrumentEnum.Tuba, 'Tuba'],
   [InstrumentEnum.Violin, 'Violin'],
   [InstrumentEnum.Xylophone, 'Xylophone'],
-])
+]);

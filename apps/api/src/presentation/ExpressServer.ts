@@ -24,7 +24,7 @@ export class ExpressServer {
 
     this.wss = new WebSocketServer({ server: this.httpServer });
 
-    this.wss.on('connection', (ws) => {
+    this.wss.on('connection', ws => {
       console.log('WebSocket client connected');
       ws.on('message', (message: string) => {
         console.log('Message received:', message);
@@ -35,20 +35,21 @@ export class ExpressServer {
   }
 
   async stop(): Promise<void> {
-    console.info('CryptoChords API | Closing HTTP Server')
+    console.info('CryptoChords API | Closing HTTP Server');
 
-    return await new Promise((resolve) => {
-      this.httpServer?.close((error) => {
+    return await new Promise(resolve => {
+      this.httpServer?.close(error => {
         if (error) {
           console.error(
-            `CryptoChords API | Error Closing HTTP Server: ${error.message}`)
+            `CryptoChords API | Error Closing HTTP Server: ${error.message}`,
+          );
         } else {
           this.wss = null;
           console.info('CryptoChords API | WSS Server successfully closed');
         }
-        this.pollingRoute.stop()
-        resolve()
-      })
-    })
+        this.pollingRoute.stop();
+        resolve();
+      });
+    });
   }
 }

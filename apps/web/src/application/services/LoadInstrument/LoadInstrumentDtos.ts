@@ -1,5 +1,5 @@
 export interface LoadInstrumentRequest {
-  instrument: string
+  instrument: string;
 }
 
-export type LoadInstrumentResponse = void
+export type LoadInstrumentResponse = void;

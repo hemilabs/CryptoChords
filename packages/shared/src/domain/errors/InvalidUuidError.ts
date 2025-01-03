@@ -1,7 +1,7 @@
-import { DomainError } from '../base/DomainError'
+import { DomainError } from '../base/DomainError';
 
 export class InvalidUuidError extends DomainError {
   constructor() {
-    super('INVALID_UUID', false)
+    super('INVALID_UUID', false);
   }
 }

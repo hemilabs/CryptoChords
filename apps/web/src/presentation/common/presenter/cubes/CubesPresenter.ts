@@ -1,90 +1,87 @@
-import { GetCubesService } from '../../../../application/services/GetCubes/GetCubesService'
-import { RecalculateCubePositionsService } from '../../../../application/services/RecalculateCubePositions/RecalculateCubePositionsService'
-import { Presenter } from '../../base/Presenter'
-import { CubesPresenterState } from './CubesPresenterState'
+import { GetCubesService } from '../../../../application/services/GetCubes/GetCubesService';
+import { RecalculateCubePositionsService } from '../../../../application/services/RecalculateCubePositions/RecalculateCubePositionsService';
+import { Presenter } from '../../base/Presenter';
+import { CubesPresenterState } from './CubesPresenterState';
 
 const initalState: CubesPresenterState = {
   cubes: [],
-}
+};
 
 interface CubesPresenterOptions {
-  maxCubeCreationInterval: number
-  tickInterval: number
-  maxCubeAge: number
+  maxCubeCreationInterval: number;
+  tickInterval: number;
+  maxCubeAge: number;
 }
 
 const defaultOptions: CubesPresenterOptions = {
+  maxCubeAge: 17_000,
   maxCubeCreationInterval: 300,
   tickInterval: 20,
-  maxCubeAge: 17_000
-}
+};
 
 export class CubesPresenter extends Presenter<CubesPresenterState> {
+  private readonly getCubesService: GetCubesService;
+  private readonly recalculateCubePositions: RecalculateCubePositionsService;
 
-  private readonly getCubesService: GetCubesService
-  private readonly recalculateCubePositions: RecalculateCubePositionsService
+  private options: CubesPresenterOptions;
 
-
-  private options: CubesPresenterOptions
-
-  private tickLoop: NodeJS.Timeout | undefined
-
+  private tickLoop: NodeJS.Timeout | undefined;
 
   constructor(
     getCubesService: GetCubesService,
     recalculateCubePositions: RecalculateCubePositionsService,
-    options?: Partial<CubesPresenterOptions>
+    options?: Partial<CubesPresenterOptions>,
   ) {
-    super(initalState)
-    this.getCubesService = getCubesService
-    this.recalculateCubePositions = recalculateCubePositions
+    super(initalState);
+    this.getCubesService = getCubesService;
+    this.recalculateCubePositions = recalculateCubePositions;
     this.options = {
       ...defaultOptions,
-      ...options
-    }
+      ...options,
+    };
 
-    this.run()
+    this.run();
   }
 
   async run() {
     if (this.isRunning()) {
-      return
+      return;
     }
-    this.runTickLoop()
+    this.runTickLoop();
   }
 
   stop() {
-    this.stopTickLoop()
+    this.stopTickLoop();
   }
 
   private isRunning() {
-    return !!this.tickLoop
+    return !!this.tickLoop;
   }
 
   private stopTickLoop() {
     if (this.tickLoop) {
-      clearInterval(this.tickLoop)
-      this.tickLoop = undefined
+      clearInterval(this.tickLoop);
+      this.tickLoop = undefined;
     }
   }
 
   private runTickLoop() {
     this.tickLoop = setInterval(async () => {
-      await this.moveAllCubesUp()
-      await this.syncState()
-    }, this.options.tickInterval)
+      await this.moveAllCubesUp();
+      await this.syncState();
+    }, this.options.tickInterval);
   }
 
   private async moveAllCubesUp() {
     await this.recalculateCubePositions.execute({
-      maxAge: this.options.maxCubeAge
-    })
+      maxAge: this.options.maxCubeAge,
+    });
   }
 
   private async syncState() {
-    const getCubesResponse = await this.getCubesService.execute()
+    const getCubesResponse = await this.getCubesService.execute();
     this.changeState({
-      cubes: getCubesResponse.cubes
-    })
+      cubes: getCubesResponse.cubes,
+    });
   }
 }

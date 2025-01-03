@@ -1,16 +1,17 @@
-import logo from '/image/crypto-chords.svg'
+import logo from '/image/crypto-chords.svg';
 
 export const Logo = function () {
-  const url = import.meta.env.VITE_LOGO_URL
+  const url = import.meta.env.VITE_LOGO_URL;
   return (
-    <a 
+    <a
       href={url ?? '#'}
       target={url ? '_blank' : '_self'}
       className={`
         h-auto
         ${url ? 'pointer' : 'cursor-default'}
-      `}>
+      `}
+    >
       <img src={logo} alt="Crypto Chords" />
     </a>
-  )
-}
+  );
+};

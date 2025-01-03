@@ -1,6 +1,6 @@
 type Props = {
-  items: { id: string; content: React.ReactNode }[]
-}
+  items: { id: string; content: React.ReactNode }[];
+};
 
 export const Menu = ({ items }: Props) => (
   <div className="rounded-lg border border-solid border-neutral-300/55 bg-white p-1 text-sm shadow-md">
@@ -15,4 +15,4 @@ export const Menu = ({ items }: Props) => (
       ))}
     </ul>
   </div>
-)
+);

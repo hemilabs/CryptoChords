@@ -26,5 +26,5 @@ export class PollingRoute {
 
   public stop(): void {
     this.pollingService.stop();
-  } 
+  }
 }

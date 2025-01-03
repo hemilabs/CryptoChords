@@ -1,52 +1,55 @@
-type Subscription<State> = (state: State) => void
+type Subscription<State> = (state: State) => void;
 
 export abstract class StateController<State> {
-  private internalState: State
-  private listeners: Subscription<State>[] = []
+  private internalState: State;
+  private listeners: Subscription<State>[] = [];
 
   constructor(initalState: State) {
-    this.internalState = initalState
+    this.internalState = initalState;
   }
 
   public get state(): State {
-    return this.internalState
+    return this.internalState;
   }
 
   protected changeState(state: Partial<State>): void {
     this.setState({
       ...this.internalState,
-      ...state
-    })
+      ...state,
+    });
   }
 
   protected setState(state: State): void {
-    this.internalState = state
-    this.notifyStateChangeToListeners()
+    this.internalState = state;
+    this.notifyStateChangeToListeners();
   }
 
   protected notifyStateChangeToListeners() {
     if (this.listeners.length > 0) {
-      this.listeners.forEach(this.notifyStateChangeToListener.bind(this))
+      this.listeners.forEach(this.notifyStateChangeToListener.bind(this));
     }
   }
 
   protected notifyStateChangeToListener(listener: Subscription<State>) {
-    listener(this.state)
+    listener(this.state);
   }
 
-  public subscribe(listener: Subscription<State>, sendCurrentStatus = false): void {
-    this.listeners.push(listener)
+  public subscribe(
+    listener: Subscription<State>,
+    sendCurrentStatus = false,
+  ): void {
+    this.listeners.push(listener);
     if (sendCurrentStatus) {
-      this.notifyStateChangeToListener(listener)
+      this.notifyStateChangeToListener(listener);
     }
   }
 
   public unsubscribe(listener: Subscription<State>): void {
-    const index = this.listeners.indexOf(listener)
+    const index = this.listeners.indexOf(listener);
     if (index < 0) {
-      return
+      return;
     }
 
-    this.listeners.splice(index, 1)
+    this.listeners.splice(index, 1);
   }
 }

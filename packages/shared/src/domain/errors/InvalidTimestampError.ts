@@ -1,7 +1,7 @@
-import { DomainError } from '../base/DomainError'
+import { DomainError } from '../base/DomainError';
 
 export class InvalidTimestampError extends DomainError {
   constructor() {
-    super('INVALID_TIMESTAMP', true)
+    super('INVALID_TIMESTAMP', true);
   }
 }

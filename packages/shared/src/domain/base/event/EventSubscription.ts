@@ -1,3 +1,3 @@
-import { Event } from './Event'
+import { Event } from './Event';
 
-export type EventSubscription<T extends Event> = (event: T) => Promise<void>
+export type EventSubscription<T extends Event> = (event: T) => Promise<void>;

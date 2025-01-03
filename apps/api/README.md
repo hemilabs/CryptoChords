@@ -90,7 +90,6 @@ The environment variables are defined in the `.env` file. The following variable
 
 - `ENABLE_MAINNET`: A boolean that enables mainnet.[Hemi Docs](https://github.com/hemilabs/infrastructure/blob/main/NETWORK_INFO.md).
 
-
 Example of the .env file
 
 ```
@@ -99,8 +98,10 @@ ENABLE_MAINNET=false
 ```
 
 ## Contribution
+
 If you want to contribute to this project and make it better, your help is very welcome.
 You can find more information about how to contribute in the [`CONTRIBUTING.md`](../../CONTRIBUTING.md) file.
 
 ## License
+
 This project is licensed under the MIT License - see the [LICENSE](../../LICENSE) file for details.

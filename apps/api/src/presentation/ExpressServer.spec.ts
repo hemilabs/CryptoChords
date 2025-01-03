@@ -8,7 +8,7 @@ vi.mock('express', () => {
   const listenMock = vi.fn((_port, callback) => {
     callback();
     return {
-      close: vi.fn((cb) => cb && cb()),
+      close: vi.fn(cb => cb && cb()),
     };
   });
   return {
@@ -44,7 +44,11 @@ describe('ExpressServer', () => {
   beforeEach(() => {
     vi.clearAllMocks();
 
-    pollingRouteMock = new PollingRoute(USE_WEBSOCKET, MOCK_WEBSOCKET_URL, MOCK_RPC_URL);
+    pollingRouteMock = new PollingRoute(
+      USE_WEBSOCKET,
+      MOCK_WEBSOCKET_URL,
+      MOCK_RPC_URL,
+    );
     expressServer = new ExpressServer(pollingRouteMock, MOCK_PORT);
   });
 
@@ -55,8 +59,11 @@ describe('ExpressServer', () => {
   it('should start the server correctly', () => {
     expressServer.start();
 
-    const mockedExpress = express() as any;
-    expect(mockedExpress.listen).toHaveBeenCalledWith(MOCK_PORT, expect.any(Function));
+    const mockedExpress = express();
+    expect(mockedExpress.listen).toHaveBeenCalledWith(
+      MOCK_PORT,
+      expect.any(Function),
+    );
     expect(pollingRouteMock.initialize).toHaveBeenCalled();
   });
 

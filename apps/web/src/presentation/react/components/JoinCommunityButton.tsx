@@ -1,6 +1,4 @@
-export const JoinCommunityButton = (props: {
-  className?: string
-}) => {
+export const JoinCommunityButton = (props: { className?: string }) => {
   return (
     <a
       className={`${props.className ?? ''}
@@ -18,7 +16,9 @@ export const JoinCommunityButton = (props: {
       pointer
       `}
       href={import.meta.env.VITE_DISCORD_URL}
-      target='_blank'
-    >Join Community</a>
-  )
-}
+      target="_blank"
+    >
+      Join Community
+    </a>
+  );
+};

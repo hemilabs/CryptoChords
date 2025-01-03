@@ -1,13 +1,13 @@
-import { Keyboard } from '../../domain/valueObjects/Keyboard'
+import { Keyboard } from '../../domain/valueObjects/Keyboard';
 
 export class InMemoryKeyboardRepository {
-  private keyboard: Keyboard | undefined
+  private keyboard: Keyboard | undefined;
 
   public setKeyboard(keyboard: Keyboard) {
-    this.keyboard = keyboard
+    this.keyboard = keyboard;
   }
 
   public getKeyboard() {
-    return this.keyboard
+    return this.keyboard;
   }
 }

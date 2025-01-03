@@ -1,24 +1,24 @@
-import { ValueObject } from '../base/ValueObject'
-import { TxTypesEnum } from '../enums/TxTypesEnum'
+import { ValueObject } from '../base/ValueObject';
+import { TxTypesEnum } from '../enums/TxTypesEnum';
 
 interface TxTypeProps {
-  value: TxTypesEnum
+  value: TxTypesEnum;
 }
 
 export class TxType extends ValueObject<TxTypeProps> {
   private constructor(txType: TxTypesEnum) {
-    super({ value: txType })
+    super({ value: txType });
   }
 
   static create(txType: TxTypesEnum) {
-    return new TxType(txType)
+    return new TxType(txType);
   }
 
   get value() {
-    return this.props.value
+    return this.props.value;
   }
 
   get isBlock() {
-    return this.props.value === TxTypesEnum.Block
+    return this.props.value === TxTypesEnum.Block;
   }
 }

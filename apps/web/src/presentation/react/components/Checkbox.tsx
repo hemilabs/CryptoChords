@@ -1,14 +1,19 @@
 export const Checkbox = function (props: {
-  value: boolean
-  className?: string
-  onClick?: () => void
+  value: boolean;
+  className?: string;
+  onClick?: () => void;
 }) {
   return (
     <>
-      <input type="checkbox" className='sr-only peer' checked={props.value} onChange={()=>{}}/>
+      <input
+        type="checkbox"
+        className="sr-only peer"
+        checked={props.value}
+        onChange={() => {}}
+      />
       <div
-          onClick={props.onClick}
-          className={`
+        onClick={props.onClick}
+        className={`
             ${props.className ?? ''}
             cursor-pointer
             relative
@@ -39,7 +44,8 @@ export const Checkbox = function (props: {
             after:transition-all
             dark:border-gray-600
             peer-checked:bg-[#5BC236]
-          `}></div>
-      </>
-  )
-}
+          `}
+      ></div>
+    </>
+  );
+};

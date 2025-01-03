@@ -1,0 +1,15 @@
+name: JS Checks
+
+on:
+  pull_request:
+  push:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event_name }}
+  cancel-in-progress: true
+
+jobs:
+  js-checks:
+    uses: hemilabs/actions/.github/workflows/js-checks.yml@main
+    with:
+      node-versions: '["16", "18", "20", "22"]'

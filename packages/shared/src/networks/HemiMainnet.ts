@@ -1,3 +1,3 @@
-import { hemi } from 'hemi-viem'
+import { hemi } from 'hemi-viem';
 
-export const HemiMainnet = hemi
+export const HemiMainnet = hemi;

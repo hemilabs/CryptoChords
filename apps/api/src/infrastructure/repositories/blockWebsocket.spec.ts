@@ -6,35 +6,37 @@ vi.mock('web3', () => ({
   __esModule: true,
   default: vi.fn().mockImplementation(() => ({
     eth: {
-      subscribe: vi.fn().mockImplementation(() => Promise.resolve({
-        on: vi.fn((event, callback) => {
-          if (event === 'data') {
-            const fakeBlockHeader = { hash: 'fakeHash' };
-            callback(fakeBlockHeader);
-          }
-        }),
-        unsubscribe: vi.fn(),
-      })),
       getBlock: vi.fn().mockResolvedValue({
-        transactions: [{ type: BlockTypesEnum.EIP1559, from: 'fakeAddress' }],
+        transactions: [{ from: 'fakeAddress', type: BlockTypesEnum.EIP1559 }],
       }),
+      subscribe: vi.fn().mockImplementation(() =>
+        Promise.resolve({
+          on: vi.fn((event, callback) => {
+            if (event === 'data') {
+              const fakeBlockHeader = { hash: 'fakeHash' };
+              callback(fakeBlockHeader);
+            }
+          }),
+          unsubscribe: vi.fn(),
+        }),
+      ),
     },
   })),
 }));
 
 vi.mock('@cryptochords/shared', () => ({
+  Address: {
+    create: vi.fn().mockReturnValue({}),
+  },
+  L2Block: {
+    create: vi.fn().mockReturnValue({}),
+  },
   TxType: {
     create: vi.fn().mockReturnValue({}),
   },
   TxTypesEnum: {
     Block: 'Block',
     Eth: 'Eth',
-  },
-  Address: {
-    create: vi.fn().mockReturnValue({}),
-  },
-  L2Block: {
-    create: vi.fn().mockReturnValue({}),
   },
 }));
 
@@ -54,13 +56,18 @@ describe('BlockWebsocketRepository', () => {
     await vi.waitFor(() => {
       expect(blockWebsocketRepository['subscription']).toBeDefined();
       expect(blockWebsocketRepository['web3']).toBeDefined();
-      expect(blockWebsocketRepository['subscription'].on).toHaveBeenCalledWith('data', expect.any(Function));
+      expect(blockWebsocketRepository['subscription'].on).toHaveBeenCalledWith(
+        'data',
+        expect.any(Function),
+      );
     });
   });
 
   it('should stop subscription', async () => {
     blockWebsocketRepository.execute('fakeWebsocketUrl');
-    await vi.waitFor(() => expect(blockWebsocketRepository['subscription']).toBeDefined());
+    await vi.waitFor(() =>
+      expect(blockWebsocketRepository['subscription']).toBeDefined(),
+    );
 
     blockWebsocketRepository.stop();
     expect(blockWebsocketRepository['subscription']).toBeNull();
@@ -70,8 +77,13 @@ describe('BlockWebsocketRepository', () => {
     const emitSpy = vi.spyOn(blockWebsocketRepository, 'emit');
     blockWebsocketRepository.execute('fakeWebsocketUrl');
 
-    await vi.waitFor(() => expect(emitSpy).toHaveBeenCalledWith('Block', expect.anything()));
-    await vi.waitFor(() => expect(emitSpy).toHaveBeenCalledWith('Eth', expect.anything()), { timeout: 500 });
+    await vi.waitFor(() =>
+      expect(emitSpy).toHaveBeenCalledWith('Block', expect.anything()),
+    );
+    await vi.waitFor(
+      () => expect(emitSpy).toHaveBeenCalledWith('Eth', expect.anything()),
+      { timeout: 500 },
+    );
 
     expect(emitSpy).toHaveBeenNthCalledWith(1, 'Block', expect.anything());
     expect(emitSpy).toHaveBeenNthCalledWith(2, 'Eth', expect.anything());

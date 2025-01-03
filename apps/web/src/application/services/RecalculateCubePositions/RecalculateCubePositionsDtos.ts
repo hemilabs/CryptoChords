@@ -1,8 +1,8 @@
 export interface RecalculateCubePositionsRequestDto {
-  maxAge: number
+  maxAge: number;
 }
 
 export interface RecalculateCubePositionsResponseDto {
-  deletedCubes: number
-  updatedCubes: number
+  deletedCubes: number;
+  updatedCubes: number;
 }

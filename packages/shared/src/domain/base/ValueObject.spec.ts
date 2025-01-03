@@ -1,29 +1,29 @@
-import { describe, it, expect } from "vitest"
-import { ValueObject } from "./ValueObject"
+import { describe, it, expect } from 'vitest';
+import { ValueObject } from './ValueObject';
 
 interface TestProps {
-  value: string
+  value: string;
 }
 
 class TestValueObject extends ValueObject<TestProps> {
   static create(props: TestProps): TestValueObject {
-    return new TestValueObject(props)
+    return new TestValueObject(props);
   }
 
   get value(): string {
-    return this.props.value
+    return this.props.value;
   }
 }
 
-describe("src/domain/ValueObject", () => {
-  it("should be defined", () => {
-    expect(ValueObject).toBeDefined()
-  })
+describe('src/domain/ValueObject', () => {
+  it('should be defined', () => {
+    expect(ValueObject).toBeDefined();
+  });
 
-  it("should set props attribute from the constructor", () => {
-    const expectedProps = { value: "test" }
-    const entity = TestValueObject.create(expectedProps)
+  it('should set props attribute from the constructor', () => {
+    const expectedProps = { value: 'test' };
+    const entity = TestValueObject.create(expectedProps);
 
-    expect(entity.value).toStrictEqual(expectedProps.value)
-  })
-})
+    expect(entity.value).toStrictEqual(expectedProps.value);
+  });
+});

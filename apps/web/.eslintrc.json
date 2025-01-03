@@ -1,0 +1,38 @@
+{
+  "extends": ["bloq", "prettier"],
+  "ignorePatterns": ["**/*.d.ts", "dist", "_esm/*", "_cjs/*", "_types/*"],
+  "overrides": [
+    {
+      "extends": ["bloq/typescript", "prettier"],
+      "files": ["src/**/*.ts"]
+    },
+    {
+      "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:react-hooks/recommended"
+      ],
+      "files": ["src/**/*.tsx"],
+      "parser": "@typescript-eslint/parser"
+    },
+    {
+      "extends": ["bloq/markdown"],
+      "files": ["*.md"]
+    },
+    {
+      "extends": ["bloq/vitest", "prettier"],
+      "files": ["*.spec.{js,ts}"]
+    }
+  ],
+  "parserOptions": {
+    "sourceType": "module"
+  },
+  "plugins": ["sort-keys-fix", "@typescript-eslint"],
+  "root": true,
+  "rules": {
+    "arrow-body-style": "off",
+    "promise/catch-or-return": "off",
+    "prefer-arrow/prefer-arrow-functions": "off",
+    "sort-keys-fix/sort-keys-fix": ["warn"]
+  }
+}

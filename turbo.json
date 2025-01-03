@@ -7,14 +7,23 @@
       "outputs": ["dist/**"]
     },
     "lint": {
-      "dependsOn": ["^lint"]
+      "dependsOn": ["^build", "^lint"]
     },
     "dev": {
       "cache": false,
       "persistent": true
     },
+    "format:check": {
+      "cache": false,
+      "persistent": true
+    },
+    "format:fix": {
+      "cache": false,
+      "persistent": true
+    },
     "test": {
-      "cache": false
+      "dependsOn": ["build"],
+      "outputs": []
     },
     "start:api": {
       "cache": false,

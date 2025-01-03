@@ -7,7 +7,10 @@ import { BlockTypesEnum } from '../../domain/enums/BlockTypesEnum';
 import { BlockRepository } from '../../domain/repositories/BlockRepository';
 import { L2Block } from '@cryptochords/shared';
 
-export class BlockWebsocketRepository extends EventEmitter implements BlockRepository {
+export class BlockWebsocketRepository
+  extends EventEmitter
+  implements BlockRepository
+{
   private web3: Web3 | null = null;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private subscription: any | null = null;
@@ -26,7 +29,6 @@ export class BlockWebsocketRepository extends EventEmitter implements BlockRepos
 
   private async subscribeToNewBlockHeaders(): Promise<void> {
     if (!this.web3) {
-      console.error('Web3 is not initialized.');
       return;
     }
 
@@ -36,23 +38,32 @@ export class BlockWebsocketRepository extends EventEmitter implements BlockRepos
     });
   }
 
-  private async handleNewBlockHeader(web3: Web3 | null, blockHeader: BlockHeaderOutput): Promise<void> {
-    console.log('New block header:', blockHeader.hash);
-    this.emit(TxTypesEnum.Block, L2Block.create({
-      txType: TxType.create(TxTypesEnum.Block), 
-      address: Address.create(blockHeader.hash ? blockHeader.hash.toString() : '')
-    }));
+  private async handleNewBlockHeader(
+    web3: Web3 | null,
+    blockHeader: BlockHeaderOutput,
+  ): Promise<void> {
+    this.emit(
+      TxTypesEnum.Block,
+      L2Block.create({
+        address: Address.create(
+          blockHeader.hash ? blockHeader.hash.toString() : '',
+        ),
+        txType: TxType.create(TxTypesEnum.Block),
+      }),
+    );
 
     const block = await web3?.eth.getBlock(blockHeader.hash, true);
     if (block && block.transactions) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       block.transactions.forEach((tx: any) => {
         if (tx.type.toString() === BlockTypesEnum.EIP1559) {
-          console.log('New eth tx from', tx.from);
-          this.emit(TxTypesEnum.Eth, L2Block.create({
-            txType: TxType.create(TxTypesEnum.Eth), 
-            address: Address.create(tx.from)
-          }));
+          this.emit(
+            TxTypesEnum.Eth,
+            L2Block.create({
+              address: Address.create(tx.from),
+              txType: TxType.create(TxTypesEnum.Eth),
+            }),
+          );
         }
       });
     }

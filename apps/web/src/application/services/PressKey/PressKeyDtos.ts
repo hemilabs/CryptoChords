@@ -1,8 +1,8 @@
 export interface PressKeyRequest {
-  pitchClass: string
-  octave: number
+  pitchClass: string;
+  octave: number;
 }
 
 export interface PressKeyResponse {
-  instrument?: string
+  instrument?: string;
 }

@@ -1,34 +1,34 @@
-import { describe, expect, it, vi } from 'vitest'
-import { CubeRepository } from '../../../domain/repositories/CubeRepository'
-import { CreateCubeService } from './CreateCubeService'
+import { describe, expect, it, vi } from 'vitest';
+import { CubeRepository } from '../../../domain/repositories/CubeRepository';
+import { CreateCubeService } from './CreateCubeService';
 
 const cubeRepositoryMock: CubeRepository = {
+  clear: vi.fn(),
   create: vi.fn().mockResolvedValue({
+    color: { value: 'blue' },
+    mirrored: false,
     uuid: { value: 'some-id' },
     x: { value: 0.5 },
     y: { value: 0 },
-    color: { value: 'blue' },
-    mirrored: false
   }),
   delete: vi.fn(),
-  update: vi.fn(),
   list: vi.fn(),
-  clear: vi.fn()
-}
+  update: vi.fn(),
+};
 
-const create: CreateCubeService = new CreateCubeService(cubeRepositoryMock)
+const create: CreateCubeService = new CreateCubeService(cubeRepositoryMock);
 
 describe('src/application/CreateCube/CreateCubeService', () => {
   describe('execute', () => {
-    it('should return ', async () => {
-      const response = await create.execute({ color: 'blue', x: 0.5 })
+    it('should return', async () => {
+      const response = await create.execute({ color: 'blue', x: 0.5 });
       expect(response).toEqual({
+        color: 'blue',
         id: 'some-id',
+        mirrored: false,
         x: 0.5,
         y: 0,
-        color: 'blue',
-        mirrored: false
-      })
-    })
-  })
-})
+      });
+    });
+  });
+});
