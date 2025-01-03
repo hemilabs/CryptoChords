@@ -10,26 +10,26 @@ import { usePresenter } from './hooks/usePresenter'
 function App() {
   const { appPresenter } = useContext(presenters)
 
-  const {
-    navMenuVisible,
-  } = usePresenter<AppPresenter, AppPresenterState>(appPresenter)
+  const { navMenuVisible } = usePresenter<AppPresenter, AppPresenterState>(
+    appPresenter,
+  )
 
   return (
     <>
-      <Header 
-        className='relative z-40' 
-        onNavButtonClick={() => appPresenter.navButtonClicked()} 
-        networks={appPresenter.state.networkNames} 
-        selectedNetwork={appPresenter.state.selectedNetworkName} 
-        selectNetwork={(networkName) => appPresenter.selectNetwork(networkName)}
+      <Header
+        className="relative z-40"
+        onNavButtonClick={() => appPresenter.navButtonClicked()}
+        networks={appPresenter.state.networkNames}
+        selectedNetwork={appPresenter.state.selectedNetworkName}
+        selectNetwork={networkName => appPresenter.selectNetwork(networkName)}
         enableMainnet={appPresenter.state.enableMainnet}
       />
-      <NavMenu 
-        onCloseButtonClick={() => appPresenter.closeButtonClicked()} 
-        className={`${navMenuVisible ? '' : 'hidden'} md:hidden`} 
-        networks={appPresenter.state.networkNames} 
-        selectedNetwork={appPresenter.state.selectedNetworkName} 
-        selectNetwork={(networkName) => appPresenter.selectNetwork(networkName)}
+      <NavMenu
+        onCloseButtonClick={() => appPresenter.closeButtonClicked()}
+        className={`${navMenuVisible ? '' : 'hidden'} md:hidden`}
+        networks={appPresenter.state.networkNames}
+        selectedNetwork={appPresenter.state.selectedNetworkName}
+        selectNetwork={networkName => appPresenter.selectNetwork(networkName)}
         enableMainnet={appPresenter.state.enableMainnet}
       />
       <MainContent className={navMenuVisible ? 'max-md:hidden' : ''} />

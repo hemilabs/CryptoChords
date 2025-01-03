@@ -4,7 +4,7 @@ export interface GetKeyboardResponseDto {
       class: string
       octave: number
     }
-    keyShape: string,
+    keyShape: string
     x: number
     color: string
     pressed: boolean

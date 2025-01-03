@@ -12,7 +12,7 @@ describe('src/domain/factories/KeyboardFactory', () => {
     const keyboard = KeyboardFactory.create({
       initialOctave: 0,
       numberOfKeys: 88,
-      initialPitchClass: PitchClassEnum.A
+      initialPitchClass: PitchClassEnum.A,
     })
     expect(keyboard.keys.length).toBe(88)
   })
@@ -21,7 +21,7 @@ describe('src/domain/factories/KeyboardFactory', () => {
     const keyboard = KeyboardFactory.create({
       initialOctave: 1,
       numberOfKeys: 12,
-      initialPitchClass: PitchClassEnum.F
+      initialPitchClass: PitchClassEnum.F,
     })
     expect(keyboard.keys[0].pitch.pitchClass.value).toBe(PitchClassEnum.F)
     expect(keyboard.keys[0].pitch.octave).toBe(1)
@@ -30,43 +30,45 @@ describe('src/domain/factories/KeyboardFactory', () => {
     expect(keyboard.keys[1].pitch.pitchClass.value).toBe(PitchClassEnum.F_SHARP)
     expect(keyboard.keys[1].pitch.octave).toBe(1)
     expect(keyboard.keys[1].keyShape.value).toBe(KeyShapeEnum.Black)
-    
+
     expect(keyboard.keys[2].pitch.pitchClass.value).toBe(PitchClassEnum.G)
     expect(keyboard.keys[2].pitch.octave).toBe(1)
     expect(keyboard.keys[2].keyShape.value).toBe(KeyShapeEnum.WhiteMiddle)
-    
+
     expect(keyboard.keys[3].pitch.pitchClass.value).toBe(PitchClassEnum.G_SHARP)
     expect(keyboard.keys[3].pitch.octave).toBe(1)
     expect(keyboard.keys[3].keyShape.value).toBe(KeyShapeEnum.Black)
-    
+
     expect(keyboard.keys[4].pitch.pitchClass.value).toBe(PitchClassEnum.A)
     expect(keyboard.keys[4].pitch.octave).toBe(1)
     expect(keyboard.keys[4].keyShape.value).toBe(KeyShapeEnum.WhiteMiddle)
-    
+
     expect(keyboard.keys[5].pitch.pitchClass.value).toBe(PitchClassEnum.A_SHARP)
     expect(keyboard.keys[5].pitch.octave).toBe(1)
     expect(keyboard.keys[5].keyShape.value).toBe(KeyShapeEnum.Black)
-    
+
     expect(keyboard.keys[6].pitch.pitchClass.value).toBe(PitchClassEnum.B)
     expect(keyboard.keys[6].pitch.octave).toBe(1)
     expect(keyboard.keys[6].keyShape.value).toBe(KeyShapeEnum.WhiteRight)
-    
+
     expect(keyboard.keys[7].pitch.pitchClass.value).toBe(PitchClassEnum.C)
     expect(keyboard.keys[7].pitch.octave).toBe(2)
     expect(keyboard.keys[7].keyShape.value).toBe(KeyShapeEnum.WhiteLeft)
-    
+
     expect(keyboard.keys[8].pitch.pitchClass.value).toBe(PitchClassEnum.C_SHARP)
     expect(keyboard.keys[8].pitch.octave).toBe(2)
     expect(keyboard.keys[8].keyShape.value).toBe(KeyShapeEnum.Black)
-    
+
     expect(keyboard.keys[9].pitch.pitchClass.value).toBe(PitchClassEnum.D)
     expect(keyboard.keys[9].pitch.octave).toBe(2)
     expect(keyboard.keys[9].keyShape.value).toBe(KeyShapeEnum.WhiteMiddle)
-    
-    expect(keyboard.keys[10].pitch.pitchClass.value).toBe(PitchClassEnum.D_SHARP)
+
+    expect(keyboard.keys[10].pitch.pitchClass.value).toBe(
+      PitchClassEnum.D_SHARP,
+    )
     expect(keyboard.keys[10].pitch.octave).toBe(2)
     expect(keyboard.keys[10].keyShape.value).toBe(KeyShapeEnum.Black)
-    
+
     expect(keyboard.keys[11].pitch.pitchClass.value).toBe(PitchClassEnum.E)
     expect(keyboard.keys[11].pitch.octave).toBe(2)
     expect(keyboard.keys[11].keyShape.value).toBe(KeyShapeEnum.WhiteRight)
@@ -76,7 +78,7 @@ describe('src/domain/factories/KeyboardFactory', () => {
     const keyboard = KeyboardFactory.create({
       initialOctave: 1,
       numberOfKeys: 2,
-      initialPitchClass: PitchClassEnum.B
+      initialPitchClass: PitchClassEnum.B,
     })
     expect(keyboard.keys[1].keyShape.value).toBe(KeyShapeEnum.White)
   })
@@ -85,7 +87,7 @@ describe('src/domain/factories/KeyboardFactory', () => {
     const keyboard = KeyboardFactory.create({
       initialOctave: 1,
       numberOfKeys: 2,
-      initialPitchClass: PitchClassEnum.E
+      initialPitchClass: PitchClassEnum.E,
     })
     expect(keyboard.keys[1].keyShape.value).toBe(KeyShapeEnum.White)
   })
@@ -94,16 +96,16 @@ describe('src/domain/factories/KeyboardFactory', () => {
     const keyboard = KeyboardFactory.create({
       initialOctave: 1,
       numberOfKeys: 3,
-      initialPitchClass: PitchClassEnum.C
+      initialPitchClass: PitchClassEnum.C,
     })
     expect(keyboard.keys[2].keyShape.value).toBe(KeyShapeEnum.WhiteRight)
   })
-  
+
   it('should return a keyboard with a white-right last key when it finish with a G key', () => {
     const keyboard = KeyboardFactory.create({
       initialOctave: 1,
       numberOfKeys: 3,
-      initialPitchClass: PitchClassEnum.F
+      initialPitchClass: PitchClassEnum.F,
     })
     expect(keyboard.keys[2].keyShape.value).toBe(KeyShapeEnum.WhiteRight)
   })
@@ -112,7 +114,7 @@ describe('src/domain/factories/KeyboardFactory', () => {
     const keyboard = KeyboardFactory.create({
       initialOctave: 1,
       numberOfKeys: 3,
-      initialPitchClass: PitchClassEnum.G
+      initialPitchClass: PitchClassEnum.G,
     })
     expect(keyboard.keys[2].keyShape.value).toBe(KeyShapeEnum.WhiteRight)
   })

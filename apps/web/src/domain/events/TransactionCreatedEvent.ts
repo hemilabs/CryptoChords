@@ -2,7 +2,7 @@ import { Event } from '@cryptochords/shared'
 import { Transaction } from '../entities/Transaction'
 
 export class TransactionCreatedEvent extends Event {
-  static eventKey:symbol = Symbol('TransactionCreatedEvent')
+  static eventKey: symbol = Symbol('TransactionCreatedEvent')
 
   private readonly transaction: Transaction
 

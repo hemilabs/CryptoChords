@@ -18,7 +18,7 @@ const MenuContainer = ({
   className,
   ...props
 }: {
-  refProp: React.RefObject<HTMLDivElement> | MutableRefObject<HTMLDivElement>;
+  refProp: React.RefObject<HTMLDivElement> | MutableRefObject<HTMLDivElement>
 } & ComponentProps<'div'>) => (
   <div
     {...props}
@@ -27,11 +27,9 @@ const MenuContainer = ({
   >
     {children}
   </div>
-);
+)
 
-const ItemText = ({
-  selected = false,
-  text = ''}) => (
+const ItemText = ({ selected = false, text = '' }) => (
   <span
     className={`text-base font-medium capitalize transition-colors duration-300
       group-hover/item:text-[#1A1B23] ${
@@ -50,7 +48,7 @@ export const NetworkSwitch = function ({
   className,
   networks,
   selectedNetwork,
-  selectNetwork
+  selectNetwork,
 }: Props) {
   const [isOpen, setIsOpen] = useState(false)
   const ref = useOnClickOutside<HTMLDivElement>(() => setIsOpen(false))

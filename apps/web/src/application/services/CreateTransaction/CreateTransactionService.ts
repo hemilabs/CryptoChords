@@ -1,4 +1,10 @@
-import { Address, NetworkEnum, Timestamp, TxType, TxTypesEnum } from '@cryptochords/shared'
+import {
+  Address,
+  NetworkEnum,
+  Timestamp,
+  TxType,
+  TxTypesEnum,
+} from '@cryptochords/shared'
 import { Transaction } from '../../../domain/entities/Transaction'
 import { InstrumentEnum } from '../../../domain/enum/InstrumentEnum'
 import { KeyboardRepository } from '../../../domain/repositories/KeyboardRepository'
@@ -11,7 +17,10 @@ import { PressKeyService } from '../PressKey/PressKeyService'
 import { ReleaseKeyService } from '../ReleaseKey/ReleaseKeyService'
 import { CreateTransactionRequest } from './CreateTransactionDtos'
 
-export class CreateTransactionService extends ObservableService<CreateTransactionRequest, void> {
+export class CreateTransactionService extends ObservableService<
+  CreateTransactionRequest,
+  void
+> {
   private readonly keyboardRepository: KeyboardRepository
   private readonly transactionRepository: TransactionRepository
   private readonly createCubeService: CreateCubeService
@@ -25,7 +34,7 @@ export class CreateTransactionService extends ObservableService<CreateTransactio
     createCubeService: CreateCubeService,
     pressKeyService: PressKeyService,
     releaseKeyService: ReleaseKeyService,
-    networkRepository: NetworkRepository
+    networkRepository: NetworkRepository,
   ) {
     super()
     this.keyboardRepository = keyboardRepository
@@ -38,27 +47,32 @@ export class CreateTransactionService extends ObservableService<CreateTransactio
 
   protected async process(request: CreateTransactionRequest): Promise<void> {
     const transaction = await this.createTransaction(request)
-    const [ key, instrument ] = await this.pressKey(transaction)
-    if (!key)
-      return
+    const [key, instrument] = await this.pressKey(transaction)
+    if (!key) return
     await this.createCube(key)
 
-    setTimeout(() => {
-      this.releaseKey(key, instrument)
-    }, 100 + Math.random() * 3_000)
+    setTimeout(
+      () => {
+        this.releaseKey(key, instrument)
+      },
+      100 + Math.random() * 3_000,
+    )
   }
 
-  async createTransaction(request: CreateTransactionRequest): Promise<Transaction> {
-    const network = await this.netwtorkRepository.find(request.network as NetworkEnum)
+  async createTransaction(
+    request: CreateTransactionRequest,
+  ): Promise<Transaction> {
+    const network = await this.netwtorkRepository.find(
+      request.network as NetworkEnum,
+    )
 
-    if (!network)
-      throw new Error('Network not found')
+    if (!network) throw new Error('Network not found')
 
     const transaction = Transaction.create({
       txType: TxType.create(request.txType as TxTypesEnum),
       address: Address.create(request.address),
       network,
-      timestamp: Timestamp.create(request.timestamp)
+      timestamp: Timestamp.create(request.timestamp),
     })
     await this.transactionRepository.create(transaction)
 
@@ -68,22 +82,25 @@ export class CreateTransactionService extends ObservableService<CreateTransactio
   async createCube(key: Key): Promise<void> {
     this.createCubeService.execute({
       x: key.x.value,
-      color: key.color
+      color: key.color,
     })
   }
 
-  async pressKey(transaction: Transaction): Promise<[Key  | undefined, (InstrumentEnum | undefined) ] > {
+  async pressKey(
+    transaction: Transaction,
+  ): Promise<[Key | undefined, InstrumentEnum | undefined]> {
     const keyboard = this.keyboardRepository.getKeyboard()
-    if (!keyboard)
-      return [undefined, undefined]
+    if (!keyboard) return [undefined, undefined]
 
-    const randomKey = keyboard.getRandomWhiteKeyByTxType(transaction.txType.value)   
+    const randomKey = keyboard.getRandomWhiteKeyByTxType(
+      transaction.txType.value,
+    )
 
     const { instrument } = await this.pressKeyService.execute({
       pitchClass: randomKey.pitch.pitchClass.value,
-      octave: randomKey.pitch.octave
+      octave: randomKey.pitch.octave,
     })
-    
+
     return [randomKey, instrument as InstrumentEnum]
   }
 
@@ -91,7 +108,7 @@ export class CreateTransactionService extends ObservableService<CreateTransactio
     this.releaseKeyService.execute({
       pitchClass: key.pitch.pitchClass.value,
       octave: key.pitch.octave,
-      instrument
+      instrument,
     })
   }
 }

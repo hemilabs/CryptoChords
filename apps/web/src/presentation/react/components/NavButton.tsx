@@ -4,6 +4,10 @@ export const NavButton = function (props: {
   onClick?: () => void
 }) {
   return (
-    <img src={navButton} className={`cursor-pointer w-10 ${props.className ?? ''}`} onClick={props.onClick} />
+    <img
+      src={navButton}
+      className={`cursor-pointer w-10 ${props.className ?? ''}`}
+      onClick={props.onClick}
+    />
   )
 }

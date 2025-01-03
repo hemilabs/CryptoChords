@@ -48,13 +48,13 @@ jobs:
   docker:
     name: "Docker (${{ matrix.component }})"
     uses: hemilabs/actions/.github/workflows/docker.yml@main
-    needs: [ "prepare" ]
+    needs: ["prepare"]
     permissions:
       contents: read
       packages: write # Needed to push to the GitHub Container Registry
     strategy:
       matrix:
-        component: [ "api", "web" ]
+        component: ["api", "web"]
     with:
       version: "${{ needs.prepare.outputs.version }}"
       context: "."
@@ -90,7 +90,7 @@ jobs:
   deploy:
     name: "Deploy to testnet"
     uses: hemilabs/actions/.github/workflows/deploy-kustomize.yml@main
-    needs: [ "prepare", "docker", "deploy-registry" ]
+    needs: ["prepare", "docker", "deploy-registry"]
     permissions:
       contents: read
     with:

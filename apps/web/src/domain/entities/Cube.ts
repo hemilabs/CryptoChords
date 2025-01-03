@@ -22,13 +22,16 @@ interface CubeProps {
 
 export class Cube extends Entity<CubeProps> {
   private constructor(color: TransactionColor, x: UnitInterval, uuid: Uuid) {
-    super({
-      color,
-      x: x,
-      y: UnitInterval.create(0),
-      creation: Date.now(),
-      mirrored: Cube.randomMirrored()
-    }, uuid)
+    super(
+      {
+        color,
+        x: x,
+        y: UnitInterval.create(0),
+        creation: Date.now(),
+        mirrored: Cube.randomMirrored(),
+      },
+      uuid,
+    )
   }
 
   private static randomMirrored() {
@@ -43,7 +46,10 @@ export class Cube extends Entity<CubeProps> {
     return new Cube(color, x, Uuid.create())
   }
 
-  private static isValidPosition(color: TransactionColor, x: UnitInterval): boolean {
+  private static isValidPosition(
+    color: TransactionColor,
+    x: UnitInterval,
+  ): boolean {
     const range = CubeXRange.get(color.value)
 
     if (!range) {

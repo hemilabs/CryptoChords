@@ -6,7 +6,8 @@ export const Cube = function (props: {
   mirrored?: boolean
 }) {
   return (
-    <img src={`/image/cube/${props.color}.png`}
+    <img
+      src={`/image/cube/${props.color}.png`}
       className={`absolute 
                   bottom-0
                   w-[10vw]

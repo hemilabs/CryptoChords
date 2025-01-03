@@ -27,7 +27,7 @@ export class L2Block extends Entity<L2BlockProps> {
   static fromJSON(json: L2BlockJSON): L2Block {
     return L2Block.create({
       txType: TxType.create(json.txType as TxTypesEnum),
-      address: Address.create(json.address)
+      address: Address.create(json.address),
     })
   }
 

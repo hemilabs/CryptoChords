@@ -3,14 +3,14 @@ import ReactSelect from 'react-select'
 export const Select = function (props: {
   value: string
   onChange: (value?: string) => void
-  options: { value: string, label: string }[]
+  options: { value: string; label: string }[]
   className?: string
 }) {
   return (
     <ReactSelect
       className={`${props.className ?? ''}`}
       defaultValue={props.options.find(option => option.value === props.value)}
-      onChange={(option) => props.onChange(option?.value)}
+      onChange={option => props.onChange(option?.value)}
       options={props.options}
       isMulti={false}
       styles={{
@@ -27,7 +27,7 @@ export const Select = function (props: {
           ...provided,
           rotate: state.selectProps.menuIsOpen ? '180deg' : '0',
         }),
-        menu: (provided) => ({
+        menu: provided => ({
           ...provided,
           backgroundColor: 'white',
           borderTop: 'none',
@@ -36,7 +36,7 @@ export const Select = function (props: {
           borderTopRightRadius: '0',
           marginTop: '0',
         }),
-        menuList: (provided) => ({
+        menuList: provided => ({
           ...provided,
           borderRadius: '0.7rem',
           borderTopLeftRadius: '0',
@@ -44,12 +44,12 @@ export const Select = function (props: {
         }),
         option: (provided, state) => ({
           ...provided,
-          color: 'black',
-          backgroundColor: state.isSelected ? '#ccc' : 'white',
+          'color': 'black',
+          'backgroundColor': state.isSelected ? '#ccc' : 'white',
           '&:hover': {
             backgroundColor: '#666',
-            color: 'white'
-          }
+            color: 'white',
+          },
         }),
       }}
     />

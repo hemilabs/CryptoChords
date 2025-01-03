@@ -5,7 +5,7 @@ import { Presenter } from '../../base/Presenter'
 import { KeyboardPresenterState } from './KeyboardPresenterState'
 
 const initalState: KeyboardPresenterState = {
-  keys: []
+  keys: [],
 }
 
 interface KeyboardPresenterOptions {
@@ -17,11 +17,10 @@ interface KeyboardPresenterOptions {
 const defaultOptions: KeyboardPresenterOptions = {
   numberOfKeys: 88,
   initialPitchClass: 'A',
-  initialOctave: 0
+  initialOctave: 0,
 }
 
 export class KeyboardPresenter extends Presenter<KeyboardPresenterState> {
-
   private options: KeyboardPresenterOptions
   private createKeyboardService: CreateKeyboardService
   private getKeyboardService: GetKeyboardService
@@ -30,7 +29,7 @@ export class KeyboardPresenter extends Presenter<KeyboardPresenterState> {
     createKeyboardService: CreateKeyboardService,
     getKeyboardService: GetKeyboardService,
     keyboardChangesObserver?: Observable<Event>,
-    options?: Partial<KeyboardPresenterOptions>
+    options?: Partial<KeyboardPresenterOptions>,
   ) {
     super(initalState)
 
@@ -39,13 +38,13 @@ export class KeyboardPresenter extends Presenter<KeyboardPresenterState> {
 
     this.options = {
       ...defaultOptions,
-      ...options
+      ...options,
     }
 
     this.createKeyboard()
     this.refresh()
 
-    if(keyboardChangesObserver) {
+    if (keyboardChangesObserver) {
       keyboardChangesObserver.listen(this.refresh.bind(this))
     }
   }
@@ -61,12 +60,12 @@ export class KeyboardPresenter extends Presenter<KeyboardPresenterState> {
       keys: keyboard.keys.map(key => ({
         pitch: {
           class: key.pitch.class,
-          octave: key.pitch.octave
+          octave: key.pitch.octave,
         },
         keyShape: key.keyShape,
         x: key.x,
-        color: key.pressed ? key.color : undefined
-      }))
+        color: key.pressed ? key.color : undefined,
+      })),
     })
   }
 
@@ -74,8 +73,7 @@ export class KeyboardPresenter extends Presenter<KeyboardPresenterState> {
     await this.createKeyboardService.execute({
       numberOfKeys: this.options.numberOfKeys,
       initialPitchClass: this.options.initialPitchClass,
-      initialOctave: this.options.initialOctave
+      initialOctave: this.options.initialOctave,
     })
   }
-
 }

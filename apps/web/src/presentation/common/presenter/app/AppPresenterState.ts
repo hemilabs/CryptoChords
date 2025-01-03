@@ -1,4 +1,3 @@
-
 export type AppPresenterState = {
   networkNames: string[]
   selectedNetworkName: string | null

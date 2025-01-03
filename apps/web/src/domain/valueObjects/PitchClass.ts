@@ -27,12 +27,18 @@ export class PitchClass extends ValueObject<PitchClassProps> {
   }
 
   get next() {
-    const nextIndex = (Object.values(PitchClassEnum).indexOf(this.props.value) + 1) % Object.values(PitchClassEnum).length
+    const nextIndex =
+      (Object.values(PitchClassEnum).indexOf(this.props.value) + 1) %
+      Object.values(PitchClassEnum).length
     return PitchClass.create(Object.values(PitchClassEnum)[nextIndex])
   }
 
   get previous() {
-    const previousIndex = (Object.values(PitchClassEnum).indexOf(this.props.value) - 1 + Object.values(PitchClassEnum).length) % Object.values(PitchClassEnum).length
+    const previousIndex =
+      (Object.values(PitchClassEnum).indexOf(this.props.value) -
+        1 +
+        Object.values(PitchClassEnum).length) %
+      Object.values(PitchClassEnum).length
     return PitchClass.create(Object.values(PitchClassEnum)[previousIndex])
   }
 }

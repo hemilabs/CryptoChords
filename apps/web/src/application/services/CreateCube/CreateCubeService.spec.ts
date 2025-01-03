@@ -8,12 +8,12 @@ const cubeRepositoryMock: CubeRepository = {
     x: { value: 0.5 },
     y: { value: 0 },
     color: { value: 'blue' },
-    mirrored: false
+    mirrored: false,
   }),
   delete: vi.fn(),
   update: vi.fn(),
   list: vi.fn(),
-  clear: vi.fn()
+  clear: vi.fn(),
 }
 
 const create: CreateCubeService = new CreateCubeService(cubeRepositoryMock)
@@ -27,7 +27,7 @@ describe('src/application/CreateCube/CreateCubeService', () => {
         x: 0.5,
         y: 0,
         color: 'blue',
-        mirrored: false
+        mirrored: false,
       })
     })
   })

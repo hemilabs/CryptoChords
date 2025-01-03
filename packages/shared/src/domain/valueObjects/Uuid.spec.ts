@@ -10,7 +10,7 @@ describe('src/domain/valueObjects/Uuid', () => {
   })
 
   it('should be instance of ValueObject', () => {
-    expect(Uuid.create()).toBeInstanceOf(ValueObject)  
+    expect(Uuid.create()).toBeInstanceOf(ValueObject)
   })
 
   describe('create', () => {
@@ -19,8 +19,8 @@ describe('src/domain/valueObjects/Uuid', () => {
         const uuid = Uuid.create()
 
         expect(validate(uuid.value)).toBeTruthy()
-      });
-    });
+      })
+    })
 
     describe('when a valid id is provided', () => {
       it('should set the id as value', () => {
@@ -28,8 +28,8 @@ describe('src/domain/valueObjects/Uuid', () => {
         const uuid = Uuid.create(validId)
 
         expect(uuid.value).toEqual(validId)
-      });
-    });
+      })
+    })
 
     describe('when an invalid id is provided', () => {
       it('should set the id as value', () => {
@@ -39,7 +39,7 @@ describe('src/domain/valueObjects/Uuid', () => {
         }
 
         expect(test).toThrowError(InvalidUuidError)
-      });
-    });
+      })
+    })
   })
 })

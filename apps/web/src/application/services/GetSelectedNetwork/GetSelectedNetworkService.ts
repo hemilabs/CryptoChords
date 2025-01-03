@@ -2,12 +2,13 @@ import { NetworkRepository } from '../../../domain/repositories/NetworkRepositor
 import { ObservableService } from '../../ObservableService'
 import { GetSelectedNetworkResponseDto } from './GetSelectedNetworkResponseDto'
 
-export class GetSelectedNetworkService extends ObservableService<void, GetSelectedNetworkResponseDto> {
+export class GetSelectedNetworkService extends ObservableService<
+  void,
+  GetSelectedNetworkResponseDto
+> {
   private readonly netwtorkRepository: NetworkRepository
 
-  constructor(
-    networkRepository: NetworkRepository,
-  ) {
+  constructor(networkRepository: NetworkRepository) {
     super()
     this.netwtorkRepository = networkRepository
   }

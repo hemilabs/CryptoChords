@@ -2,9 +2,12 @@ import { OptionsRepository } from '../../../domain/repositories/OptionsRepositor
 import { ObservableService } from '../../ObservableService'
 import { GetOptionsResponseDto } from './GetOptionsDtos'
 
-export class GetOptionsService extends ObservableService<void, GetOptionsResponseDto>{
+export class GetOptionsService extends ObservableService<
+  void,
+  GetOptionsResponseDto
+> {
   private readonly optionsRepository: OptionsRepository
-  
+
   constructor(optionsRepository: OptionsRepository) {
     super()
     this.optionsRepository = optionsRepository
@@ -15,7 +18,7 @@ export class GetOptionsService extends ObservableService<void, GetOptionsRespons
 
     return {
       instrument: options.instrument.name,
-      muted: options.muted
+      muted: options.muted,
     }
   }
 }

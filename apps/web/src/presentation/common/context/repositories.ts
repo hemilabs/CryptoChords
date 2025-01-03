@@ -11,9 +11,9 @@ import { StaticNetworksRepository } from '../../../infrastructure/repositories/S
 
 export interface Repositories {
   cubeRepository: CubeRepository
-  transactionRepository: TransactionRepository,
-  keyboardRepository: KeyboardRepository,
-  optionsRepository: OptionsRepository,
+  transactionRepository: TransactionRepository
+  keyboardRepository: KeyboardRepository
+  optionsRepository: OptionsRepository
   networkRepository: NetworkRepository
 }
 
@@ -22,5 +22,5 @@ export const repositories: Repositories = {
   transactionRepository: new LimitedInMemoryTransactionRepository(),
   keyboardRepository: new InMemoryKeyboardRepository(),
   optionsRepository: new LocalStorageOptionsRepository(),
-  networkRepository: new StaticNetworksRepository()
+  networkRepository: new StaticNetworksRepository(),
 }

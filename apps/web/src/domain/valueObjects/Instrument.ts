@@ -5,7 +5,7 @@ export interface InstrumentProps {
   name: InstrumentEnum
 }
 
-export class Instrument extends ValueObject<InstrumentProps>{
+export class Instrument extends ValueObject<InstrumentProps> {
   private constructor(props: InstrumentProps) {
     super(props)
   }

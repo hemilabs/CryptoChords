@@ -1,7 +1,6 @@
 import { ValueObject } from '@cryptochords/shared'
 import { InvalidUnitIntervalError } from '../errors/InvalidUnitIntervalError'
 
-
 interface UnitIntevalProps {
   value: number
 }
@@ -12,9 +11,7 @@ export class UnitInterval extends ValueObject<UnitIntevalProps> {
   }
 
   static create(value: number) {
-    if (typeof value !== 'number' ||
-      value < 0 ||
-      value > 1) {
+    if (typeof value !== 'number' || value < 0 || value > 1) {
       throw new InvalidUnitIntervalError()
     }
 
@@ -33,7 +30,9 @@ export class UnitInterval extends ValueObject<UnitIntevalProps> {
     const minSanitized = Math.max(0, min)
     const maxSanitized = Math.min(1, max)
 
-    return this.create(Math.random() * (maxSanitized - minSanitized) + minSanitized)
+    return this.create(
+      Math.random() * (maxSanitized - minSanitized) + minSanitized,
+    )
   }
 
   increment(value: number) {

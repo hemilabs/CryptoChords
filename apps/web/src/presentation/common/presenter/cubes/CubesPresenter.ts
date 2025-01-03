@@ -16,31 +16,28 @@ interface CubesPresenterOptions {
 const defaultOptions: CubesPresenterOptions = {
   maxCubeCreationInterval: 300,
   tickInterval: 20,
-  maxCubeAge: 17_000
+  maxCubeAge: 17_000,
 }
 
 export class CubesPresenter extends Presenter<CubesPresenterState> {
-
   private readonly getCubesService: GetCubesService
   private readonly recalculateCubePositions: RecalculateCubePositionsService
-
 
   private options: CubesPresenterOptions
 
   private tickLoop: NodeJS.Timeout | undefined
 
-
   constructor(
     getCubesService: GetCubesService,
     recalculateCubePositions: RecalculateCubePositionsService,
-    options?: Partial<CubesPresenterOptions>
+    options?: Partial<CubesPresenterOptions>,
   ) {
     super(initalState)
     this.getCubesService = getCubesService
     this.recalculateCubePositions = recalculateCubePositions
     this.options = {
       ...defaultOptions,
-      ...options
+      ...options,
     }
 
     this.run()
@@ -77,14 +74,14 @@ export class CubesPresenter extends Presenter<CubesPresenterState> {
 
   private async moveAllCubesUp() {
     await this.recalculateCubePositions.execute({
-      maxAge: this.options.maxCubeAge
+      maxAge: this.options.maxCubeAge,
     })
   }
 
   private async syncState() {
     const getCubesResponse = await this.getCubesService.execute()
     this.changeState({
-      cubes: getCubesResponse.cubes
+      cubes: getCubesResponse.cubes,
     })
   }
 }

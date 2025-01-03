@@ -16,45 +16,38 @@ export interface Presenters {
 
 const cubesPresenter = new CubesPresenter(
   services.getCubes,
-  services.recalculateCubePosition
+  services.recalculateCubePosition,
 )
 
 const appPresenter = new AppPresenter(
   services.createTransaction,
   services.switchNetwork,
   services.getSelectedNetwork,
-  services.listNetworks
+  services.listNetworks,
 )
 
 const keyboardPresenter = new KeyboardPresenter(
   services.createKeyboard,
   services.getKeyboard,
-  new ObservableSet<Event>(
-    services.pressKey,
-    services.releaseKey
-  )
+  new ObservableSet<Event>(services.pressKey, services.releaseKey),
 )
 
 const transactionsPresenter = new TransactionsPresenter(
   services.listTransactions,
-  new ObservableSet<Event>(
-    services.createTransaction,
-    services.switchNetwork
-  )
+  new ObservableSet<Event>(services.createTransaction, services.switchNetwork),
 )
 
 const optionsPresenter = new OptionsPresenter(
   services.getOptions,
   services.setMuted,
   services.setInstrument,
-  services.loadInstrument
+  services.loadInstrument,
 )
-
 
 export const presenters: Presenters = {
   cubesPresenter,
   appPresenter,
   keyboardPresenter,
   transactionsPresenter,
-  optionsPresenter
+  optionsPresenter,
 }

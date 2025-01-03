@@ -9,10 +9,13 @@ const createKeyboardService = new CreateKeyboardService(keyboardRepository)
 await createKeyboardService.execute({
   numberOfKeys: 88,
   initialPitchClass: 'A',
-  initialOctave: 1
+  initialOctave: 1,
 })
 const getKeyboardService = new GetKeyboardService(keyboardRepository)
-const keyboardPresenter = new KeyboardPresenter(createKeyboardService, getKeyboardService)
+const keyboardPresenter = new KeyboardPresenter(
+  createKeyboardService,
+  getKeyboardService,
+)
 
 describe('src/presentation/common/presenter/keyboard/KeyboardPresenter', () => {
   it('should be defined', () => {
@@ -22,5 +25,4 @@ describe('src/presentation/common/presenter/keyboard/KeyboardPresenter', () => {
   it('should have 88 keys', () => {
     expect(keyboardPresenter.state.keys.length).toBe(88)
   })
-
 })

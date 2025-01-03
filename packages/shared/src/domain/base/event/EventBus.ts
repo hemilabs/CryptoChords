@@ -9,11 +9,17 @@ export default class EventBus {
     this.instance.publish(event)
   }
 
-  static subscribe<E extends Event = Event>(eventKey: symbol, listener: EventSubscription<E>): void {
+  static subscribe<E extends Event = Event>(
+    eventKey: symbol,
+    listener: EventSubscription<E>,
+  ): void {
     this.instance.subscribe(eventKey, listener as EventSubscription<Event>)
   }
 
-  static unsubscribe(eventKey: symbol, listener: EventSubscription<Event>): void {
+  static unsubscribe(
+    eventKey: symbol,
+    listener: EventSubscription<Event>,
+  ): void {
     this.instance.unsubscribe(eventKey, listener)
   }
 }

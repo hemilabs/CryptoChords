@@ -2,9 +2,12 @@ import { CubeRepository } from '../../../domain/repositories/CubeRepository'
 import { ObservableService } from '../../ObservableService'
 import { GetCubesResponseDto } from './GetCubesDtos'
 
-export class GetCubesService extends ObservableService<void, GetCubesResponseDto>{
+export class GetCubesService extends ObservableService<
+  void,
+  GetCubesResponseDto
+> {
   private readonly cubeRepository: CubeRepository
-  
+
   constructor(cubeRepository: CubeRepository) {
     super()
     this.cubeRepository = cubeRepository
@@ -20,8 +23,8 @@ export class GetCubesService extends ObservableService<void, GetCubesResponseDto
         y: cube.y.value,
         color: cube.color.value,
         mirrored: cube.mirrored,
-        age: cube.age
-      }))
+        age: cube.age,
+      })),
     }
   }
 }

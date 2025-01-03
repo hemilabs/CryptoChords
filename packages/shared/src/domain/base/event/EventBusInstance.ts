@@ -21,7 +21,10 @@ export class EventBusInstance {
     listeners.push(listener)
   }
 
-  public unsubscribe(eventKey: symbol, listener: EventSubscription<Event>): void {
+  public unsubscribe(
+    eventKey: symbol,
+    listener: EventSubscription<Event>,
+  ): void {
     const listeners = this.listeners.get(eventKey)
     if (listeners) {
       const index = listeners.indexOf(listener)

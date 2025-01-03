@@ -42,8 +42,7 @@ export class AppPresenter extends Presenter<AppPresenterState> {
   private async loadNetworkState() {
     const { networks } = await this.listNetworks.execute()
 
-    if (!networks)
-      return
+    if (!networks) return
 
     const networkNames = networks.map(network => network.name)
     const selectedNetwork = await this.getSelectedNetworkService.execute()
@@ -51,7 +50,7 @@ export class AppPresenter extends Presenter<AppPresenterState> {
     this.changeState({
       networkNames,
       selectedNetworkName: selectedNetwork.networkName,
-      selectedNetworkWsUrl: selectedNetwork.networkWsUrl
+      selectedNetworkWsUrl: selectedNetwork.networkWsUrl,
     })
   }
 
@@ -69,21 +68,25 @@ export class AppPresenter extends Presenter<AppPresenterState> {
 
   async selectNetwork(networkName: string) {
     const response = await this.switchNetworkService.execute({
-      networkName
+      networkName,
     })
 
     this.changeState({
       selectedNetworkName: response.networkName,
-      selectedNetworkWsUrl: response.networkWsUrl
+      selectedNetworkWsUrl: response.networkWsUrl,
     })
   }
 
-  async createTransaction(txType: string, address: string, network: string): Promise<void> {
+  async createTransaction(
+    txType: string,
+    address: string,
+    network: string,
+  ): Promise<void> {
     return this.createTransactionService.execute({
       txType,
       address,
       network,
-      timestamp: Date.now()
+      timestamp: Date.now(),
     })
   }
 }

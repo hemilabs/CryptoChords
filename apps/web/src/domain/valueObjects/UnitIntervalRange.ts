@@ -1,9 +1,8 @@
 import { ValueObject } from '@cryptochords/shared'
 import { UnitInterval } from './UnitInterval'
 
-
 interface UnitIntevalRangeProps {
-  min: UnitInterval,
+  min: UnitInterval
   max: UnitInterval
 }
 
@@ -13,7 +12,10 @@ export class UnitIntervalRange extends ValueObject<UnitIntevalRangeProps> {
   }
 
   static create(min: number, max: number) {
-    return new UnitIntervalRange(UnitInterval.create(min), UnitInterval.create(max))
+    return new UnitIntervalRange(
+      UnitInterval.create(min),
+      UnitInterval.create(max),
+    )
   }
 
   get min() {
@@ -23,5 +25,4 @@ export class UnitIntervalRange extends ValueObject<UnitIntevalRangeProps> {
   get max() {
     return this.props.max.value
   }
-
 }

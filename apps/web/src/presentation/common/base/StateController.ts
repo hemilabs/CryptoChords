@@ -15,7 +15,7 @@ export abstract class StateController<State> {
   protected changeState(state: Partial<State>): void {
     this.setState({
       ...this.internalState,
-      ...state
+      ...state,
     })
   }
 
@@ -34,7 +34,10 @@ export abstract class StateController<State> {
     listener(this.state)
   }
 
-  public subscribe(listener: Subscription<State>, sendCurrentStatus = false): void {
+  public subscribe(
+    listener: Subscription<State>,
+    sendCurrentStatus = false,
+  ): void {
     this.listeners.push(listener)
     if (sendCurrentStatus) {
       this.notifyStateChangeToListener(listener)

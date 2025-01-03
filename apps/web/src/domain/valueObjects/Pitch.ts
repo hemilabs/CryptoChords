@@ -27,7 +27,8 @@ export class Pitch extends ValueObject<PitchProps> {
     const nextClass = this.props.pitchClass.next
     return Pitch.create({
       pitchClass: nextClass,
-      octave: nextClass.value === 'C' ? this.props.octave + 1 : this.props.octave
+      octave:
+        nextClass.value === 'C' ? this.props.octave + 1 : this.props.octave,
     })
   }
 
@@ -35,39 +36,51 @@ export class Pitch extends ValueObject<PitchProps> {
     const previousClass = this.props.pitchClass.previous
     return Pitch.create({
       pitchClass: previousClass,
-      octave: previousClass.value === 'B' ? this.props.octave - 1 : this.props.octave
+      octave:
+        previousClass.value === 'B' ? this.props.octave - 1 : this.props.octave,
     })
   }
 
   isBefore(pitch: Pitch) {
-    return this.props.octave < pitch.octave || (this.props.octave === pitch.octave && this.props.pitchClass.value < pitch.pitchClass.value)
+    return (
+      this.props.octave < pitch.octave ||
+      (this.props.octave === pitch.octave &&
+        this.props.pitchClass.value < pitch.pitchClass.value)
+    )
   }
 
   isAfter(pitch: Pitch) {
-    return this.props.octave > pitch.octave || (this.props.octave === pitch.octave && this.props.pitchClass.value > pitch.pitchClass.value)
+    return (
+      this.props.octave > pitch.octave ||
+      (this.props.octave === pitch.octave &&
+        this.props.pitchClass.value > pitch.pitchClass.value)
+    )
   }
 
   equals(pitch: Pitch) {
-    return this.props.octave === pitch.octave && this.props.pitchClass.value === pitch.pitchClass.value
+    return (
+      this.props.octave === pitch.octave &&
+      this.props.pitchClass.value === pitch.pitchClass.value
+    )
   }
 
   toString() {
     return `${this.props.pitchClass.value}${this.props.octave}`
-  } 
-  
-  static random(min: Pitch, max: Pitch) {    
+  }
+
+  static random(min: Pitch, max: Pitch) {
     const range = Pitch.range(min, max)
     return range[Math.floor(Math.random() * range.length)]
   }
 
   static range(min: Pitch, max: Pitch): Pitch[] {
-    if(min.isAfter(max)) {
+    if (min.isAfter(max)) {
       throw new Error('Min pitch must be before max pitch')
     }
-    
-    const possibleValues:Pitch[] = []
+
+    const possibleValues: Pitch[] = []
     let current = min
-    while(!current.isAfter(max)) {
+    while (!current.isAfter(max)) {
       possibleValues.push(current)
       current = current.next
     }

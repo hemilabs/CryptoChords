@@ -14,7 +14,8 @@ export const NavMenu = function (props: {
   enableMainnet: boolean
 }) {
   return (
-    <div className={`
+    <div
+      className={`
       ${props.className}
       fixed w-full
       flex flex-col justify-between
@@ -23,12 +24,17 @@ export const NavMenu = function (props: {
       overflow-y-auto
       pb-16
       z-50
-      `}>
-      <div className='flex flex-row justify-between p-10'>
+      `}
+    >
+      <div className="flex flex-row justify-between p-10">
         <Logo />
-        <img src={closeButton} onClick={props.onCloseButtonClick} className={`cursor-pointer w-10 ${props.className ?? ''}`} />
+        <img
+          src={closeButton}
+          onClick={props.onCloseButtonClick}
+          className={`cursor-pointer w-10 ${props.className ?? ''}`}
+        />
       </div>
-      <NavItems className='flex-col mt-24 text-center gap-24 text-4xl'></NavItems>
+      <NavItems className="flex-col mt-24 text-center gap-24 text-4xl"></NavItems>
       <div className="grow flex flex-col justify-center items-center my-16 gap-4">
         {props.enableMainnet && (
           <div className="w-full max-w-52">
@@ -44,7 +50,7 @@ export const NavMenu = function (props: {
           <JoinCommunityButton className="w-full text-2xl p-8" />
         </div>
       </div>
-      <Social large className='justify-center'></Social>
+      <Social large className="justify-center"></Social>
     </div>
   )
 }

@@ -12,7 +12,7 @@ export interface OptionsJSON {
   instrument: string
 }
 
-export class Options extends ValueObject<OptionsProps>{
+export class Options extends ValueObject<OptionsProps> {
   private constructor(props: OptionsProps) {
     super(props)
   }
@@ -32,14 +32,16 @@ export class Options extends ValueObject<OptionsProps>{
   toJSON(): OptionsJSON {
     return {
       muted: this.props.muted,
-      instrument: this.props.instrument.name
+      instrument: this.props.instrument.name,
     }
   }
 
   static fromJSON(json: OptionsJSON) {
     return Options.create({
       muted: json.muted,
-      instrument: Instrument.create({ name: json.instrument as  InstrumentEnum})
+      instrument: Instrument.create({
+        name: json.instrument as InstrumentEnum,
+      }),
     })
   }
 }

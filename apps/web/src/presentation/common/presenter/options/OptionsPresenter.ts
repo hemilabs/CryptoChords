@@ -2,27 +2,29 @@ import { GetOptionsService } from '../../../../application/services/GetOptions/G
 import { LoadInstrumentService } from '../../../../application/services/LoadInstrument/LoadInstrumentService'
 import { SetInstrumentService } from '../../../../application/services/SetInstrument/SetInstrumentService'
 import { SetMutedService } from '../../../../application/services/SetMuted/SetMutedService'
-import { InstrumentEnum, instrumentLabels } from '../../../../domain/enum/InstrumentEnum'
+import {
+  InstrumentEnum,
+  instrumentLabels,
+} from '../../../../domain/enum/InstrumentEnum'
 import { Presenter } from '../../base/Presenter'
 import { OptionsPresenterState } from './OptionsPresenterState'
 
-const instruments: { label: string, value: string }[] = Object.values(InstrumentEnum).map(
-  (instrument) => ({
-    label: instrumentLabels.get(instrument) ?? instrument,
-    value: instrument
-  })
-)
+const instruments: { label: string; value: string }[] = Object.values(
+  InstrumentEnum,
+).map(instrument => ({
+  label: instrumentLabels.get(instrument) ?? instrument,
+  value: instrument,
+}))
 
 const initalState: OptionsPresenterState = {
   muted: true,
   selectedInstrument: '',
   instruments,
   displayLoadingMessage: false,
-  displayInstrumentPicker: false
+  displayInstrumentPicker: false,
 }
 
 export class OptionsPresenter extends Presenter<OptionsPresenterState> {
-
   private getOptionsService: GetOptionsService
   private setMutedService: SetMutedService
   private setInstrumentService: SetInstrumentService
@@ -32,7 +34,7 @@ export class OptionsPresenter extends Presenter<OptionsPresenterState> {
     getOptionsService: GetOptionsService,
     setMutedService: SetMutedService,
     setInstrumentService: SetInstrumentService,
-    loadInstrumentService: LoadInstrumentService
+    loadInstrumentService: LoadInstrumentService,
   ) {
     super(initalState)
 
@@ -51,10 +53,9 @@ export class OptionsPresenter extends Presenter<OptionsPresenterState> {
       selectedInstrument: options.instrument,
       instruments,
       displayLoadingMessage: false,
-      displayInstrumentPicker: true
+      displayInstrumentPicker: true,
     })
   }
-
 
   async setMuted(muted: boolean) {
     if (!muted) {
@@ -71,8 +72,14 @@ export class OptionsPresenter extends Presenter<OptionsPresenterState> {
   }
 
   private async loadInstrument(instrument: string) {
-    this.changeState({ displayLoadingMessage: true, displayInstrumentPicker: false })
+    this.changeState({
+      displayLoadingMessage: true,
+      displayInstrumentPicker: false,
+    })
     await this.loadInstrumentService.execute({ instrument })
-    this.changeState({ displayLoadingMessage: false, displayInstrumentPicker: true })
+    this.changeState({
+      displayLoadingMessage: false,
+      displayInstrumentPicker: true,
+    })
   }
 }

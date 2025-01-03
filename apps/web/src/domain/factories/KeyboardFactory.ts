@@ -8,11 +8,10 @@ import { Pitch } from '../valueObjects/Pitch'
 import { PitchClass } from '../valueObjects/PitchClass'
 import { UnitInterval } from '../valueObjects/UnitInterval'
 
-
 enum KeyPosition {
   Beginning,
   Middle,
-  End
+  End,
 }
 
 export interface CreateProps {
@@ -23,14 +22,23 @@ export interface CreateProps {
 
 export class KeyboardFactory {
   static create(props: CreateProps) {
-    const keysProps: Pick<KeyProps, 'color' | 'keyShape' | 'pitch' | 'pressed'>[] = []
+    const keysProps: Pick<
+      KeyProps,
+      'color' | 'keyShape' | 'pitch' | 'pressed'
+    >[] = []
     let pitchClassValue = props.initialPitchClass
     let octave = props.initialOctave
     for (let i = 0; i < props.numberOfKeys; i++) {
       const isLastKey = i === props.numberOfKeys - 1
       const isFirstKey = i === 0
-      const position = isFirstKey ? KeyPosition.Beginning : isLastKey ? KeyPosition.End : KeyPosition.Middle
-      const keyShape = KeyShape.create(KeyboardFactory.getKeyShape(pitchClassValue, position))
+      const position = isFirstKey
+        ? KeyPosition.Beginning
+        : isLastKey
+          ? KeyPosition.End
+          : KeyPosition.Middle
+      const keyShape = KeyShape.create(
+        KeyboardFactory.getKeyShape(pitchClassValue, position),
+      )
       const pitchClass = PitchClass.create(pitchClassValue)
       const pitch = Pitch.create({ pitchClass: pitchClass, octave })
       const color = KeyboardFactory.getColor(props.numberOfKeys, i)
@@ -55,8 +63,12 @@ export class KeyboardFactory {
     return Object.values(TransactionColorEnum)[keyQuarter]
   }
 
-  private static calculatePositions(keysProps: Pick<KeyProps, 'color' | 'keyShape' | 'pitch' | 'pressed'>[]) {
-    const whiteKeysCount = keysProps.filter(key => key.keyShape.value !== KeyShapeEnum.Black).length
+  private static calculatePositions(
+    keysProps: Pick<KeyProps, 'color' | 'keyShape' | 'pitch' | 'pressed'>[],
+  ) {
+    const whiteKeysCount = keysProps.filter(
+      key => key.keyShape.value !== KeyShapeEnum.Black,
+    ).length
     const minKeyCenterSpacing = 1 / (whiteKeysCount * 2 - 1)
     const result = []
     let x = 0
@@ -64,7 +76,10 @@ export class KeyboardFactory {
       const shape = keysProps[i].keyShape.value
       if (i === 0) {
         x += minKeyCenterSpacing * 0.75
-      } else if (shape === KeyShapeEnum.WhiteLeft || shape === KeyShapeEnum.White) {
+      } else if (
+        shape === KeyShapeEnum.WhiteLeft ||
+        shape === KeyShapeEnum.White
+      ) {
         x += minKeyCenterSpacing * 2
       } else {
         x += minKeyCenterSpacing
@@ -103,7 +118,10 @@ export class KeyboardFactory {
     }
   }
 
-  private static getKeyShape(pitchClass: PitchClassEnum, position: KeyPosition): KeyShapeEnum {
+  private static getKeyShape(
+    pitchClass: PitchClassEnum,
+    position: KeyPosition,
+  ): KeyShapeEnum {
     if (pitchClass === PitchClassEnum.C || pitchClass === PitchClassEnum.F) {
       if (position === KeyPosition.End) {
         return KeyShapeEnum.White
@@ -118,7 +136,11 @@ export class KeyboardFactory {
       return KeyShapeEnum.WhiteRight
     }
 
-    if (pitchClass === PitchClassEnum.D || pitchClass === PitchClassEnum.G || pitchClass === PitchClassEnum.A) {
+    if (
+      pitchClass === PitchClassEnum.D ||
+      pitchClass === PitchClassEnum.G ||
+      pitchClass === PitchClassEnum.A
+    ) {
       if (position === KeyPosition.End) {
         return KeyShapeEnum.WhiteRight
       }

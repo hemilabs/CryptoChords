@@ -7,15 +7,13 @@ export const presenters = createContext<context.Presenters>(context.presenters)
 let ws: WebSocket
 const { appPresenter } = context.presenters
 
-
 if (import.meta.env.VITE_USE_API_MOCK === 'true') {
   mockBlockRecursively()
 } else {
-  appPresenter.subscribe((state) => {
+  appPresenter.subscribe(state => {
     setWebserviceUrl(state.selectedNetworkWsUrl)
   })
 }
-
 
 function setWebserviceUrl(url: string | null) {
   if (ws?.url == url) {
@@ -33,7 +31,10 @@ function setWebserviceUrl(url: string | null) {
 
 function mockBlockRecursively() {
   setTimeout(() => {
-    const randomTxType = Object.values(TxTypesEnum)[Math.floor(Math.random() * Object.values(TxTypesEnum).length)]
+    const randomTxType =
+      Object.values(TxTypesEnum)[
+        Math.floor(Math.random() * Object.values(TxTypesEnum).length)
+      ]
     const randomAddress = '0x' + Math.random().toString(16).slice(2)
     handleBlockCreation(randomTxType, randomAddress)
     mockBlockRecursively()
@@ -54,6 +55,9 @@ function stopWebsocket() {
 }
 
 async function handleBlockCreation(txType: TxTypesEnum, address: string) {
-  await appPresenter.createTransaction(txType, address, appPresenter.state.selectedNetworkName!)
+  await appPresenter.createTransaction(
+    txType,
+    address,
+    appPresenter.state.selectedNetworkName!,
+  )
 }
-

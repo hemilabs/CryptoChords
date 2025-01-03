@@ -22,5 +22,4 @@ describe('src/domain/valueObjects/CubeColor', () => {
       expect(color.value).toBeDefined()
     })
   })
-
 })

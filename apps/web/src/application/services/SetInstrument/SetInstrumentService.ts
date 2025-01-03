@@ -5,8 +5,10 @@ import { Options } from '../../../domain/valueObjects/Options'
 import { ObservableService } from '../../ObservableService'
 import { SetInstrumentRequest } from './SetInstrumentDtos'
 
-export class SetInstrumentService extends ObservableService<SetInstrumentRequest, void>{
-
+export class SetInstrumentService extends ObservableService<
+  SetInstrumentRequest,
+  void
+> {
   private optionsRepository: OptionsRepository
 
   constructor(optionsRepository: OptionsRepository) {
@@ -19,8 +21,10 @@ export class SetInstrumentService extends ObservableService<SetInstrumentRequest
     this.optionsRepository.setOptions(
       Options.create({
         muted: options.muted,
-        instrument: Instrument.create({ name: request.instrument as InstrumentEnum})
-      })
+        instrument: Instrument.create({
+          name: request.instrument as InstrumentEnum,
+        }),
+      }),
     )
   }
 }

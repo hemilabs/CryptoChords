@@ -3,7 +3,8 @@ export const NavItem = function (options: {
   children: React.ReactNode
 }) {
   return (
-    <a href={options.href}
+    <a
+      href={options.href}
       target="_blank"
       className="leading-4 h-4 my-auto mx-0"
     >

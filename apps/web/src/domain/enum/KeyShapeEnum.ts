@@ -3,5 +3,5 @@ export enum KeyShapeEnum {
   White = 'white',
   WhiteMiddle = 'white-middle',
   WhiteLeft = 'white-left',
-  WhiteRight = 'white-right'
+  WhiteRight = 'white-right',
 }

@@ -16,7 +16,7 @@ export class LocalStorageOptionsRepository implements OptionsRepository {
 
     return Options.create({
       muted: true,
-      instrument: Instrument.create({ name: InstrumentEnum.Piano }) 
+      instrument: Instrument.create({ name: InstrumentEnum.Piano }),
     })
   }
 }

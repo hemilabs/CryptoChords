@@ -20,9 +20,10 @@ export class Keyboard extends ValueObject<KeyboardProps> {
   }
 
   findKey(pitchClass: string, octave: number): Key | undefined {
-    return this.props.keys.find((key) =>
-      key.pitch.pitchClass.value === pitchClass
-      && key.pitch.octave === octave
+    return this.props.keys.find(
+      key =>
+        key.pitch.pitchClass.value === pitchClass &&
+        key.pitch.octave === octave,
     )
   }
 
@@ -30,10 +31,19 @@ export class Keyboard extends ValueObject<KeyboardProps> {
     if (txType === TxTypesEnum.Btc)
       return this.getRandomWhiteKey(0, Math.floor(this.props.keys.length / 4))
     if (txType === TxTypesEnum.Eth)
-      return this.getRandomWhiteKey(Math.floor(this.props.keys.length / 4), Math.floor(this.props.keys.length / 2))
+      return this.getRandomWhiteKey(
+        Math.floor(this.props.keys.length / 4),
+        Math.floor(this.props.keys.length / 2),
+      )
     if (txType === TxTypesEnum.Pop)
-      return this.getRandomWhiteKey(Math.floor(this.props.keys.length / 2), Math.floor(this.props.keys.length * 3 / 4))
-    return this.getRandomWhiteKey(Math.floor(this.props.keys.length * 3 / 4), this.props.keys.length)
+      return this.getRandomWhiteKey(
+        Math.floor(this.props.keys.length / 2),
+        Math.floor((this.props.keys.length * 3) / 4),
+      )
+    return this.getRandomWhiteKey(
+      Math.floor((this.props.keys.length * 3) / 4),
+      this.props.keys.length,
+    )
   }
 
   getRandomKey(min: number, max: number): Key {
@@ -43,7 +53,9 @@ export class Keyboard extends ValueObject<KeyboardProps> {
 
   getRandomWhiteKey(min: number, max: number): Key {
     const keysInTheRange = this.props.keys.slice(min, max)
-    const whiteKeys = keysInTheRange.filter((key) => key.keyShape.value !== KeyShapeEnum.Black )
+    const whiteKeys = keysInTheRange.filter(
+      key => key.keyShape.value !== KeyShapeEnum.Black,
+    )
     const randomIndex = Math.floor(Math.random() * whiteKeys.length)
     return whiteKeys[randomIndex]
   }

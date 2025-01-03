@@ -10,5 +10,5 @@ export enum PitchClassEnum {
   G_SHARP = 'G#',
   A = 'A',
   A_SHARP = 'A#',
-  B = 'B'
+  B = 'B',
 }

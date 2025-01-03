@@ -1,4 +1,7 @@
-import { Instrument, InstrumentOptions } from 'tone/build/esm/instrument/Instrument'
+import {
+  Instrument,
+  InstrumentOptions,
+} from 'tone/build/esm/instrument/Instrument'
 import InstrumentBassElectricMp3 from 'tonejs-instrument-bass-electric-mp3'
 import InstrumentBassoonMp3 from 'tonejs-instrument-bassoon-mp3'
 import InstrumentClarinetMp3 from 'tonejs-instrument-clarinet-mp3'
@@ -22,11 +25,12 @@ import InstrumentXylophoneMp3 from 'tonejs-instrument-xylophone-mp3'
 import { InstrumentEnum } from '../../domain/enum/InstrumentEnum'
 import { SoundService } from '../../domain/services/SoundService'
 
-
 export class ToneJS implements SoundService {
   static instruments: Map<string, Instrument<InstrumentOptions>> = new Map()
 
-  static async getInstrument(instrumentId: string): Promise<Instrument<InstrumentOptions>> {
+  static async getInstrument(
+    instrumentId: string,
+  ): Promise<Instrument<InstrumentOptions>> {
     let instrument = ToneJS.instruments.get(instrumentId)
     if (instrument) {
       return instrument
@@ -34,38 +38,58 @@ export class ToneJS implements SoundService {
 
     const InstrumentClass = ToneJS.getInstrumentClass(instrumentId)
 
-    return new Promise<Instrument<InstrumentOptions>>((resolve) => {
+    return new Promise<Instrument<InstrumentOptions>>(resolve => {
       instrument = new InstrumentClass({
         onload: () => {
           ToneJS.instruments.set(instrumentId, instrument!)
           resolve(ToneJS.getInstrument(instrumentId))
-        }
+        },
       }).toDestination()
     })
   }
 
   static getInstrumentClass(instrumentId: string) {
     switch (instrumentId) {
-      case InstrumentEnum.BassElectric: return InstrumentBassElectricMp3
-      case InstrumentEnum.Bassoon: return InstrumentBassoonMp3
-      case InstrumentEnum.Clarinet: return InstrumentClarinetMp3
-      case InstrumentEnum.Contrabass: return InstrumentContrabassMp3
-      case InstrumentEnum.Flute: return InstrumentFluteMp3
-      case InstrumentEnum.FrenchHorn: return InstrumentFrenchHornMp3
-      case InstrumentEnum.GuitarAcoustic: return InstrumentGuitarAcousticMp3
-      case InstrumentEnum.GuitarElectric: return InstrumentGuitarElectricMp3
-      case InstrumentEnum.GuitarNylon: return InstrumentGuitarNylonMp3
-      case InstrumentEnum.Harmonium: return InstrumentHarmoniumMp3
-      case InstrumentEnum.Harp: return InstrumentHarpMp3
-      case InstrumentEnum.Organ: return InstrumentOrganMp3
-      case InstrumentEnum.Piano: return InstrumentPianoMp3
-      case InstrumentEnum.Saxophone: return InstrumentSaxophoneMp3
-      case InstrumentEnum.Trombone: return InstrumentTromboneMp3
-      case InstrumentEnum.Trumpet: return InstrumentTrumpetMp3
-      case InstrumentEnum.Tuba: return InstrumentTubaMp3
-      case InstrumentEnum.Violin: return InstrumentViolinMp3
-      case InstrumentEnum.Xylophone: return InstrumentXylophoneMp3
-      default: throw new Error(`Instrument ${instrumentId} not found`)
+      case InstrumentEnum.BassElectric:
+        return InstrumentBassElectricMp3
+      case InstrumentEnum.Bassoon:
+        return InstrumentBassoonMp3
+      case InstrumentEnum.Clarinet:
+        return InstrumentClarinetMp3
+      case InstrumentEnum.Contrabass:
+        return InstrumentContrabassMp3
+      case InstrumentEnum.Flute:
+        return InstrumentFluteMp3
+      case InstrumentEnum.FrenchHorn:
+        return InstrumentFrenchHornMp3
+      case InstrumentEnum.GuitarAcoustic:
+        return InstrumentGuitarAcousticMp3
+      case InstrumentEnum.GuitarElectric:
+        return InstrumentGuitarElectricMp3
+      case InstrumentEnum.GuitarNylon:
+        return InstrumentGuitarNylonMp3
+      case InstrumentEnum.Harmonium:
+        return InstrumentHarmoniumMp3
+      case InstrumentEnum.Harp:
+        return InstrumentHarpMp3
+      case InstrumentEnum.Organ:
+        return InstrumentOrganMp3
+      case InstrumentEnum.Piano:
+        return InstrumentPianoMp3
+      case InstrumentEnum.Saxophone:
+        return InstrumentSaxophoneMp3
+      case InstrumentEnum.Trombone:
+        return InstrumentTromboneMp3
+      case InstrumentEnum.Trumpet:
+        return InstrumentTrumpetMp3
+      case InstrumentEnum.Tuba:
+        return InstrumentTubaMp3
+      case InstrumentEnum.Violin:
+        return InstrumentViolinMp3
+      case InstrumentEnum.Xylophone:
+        return InstrumentXylophoneMp3
+      default:
+        throw new Error(`Instrument ${instrumentId} not found`)
     }
   }
 
@@ -73,11 +97,21 @@ export class ToneJS implements SoundService {
     await ToneJS.getInstrument(instrument)
   }
 
-  async playSound(pitch: string, octave: number, instrument: string): Promise<void> {
-    (await ToneJS.getInstrument(instrument)).triggerAttack(`${pitch}${octave}`)
+  async playSound(
+    pitch: string,
+    octave: number,
+    instrument: string,
+  ): Promise<void> {
+    const instrumentInstance = await ToneJS.getInstrument(instrument)
+    instrumentInstance.triggerAttack(`${pitch}${octave}`)
   }
 
-  async stopSound(pitch: string, octave: number, instrument: string): Promise<void> {
-    (await ToneJS.getInstrument(instrument)).triggerRelease(`${pitch}${octave}`)
+  async stopSound(
+    pitch: string,
+    octave: number,
+    instrument: string,
+  ): Promise<void> {
+    const instrumentInstance = await ToneJS.getInstrument(instrument)
+    instrumentInstance.triggerRelease(`${pitch}${octave}`)
   }
 }

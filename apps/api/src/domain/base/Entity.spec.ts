@@ -22,7 +22,7 @@ describe('src/domain/base/Entity', () => {
   })
 
   it('should be an instance of ValueObject', () => {
-    const entity = TestEntity.create({ value: 'test'})
+    const entity = TestEntity.create({ value: 'test' })
 
     expect(entity).toBeInstanceOf(ValueObject)
   })

@@ -4,8 +4,10 @@ import { PitchClass } from '../../../domain/valueObjects/PitchClass'
 import { ObservableService } from '../../ObservableService'
 import { StopSoundRequest } from './StopSoundDtos'
 
-export class StopSoundService extends ObservableService<StopSoundRequest, void>{
-
+export class StopSoundService extends ObservableService<
+  StopSoundRequest,
+  void
+> {
   private soundService: SoundService
 
   constructor(soundService: SoundService) {
@@ -15,6 +17,10 @@ export class StopSoundService extends ObservableService<StopSoundRequest, void>{
 
   protected async process(request: StopSoundRequest): Promise<void> {
     const pitchClass = PitchClass.create(request.pitchClass as PitchClassEnum)
-    await this.soundService.stopSound(pitchClass.value, request.octave, request.instrument)
+    await this.soundService.stopSound(
+      pitchClass.value,
+      request.octave,
+      request.instrument,
+    )
   }
 }

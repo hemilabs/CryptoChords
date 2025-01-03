@@ -5,7 +5,7 @@ interface KeyShapeProps {
   value: KeyShapeEnum
 }
 
-export class KeyShape extends ValueObject<KeyShapeProps>{
+export class KeyShape extends ValueObject<KeyShapeProps> {
   private constructor(shape: KeyShapeEnum) {
     super({ value: shape })
   }

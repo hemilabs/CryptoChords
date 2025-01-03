@@ -33,37 +33,54 @@ export interface Services {
   setMuted: SetMutedService
   setInstrument: SetInstrumentService
   loadInstrument: LoadInstrumentService
-  switchNetwork: SwitchNetworkService,
+  switchNetwork: SwitchNetworkService
   getSelectedNetwork: GetSelectedNetworkService
   listNetworks: ListNetworksService
 }
 
 const getCubes = new GetCubesService(repositories.cubeRepository)
 const createCube = new CreateCubeService(repositories.cubeRepository)
-const recalculateCubePosition = new RecalculateCubePositionsService(repositories.cubeRepository)
-const createKeyboard = new CreateKeyboardService(repositories.keyboardRepository)
-const playSound = new PlaySoundService(domainServices.soundService, repositories.optionsRepository)
+const recalculateCubePosition = new RecalculateCubePositionsService(
+  repositories.cubeRepository,
+)
+const createKeyboard = new CreateKeyboardService(
+  repositories.keyboardRepository,
+)
+const playSound = new PlaySoundService(
+  domainServices.soundService,
+  repositories.optionsRepository,
+)
 const stopSound = new StopSoundService(domainServices.soundService)
 const pressKey = new PressKeyService(repositories.keyboardRepository, playSound)
-const releaseKey = new ReleaseKeyService(repositories.keyboardRepository, stopSound)
+const releaseKey = new ReleaseKeyService(
+  repositories.keyboardRepository,
+  stopSound,
+)
 const createTransaction = new CreateTransactionService(
   repositories.keyboardRepository,
   repositories.transactionRepository,
   createCube,
   pressKey,
   releaseKey,
-  repositories.networkRepository
+  repositories.networkRepository,
 )
-const listTransactions = new ListTransactionsService(repositories.transactionRepository)
+const listTransactions = new ListTransactionsService(
+  repositories.transactionRepository,
+)
 const getKeyboard = new GetKeyboardService(repositories.keyboardRepository)
 const getOptions = new GetOptionsService(repositories.optionsRepository)
 const setMuted = new SetMutedService(repositories.optionsRepository)
 const setInstrument = new SetInstrumentService(repositories.optionsRepository)
 const loadInstrument = new LoadInstrumentService(domainServices.soundService)
-const switchNetwork = new SwitchNetworkService(repositories.transactionRepository, repositories.networkRepository, repositories.cubeRepository)
-const getSelectedNetwork = new GetSelectedNetworkService(repositories.networkRepository)
+const switchNetwork = new SwitchNetworkService(
+  repositories.transactionRepository,
+  repositories.networkRepository,
+  repositories.cubeRepository,
+)
+const getSelectedNetwork = new GetSelectedNetworkService(
+  repositories.networkRepository,
+)
 const listNetworks = new ListNetworksService(repositories.networkRepository)
-
 
 export const services: Services = {
   createTransaction,
@@ -81,5 +98,5 @@ export const services: Services = {
   loadInstrument,
   switchNetwork,
   getSelectedNetwork,
-  listNetworks
+  listNetworks,
 }

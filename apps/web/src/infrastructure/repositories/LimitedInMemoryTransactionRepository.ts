@@ -1,7 +1,9 @@
 import { Transaction } from '../../domain/entities/Transaction'
 import { TransactionRepository } from '../../domain/repositories/TransactionRepository'
 
-export class LimitedInMemoryTransactionRepository implements TransactionRepository {
+export class LimitedInMemoryTransactionRepository
+  implements TransactionRepository
+{
   private transactions: Transaction[] = []
 
   constructor(private max = 99) {

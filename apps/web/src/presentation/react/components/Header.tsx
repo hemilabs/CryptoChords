@@ -1,16 +1,16 @@
-import { JoinCommunityButton } from './JoinCommunityButton';
-import { Logo } from './Logo';
-import { NavButton } from './NavButton';
-import { NavItems } from './NavItems';
-import { NetworkSwitch } from './NetworkSwitch';
+import { JoinCommunityButton } from './JoinCommunityButton'
+import { Logo } from './Logo'
+import { NavButton } from './NavButton'
+import { NavItems } from './NavItems'
+import { NetworkSwitch } from './NetworkSwitch'
 
 export const Header = (props: {
-  className?: string;
-  onNavButtonClick?: () => void;
-  networks: string[];
-  selectedNetwork: string | null;
-  selectNetwork: (networkName: string) => void;
-  enableMainnet: boolean;
+  className?: string
+  onNavButtonClick?: () => void
+  networks: string[]
+  selectedNetwork: string | null
+  selectNetwork: (networkName: string) => void
+  enableMainnet: boolean
 }) => {
   return (
     <header
@@ -44,5 +44,5 @@ export const Header = (props: {
       </div>
       <NavButton className="md:hidden ml-4" onClick={props.onNavButtonClick} />
     </header>
-  );
-};
+  )
+}

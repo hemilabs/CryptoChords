@@ -7,9 +7,9 @@ describe('src/application/CreateKeyboard/CreateKeyboardService', () => {
   let keyboardRepository: KeyboardRepository
 
   beforeAll(() => {
-    keyboardRepository= {
+    keyboardRepository = {
       setKeyboard: vi.fn(),
-      getKeyboard: vi.fn()
+      getKeyboard: vi.fn(),
     }
     createKeyboardService = new CreateKeyboardService(keyboardRepository)
   })
@@ -22,7 +22,7 @@ describe('src/application/CreateKeyboard/CreateKeyboardService', () => {
     const response = await createKeyboardService.execute({
       initialOctave: 0,
       numberOfKeys: 88,
-      initialPitchClass: 'A'
+      initialPitchClass: 'A',
     })
     expect(response.keys.length).toBe(88)
   })
@@ -31,7 +31,7 @@ describe('src/application/CreateKeyboard/CreateKeyboardService', () => {
     await createKeyboardService.execute({
       initialOctave: 0,
       numberOfKeys: 88,
-      initialPitchClass: 'A'
+      initialPitchClass: 'A',
     })
     expect(keyboardRepository.setKeyboard).toHaveBeenCalled()
   })

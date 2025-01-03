@@ -55,7 +55,6 @@ describe('src/presentation/common/base/StateController', () => {
   })
 
   describe('unsubscribe', () => {
-
     it('should unsubscribe subscribers correctly', () => {
       const subscriber1 = vi.fn()
       const subscriber2 = vi.fn()

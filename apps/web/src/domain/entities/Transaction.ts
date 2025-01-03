@@ -36,7 +36,7 @@ export class Transaction {
   }
 
   get url() {
-    if(this.props.txType.isBlock) {
+    if (this.props.txType.isBlock) {
       return `${this.props.network.blockUrl}/${this.props.address.value}`
     }
 

@@ -3,23 +3,19 @@ import { NetworkRepository } from '../../domain/repositories/NetworkRepository'
 import { Network } from '../../domain/entities/Network'
 
 export class StaticNetworksRepository implements NetworkRepository {
-
   private readonly testnet = Network.create({
     name: NetworkEnum.TESTNET,
     explorerUrl: HemiTestnet.blockExplorers.default.url,
-    wsUrl: StaticNetworksRepository.buildWebserviceUrl(NetworkEnum.TESTNET)
+    wsUrl: StaticNetworksRepository.buildWebserviceUrl(NetworkEnum.TESTNET),
   })
 
   private readonly mainnet = Network.create({
     name: NetworkEnum.MAINNET,
     explorerUrl: HemiMainnet.blockExplorers.default.url,
-    wsUrl: StaticNetworksRepository.buildWebserviceUrl(NetworkEnum.MAINNET)
+    wsUrl: StaticNetworksRepository.buildWebserviceUrl(NetworkEnum.MAINNET),
   })
 
-  private networks = [
-    this.mainnet,
-    this.testnet
-  ]
+  private networks = [this.mainnet, this.testnet]
 
   private selectedNetwork: Network = this.testnet
 
@@ -28,9 +24,8 @@ export class StaticNetworksRepository implements NetworkRepository {
   }
 
   async find(name: NetworkEnum) {
-    if(!name)
-      return undefined
-    
+    if (!name) return undefined
+
     return this.networks.find(network => network.name === name)
   }
 
@@ -53,8 +48,7 @@ export class StaticNetworksRepository implements NetworkRepository {
 
   async select(name: NetworkEnum) {
     const network = await this.find(name)
-    if(!network)
-      throw new Error('Network not found')
+    if (!network) throw new Error('Network not found')
 
     this.selectedNetwork = network
   }

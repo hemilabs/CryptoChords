@@ -6,5 +6,5 @@ export interface DomainServices {
 }
 
 export const domainServices: DomainServices = {
-  soundService: new ToneJS()
+  soundService: new ToneJS(),
 }

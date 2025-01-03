@@ -7,20 +7,23 @@ const cubeRepositoryMock: CubeRepository = {
   create: vi.fn(),
   delete: vi.fn(),
   update: vi.fn(),
-  list: vi.fn().mockResolvedValue([{
-    uuid: { value: 'some-id' },
-    x: { value: 0.5 },
-    y: { value: 0 },
-    color: { value: 'blue' },
-    mirrored: false
-  }, {
-    uuid: { value: 'another-id' },
-    x: { value: 0.1 },
-    y: { value: 0 },
-    color: { value: 'orange' },
-    mirrored: false
-  }]),
-  clear: vi.fn()
+  list: vi.fn().mockResolvedValue([
+    {
+      uuid: { value: 'some-id' },
+      x: { value: 0.5 },
+      y: { value: 0 },
+      color: { value: 'blue' },
+      mirrored: false,
+    },
+    {
+      uuid: { value: 'another-id' },
+      x: { value: 0.1 },
+      y: { value: 0 },
+      color: { value: 'orange' },
+      mirrored: false,
+    },
+  ]),
+  clear: vi.fn(),
 }
 
 const getCubes = new GetCubesService(cubeRepositoryMock)
@@ -43,19 +46,22 @@ describe('src/application/CreateCube/GetCubesService', () => {
 
     it('should return the correct values', async () => {
       expect(response).toEqual({
-        cubes: [{
-          id: 'some-id',
-          x: 0.5,
-          y: 0,
-          color: 'blue',
-          mirrored: false
-        }, {
-          id: 'another-id',
-          x: 0.1,
-          y: 0,
-          color: 'orange',
-          mirrored: false
-        }]
+        cubes: [
+          {
+            id: 'some-id',
+            x: 0.5,
+            y: 0,
+            color: 'blue',
+            mirrored: false,
+          },
+          {
+            id: 'another-id',
+            x: 0.1,
+            y: 0,
+            color: 'orange',
+            mirrored: false,
+          },
+        ],
       })
     })
   })

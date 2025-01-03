@@ -17,14 +17,12 @@ describe('src/presentation/common/CubesPresenter', () => {
   let createKeyboardService: CreateKeyboardService
   let createCubeService: CreateCubeService
 
-
   const options = {
     timeToFirstBlock: 100,
     maxCubeCreationInterval: 10,
     tickInterval: 5,
-    cubeStep: 0.001
+    cubeStep: 0.001,
   }
-
 
   beforeEach(async () => {
     keyboardRepository = new InMemoryKeyboardRepository()
@@ -32,13 +30,19 @@ describe('src/presentation/common/CubesPresenter', () => {
     await createKeyboardService.execute({
       numberOfKeys: 88,
       initialPitchClass: 'A',
-      initialOctave: 1
+      initialOctave: 1,
     })
     cubeRepository = new InMemoryCubeRepository()
     getCubesService = new GetCubesService(cubeRepository)
-    recalculateCubePositionsService = new RecalculateCubePositionsService(cubeRepository)
+    recalculateCubePositionsService = new RecalculateCubePositionsService(
+      cubeRepository,
+    )
     createCubeService = new CreateCubeService(cubeRepository)
-    presenter = new CubesPresenter(getCubesService, recalculateCubePositionsService, options)
+    presenter = new CubesPresenter(
+      getCubesService,
+      recalculateCubePositionsService,
+      options,
+    )
     await createCubeService.execute({ color: 'blue', x: 0.5 })
   })
 
@@ -55,11 +59,15 @@ describe('src/presentation/common/CubesPresenter', () => {
 
   it('should stop creating cubes when stopped', async () => {
     presenter.run()
-    await new Promise(resolve => setTimeout(resolve, options.maxCubeCreationInterval))
+    await new Promise(resolve =>
+      setTimeout(resolve, options.maxCubeCreationInterval),
+    )
     presenter.stop()
     const cubes = await cubeRepository.list()
     const cubesCount = cubes.length
-    await new Promise(resolve => setTimeout(resolve, options.maxCubeCreationInterval))
+    await new Promise(resolve =>
+      setTimeout(resolve, options.maxCubeCreationInterval),
+    )
     expect(cubes.length).toBe(cubesCount)
   })
 

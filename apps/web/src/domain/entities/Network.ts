@@ -9,13 +9,12 @@ export interface NetworkProps {
 }
 
 export class Network extends Entity<NetworkProps> {
-
   private constructor(props: NetworkProps, uuid: Uuid) {
     super(props, uuid)
   }
 
   static create(props: NetworkProps, id?: Uuid) {
-    const uuid = id ?? Uuid.create();
+    const uuid = id ?? Uuid.create()
     return new Network(props, uuid)
   }
 

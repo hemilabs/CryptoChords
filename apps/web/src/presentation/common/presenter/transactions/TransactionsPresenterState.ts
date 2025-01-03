@@ -1,4 +1,3 @@
-
 export type TransactionsPresenterState = {
   transactions: {
     type: string

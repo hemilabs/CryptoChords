@@ -1,4 +1,3 @@
-
 export type CubesPresenterState = {
   cubes: {
     id: string

@@ -2,10 +2,10 @@ import { Event } from './Event'
 import { EventSubscription } from './EventSubscription'
 import { Observable } from './Observable'
 
-export class ObservableSet<E extends Event = Event> implements Observable<E>{
+export class ObservableSet<E extends Event = Event> implements Observable<E> {
   private listeners: Observable<E>[] = []
-  
-  constructor(...listeners:Observable<E>[]) {
+
+  constructor(...listeners: Observable<E>[]) {
     this.listeners = listeners
   }
 

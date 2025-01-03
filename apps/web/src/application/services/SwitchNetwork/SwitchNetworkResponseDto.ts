@@ -1,4 +1,4 @@
 export interface SwitchNetworkResponseDto {
-  networkName: string,
+  networkName: string
   networkWsUrl: string
 }

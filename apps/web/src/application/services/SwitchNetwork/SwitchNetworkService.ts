@@ -7,7 +7,10 @@ import { ObservableService } from '../../ObservableService'
 import { SwitchNetworkRequestDto } from './SwitchNetworkRequestDto'
 import { SwitchNetworkResponseDto } from './SwitchNetworkResponseDto'
 
-export class SwitchNetworkService extends ObservableService<SwitchNetworkRequestDto, SwitchNetworkResponseDto> {
+export class SwitchNetworkService extends ObservableService<
+  SwitchNetworkRequestDto,
+  SwitchNetworkResponseDto
+> {
   private readonly transactionRepository: TransactionRepository
   private readonly networkRepository: NetworkRepository
   private readonly cubeRepository: CubeRepository
@@ -15,7 +18,7 @@ export class SwitchNetworkService extends ObservableService<SwitchNetworkRequest
   constructor(
     transactionRepository: TransactionRepository,
     networkRepository: NetworkRepository,
-    cubeRepository: CubeRepository
+    cubeRepository: CubeRepository,
   ) {
     super()
     this.transactionRepository = transactionRepository
@@ -23,17 +26,19 @@ export class SwitchNetworkService extends ObservableService<SwitchNetworkRequest
     this.cubeRepository = cubeRepository
   }
 
-  protected async process(request: SwitchNetworkRequestDto): Promise<SwitchNetworkResponseDto> {
+  protected async process(
+    request: SwitchNetworkRequestDto,
+  ): Promise<SwitchNetworkResponseDto> {
     const network = await this.validateNetwork(request.networkName)
     await Promise.all([
       this.transactionRepository.clear(),
       this.cubeRepository.clear(),
-      this.networkRepository.select(network.name)
+      this.networkRepository.select(network.name),
     ])
 
     return {
       networkName: network.name,
-      networkWsUrl: network.wsUrl
+      networkWsUrl: network.wsUrl,
     }
   }
 
@@ -42,7 +47,9 @@ export class SwitchNetworkService extends ObservableService<SwitchNetworkRequest
       throw new Error('Network not found')
     }
 
-    const network = await this.networkRepository.find(networkName as NetworkEnum)
+    const network = await this.networkRepository.find(
+      networkName as NetworkEnum,
+    )
 
     if (!network) {
       throw new Error('Network not found')

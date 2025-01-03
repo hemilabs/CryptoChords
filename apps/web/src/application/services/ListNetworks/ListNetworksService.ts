@@ -2,13 +2,13 @@ import { NetworkRepository } from '../../../domain/repositories/NetworkRepositor
 import { ObservableService } from '../../ObservableService'
 import { ListNetworksResponseDto } from './ListNetworksResponseDto'
 
-
-export class ListNetworksService extends ObservableService<void, ListNetworksResponseDto> {
+export class ListNetworksService extends ObservableService<
+  void,
+  ListNetworksResponseDto
+> {
   private readonly networkRepository: NetworkRepository
 
-  constructor(
-    networkRepository: NetworkRepository,
-  ) {
+  constructor(networkRepository: NetworkRepository) {
     super()
     this.networkRepository = networkRepository
   }
@@ -16,7 +16,7 @@ export class ListNetworksService extends ObservableService<void, ListNetworksRes
   protected async process(): Promise<ListNetworksResponseDto> {
     const [networks, selectedNetwork] = await Promise.all([
       this.networkRepository.list(),
-      this.networkRepository.getSelected()
+      this.networkRepository.getSelected(),
     ])
 
     return {
@@ -24,7 +24,7 @@ export class ListNetworksService extends ObservableService<void, ListNetworksRes
         name: network.name,
         wsUrl: network.wsUrl,
         selected: network.name === selectedNetwork.name,
-      }))
+      })),
     }
   }
 }

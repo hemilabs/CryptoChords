@@ -6,8 +6,8 @@ import { Address } from '../valueObjects/Address'
 import { L2Block } from './L2Block'
 
 describe('src/domain/entities/L2Block', () => {
-  const txType = TxType.create(TxTypesEnum.Eth) 
-  const address = Address.create("0xbhbfhudhuf")
+  const txType = TxType.create(TxTypesEnum.Eth)
+  const address = Address.create('0xbhbfhudhuf')
 
   it('should be defined', () => {
     expect(L2Block).toBeDefined()
@@ -16,7 +16,7 @@ describe('src/domain/entities/L2Block', () => {
   it('should be an instance of Entity', () => {
     const l2Block = L2Block.create({
       txType,
-      address
+      address,
     })
 
     expect(l2Block).toBeInstanceOf(Entity)
@@ -25,7 +25,7 @@ describe('src/domain/entities/L2Block', () => {
   describe('create', () => {
     const l2Block = L2Block.create({
       txType,
-      address
+      address,
     })
 
     it('should set the txType on tagname txType', () => {

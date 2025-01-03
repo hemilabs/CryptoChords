@@ -4,7 +4,7 @@ export interface KeyProps {
   index: number
   color?: string
 }
-export const Key = function ({ keyShape, x, index, color}: KeyProps) {
+export const Key = function ({ keyShape, x, index, color }: KeyProps) {
   const isBlack = keyShape === 'black'
   const zIndex = isBlack ? 1 : 0
   const left = `${x * 100}%`
@@ -13,11 +13,12 @@ export const Key = function ({ keyShape, x, index, color}: KeyProps) {
 
   return (
     <img
-      key={index} src={
+      key={index}
+      src={
         color
           ? `/image/keyboard/keys/${color}/${keyShape}.svg`
           : `/image/keyboard/keys/${keyShape}.svg`
-        }
+      }
       style={{ left, top, width, zIndex }}
       className={`
         absolute

@@ -6,7 +6,7 @@
 name: "Staging"
 on:
   push:
-    branches: [ "master" ]
+    branches: ["master"]
   workflow_dispatch:
 
 concurrency:
@@ -23,7 +23,7 @@ jobs:
       packages: write # Needed to push to the GitHub Container Registry
     strategy:
       matrix:
-        component: [ "api", "web" ]
+        component: ["api", "web"]
     with:
       version: "${{ github.sha }}"
       context: "."
@@ -55,7 +55,7 @@ jobs:
   deploy:
     name: "Deploy to staging"
     uses: hemilabs/actions/.github/workflows/deploy-kustomize.yml@main
-    needs: [ "docker", "deploy-registry" ]
+    needs: ["docker", "deploy-registry"]
     permissions:
       contents: read
     with:

@@ -3,8 +3,7 @@ import { Options } from '../../../domain/valueObjects/Options'
 import { ObservableService } from '../../ObservableService'
 import { SetMutedRequest } from './SetMutedDtos'
 
-export class SetMutedService extends ObservableService<SetMutedRequest, void>{
-
+export class SetMutedService extends ObservableService<SetMutedRequest, void> {
   private optionsRepository: OptionsRepository
 
   constructor(optionsRepository: OptionsRepository) {
@@ -17,8 +16,8 @@ export class SetMutedService extends ObservableService<SetMutedRequest, void>{
     this.optionsRepository.setOptions(
       Options.create({
         instrument: options.instrument,
-        muted: request.muted
-      })
+        muted: request.muted,
+      }),
     )
   }
 }

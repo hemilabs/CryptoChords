@@ -12,25 +12,26 @@ export const Cubes = function (props: {
   bottomOffset?: number
 }) {
   const { cubesPresenter } = useContext(presenters)
-  const { cubes } = usePresenter<CubesPresenter, CubesPresenterState>(cubesPresenter)
+  const { cubes } = usePresenter<CubesPresenter, CubesPresenterState>(
+    cubesPresenter,
+  )
 
   return (
     <div className={`${props.className ?? ''}`}>
-      {cubes
-        .map((cube) => {
-          return (
-            <Cube
-              key={cube.id}
-              color={cube.color}
-              style={{
-                left: `${cube.x * 100}%`,
-                bottom: `${(cube.y * (props.yMultiplier ?? 1) - (props.bottomOffset ?? 0)) * 100}%`,
-              }}
-              centerPositioning={props.centerPositioning}
-              mirrored={cube.mirrored}
-            />
-          )
-        })}
+      {cubes.map(cube => {
+        return (
+          <Cube
+            key={cube.id}
+            color={cube.color}
+            style={{
+              left: `${cube.x * 100}%`,
+              bottom: `${(cube.y * (props.yMultiplier ?? 1) - (props.bottomOffset ?? 0)) * 100}%`,
+            }}
+            centerPositioning={props.centerPositioning}
+            mirrored={cube.mirrored}
+          />
+        )
+      })}
     </div>
   )
 }
