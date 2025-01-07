@@ -1,3 +1,4 @@
+import qs from 'qs';
 import { CreateTransactionService } from '../../../../application/services/CreateTransaction/CreateTransactionService';
 import { GetSelectedNetworkService } from '../../../../application/services/GetSelectedNetwork/GetSelectedNetworkService';
 import { ListNetworksService } from '../../../../application/services/ListNetworks/ListNetworksService';
@@ -5,7 +6,7 @@ import { SwitchNetworkService } from '../../../../application/services/SwitchNet
 import { Presenter } from '../../base/Presenter';
 import { AppPresenterState } from './AppPresenterState';
 
-const initalState: AppPresenterState = {
+const initialState: AppPresenterState = {
   enableMainnet: import.meta.env.VITE_ENABLE_MAINNET === 'true',
   navMenuVisible: false,
   networkNames: [],
@@ -26,7 +27,7 @@ export class AppPresenter extends Presenter<AppPresenterState> {
     listNetworks: ListNetworksService,
   ) {
     super({
-      ...initalState,
+      ...initialState,
     });
     this.createTransactionService = createTransactionService;
     this.switchNetworkService = switchNetworkService;
@@ -36,7 +37,27 @@ export class AppPresenter extends Presenter<AppPresenterState> {
   }
 
   private async init() {
+    const networkType = this.parseUrlForNetworkType();
     await this.loadNetworkState();
+
+    if (this.isNetworkValid(networkType)) {
+      await this.selectNetwork(networkType!);
+    }
+  }
+
+  private parseUrlForNetworkType(): string | null {
+    const urlParams = qs.parse(window.location.search, {
+      ignoreQueryPrefix: true,
+    });
+    return urlParams.networkType as string | null;
+  }
+
+  private isNetworkValid(networkType: string | null): boolean {
+    return (
+      networkType !== null &&
+      this.state.networkNames.includes(networkType) &&
+      initialState.enableMainnet
+    );
   }
 
   private async loadNetworkState() {
