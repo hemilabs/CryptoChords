@@ -1,5 +1,5 @@
 export interface StopSoundRequest {
-  pitchClass: string
-  octave: number
-  instrument: string
+  pitchClass: string;
+  octave: number;
+  instrument: string;
 }

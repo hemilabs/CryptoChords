@@ -1,35 +1,38 @@
-import { KeyboardRepository } from '../../../domain/repositories/KeyboardRepository'
-import { ObservableService } from '../../ObservableService'
-import { GetKeyboardResponseDto } from './GetKeyboardDtos'
+import { KeyboardRepository } from '../../../domain/repositories/KeyboardRepository';
+import { ObservableService } from '../../ObservableService';
+import { GetKeyboardResponseDto } from './GetKeyboardDtos';
 
-export class GetKeyboardService extends ObservableService<void, GetKeyboardResponseDto>{
-  private readonly keyboardRepository: KeyboardRepository
-  
+export class GetKeyboardService extends ObservableService<
+  void,
+  GetKeyboardResponseDto
+> {
+  private readonly keyboardRepository: KeyboardRepository;
+
   constructor(keyboardRepository: KeyboardRepository) {
-    super()
-    this.keyboardRepository = keyboardRepository
+    super();
+    this.keyboardRepository = keyboardRepository;
   }
 
   protected async process(): Promise<GetKeyboardResponseDto> {
-    const keyboard = this.keyboardRepository.getKeyboard()
+    const keyboard = this.keyboardRepository.getKeyboard();
 
     if (!keyboard) {
       return {
-        keys: []
-      }
+        keys: [],
+      };
     }
 
     return {
       keys: keyboard.keys.map(key => ({
+        color: key.color,
+        keyShape: key.keyShape.value,
         pitch: {
           class: key.pitch.pitchClass.value,
-          octave: key.pitch.octave
+          octave: key.pitch.octave,
         },
-        keyShape: key.keyShape.value,
+        pressed: key.pressed,
         x: key.x.value,
-        color: key.color,
-        pressed: key.pressed
-      }))
-    }
+      })),
+    };
   }
 }

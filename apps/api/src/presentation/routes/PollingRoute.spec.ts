@@ -32,18 +32,29 @@ describe('PollingRoute', () => {
   });
 
   it('should initialize with WebSocket when useWebsocket is true', () => {
-    const pollingRoute = new PollingRoute(true, MOCK_WEBSOCKET_URL, MOCK_RPC_URL);
+    const pollingRoute = new PollingRoute(
+      true,
+      MOCK_WEBSOCKET_URL,
+      MOCK_RPC_URL,
+    );
     pollingRoute.initialize(wss);
 
-    const mockPollingService = pollingRoute['pollingService'] as any;
-    expect(mockPollingService.execute).toHaveBeenCalledWith(wss, MOCK_WEBSOCKET_URL);
+    const mockPollingService = pollingRoute['pollingService'];
+    expect(mockPollingService.execute).toHaveBeenCalledWith(
+      wss,
+      MOCK_WEBSOCKET_URL,
+    );
   });
 
   it('should initialize with Polling when useWebsocket is false', () => {
-    const pollingRoute = new PollingRoute(false, MOCK_WEBSOCKET_URL, MOCK_RPC_URL);
+    const pollingRoute = new PollingRoute(
+      false,
+      MOCK_WEBSOCKET_URL,
+      MOCK_RPC_URL,
+    );
     pollingRoute.initialize(wss);
 
-    const mockPollingService = pollingRoute['pollingService'] as any;
+    const mockPollingService = pollingRoute['pollingService'];
     expect(mockPollingService.execute).toHaveBeenCalledWith(wss, MOCK_RPC_URL);
   });
 });

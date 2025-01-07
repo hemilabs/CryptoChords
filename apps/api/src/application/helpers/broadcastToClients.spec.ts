@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { describe, it, expect, vi } from 'vitest';
 import WebSocket, { WebSocketServer } from 'ws';
-import BroadcastToClients from './BroadcastToClients';
+import broadcastToClients from './BroadcastToClients';
 
 describe('BroadcastToClients', () => {
   it('should send a message to all connected clients', () => {
@@ -22,7 +22,7 @@ describe('BroadcastToClients', () => {
       toJSON: () => ({ key: 'value' }),
     };
 
-    BroadcastToClients(wss, l2Block as any);
+    broadcastToClients(wss, l2Block as any);
 
     expect(mockSend).toHaveBeenCalledTimes(1);
     expect(mockSend).toHaveBeenCalledWith(JSON.stringify({ key: 'value' }));

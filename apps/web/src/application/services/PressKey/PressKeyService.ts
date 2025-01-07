@@ -1,35 +1,38 @@
-import { KeyboardRepository } from '../../../domain/repositories/KeyboardRepository'
-import { ObservableService } from '../../ObservableService'
-import { PlaySoundService } from '../PlaySound/PlaySoundService'
-import { PressKeyRequest, PressKeyResponse } from './PressKeyDtos'
+import { KeyboardRepository } from '../../../domain/repositories/KeyboardRepository';
+import { ObservableService } from '../../ObservableService';
+import { PlaySoundService } from '../PlaySound/PlaySoundService';
+import { PressKeyRequest, PressKeyResponse } from './PressKeyDtos';
 
-export class PressKeyService extends ObservableService<PressKeyRequest, PressKeyResponse>{
+export class PressKeyService extends ObservableService<
+  PressKeyRequest,
+  PressKeyResponse
+> {
+  private keyboardRepository: KeyboardRepository;
+  private playSound: PlaySoundService;
 
-  private keyboardRepository: KeyboardRepository
-  private playSound: PlaySoundService
-
-  constructor(keyboardRepository: KeyboardRepository, playSound: PlaySoundService) {
-    super()
-    this.keyboardRepository = keyboardRepository
-    this.playSound = playSound
+  constructor(
+    keyboardRepository: KeyboardRepository,
+    playSound: PlaySoundService,
+  ) {
+    super();
+    this.keyboardRepository = keyboardRepository;
+    this.playSound = playSound;
   }
 
   protected async process(request: PressKeyRequest): Promise<PressKeyResponse> {
-    const keyboard = this.keyboardRepository.getKeyboard()
-    if (!keyboard)
-      return {}
+    const keyboard = this.keyboardRepository.getKeyboard();
+    if (!keyboard) return {};
 
-    const key = keyboard.findKey(request.pitchClass, request.octave)
-    if (!key)
-      return {}
+    const key = keyboard.findKey(request.pitchClass, request.octave);
+    if (!key) return {};
 
-    key.press()
+    key.press();
 
     const { instrument } = await this.playSound.execute({
+      octave: request.octave,
       pitchClass: request.pitchClass,
-      octave: request.octave
-    })
+    });
 
-    return { instrument }
+    return { instrument };
   }
 }

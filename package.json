@@ -4,6 +4,8 @@
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
+    "format:check": "prettier --check .",
+    "format:fix": "npx prettier --write .",
     "lint": "turbo lint",
     "test": "turbo run test",
     "test:cov": "turbo run test --coverage",

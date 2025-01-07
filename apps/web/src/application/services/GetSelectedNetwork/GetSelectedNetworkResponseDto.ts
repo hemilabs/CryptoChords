@@ -1,4 +1,4 @@
 export interface GetSelectedNetworkResponseDto {
-  networkName: string
-  networkWsUrl: string
+  networkName: string;
+  networkWsUrl: string;
 }

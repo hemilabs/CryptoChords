@@ -1,20 +1,22 @@
-import { JoinCommunityButton } from './JoinCommunityButton'
-import { Logo } from './Logo'
-import { NavItems } from './NavItems'
-import { NetworkSwitch } from './NetworkSwitch'
-import { Social } from './Social'
-import closeButton from '/image/close-button.svg'
+import { JoinCommunityButton } from './JoinCommunityButton';
+import { Logo } from './Logo';
+import { NavItems } from './NavItems';
+import { NetworkSwitch } from './NetworkSwitch';
+import { Social } from './Social';
+
+import closeButton from '/image/close-button.svg';
 
 export const NavMenu = function (props: {
-  className?: string
-  onCloseButtonClick?: () => void
-  networks: string[]
-  selectedNetwork: string | null
-  selectNetwork: (networkName: string) => void
-  enableMainnet: boolean
+  className?: string;
+  onCloseButtonClick?: () => void;
+  networks: string[];
+  selectedNetwork: string | null;
+  selectNetwork: (networkName: string) => void;
+  enableMainnet: boolean;
 }) {
   return (
-    <div className={`
+    <div
+      className={`
       ${props.className}
       fixed w-full
       flex flex-col justify-between
@@ -23,20 +25,25 @@ export const NavMenu = function (props: {
       overflow-y-auto
       pb-16
       z-50
-      `}>
-      <div className='flex flex-row justify-between p-10'>
+      `}
+    >
+      <div className="flex flex-row justify-between p-10">
         <Logo />
-        <img src={closeButton} onClick={props.onCloseButtonClick} className={`cursor-pointer w-10 ${props.className ?? ''}`} />
+        <img
+          className={`cursor-pointer w-10 ${props.className ?? ''}`}
+          onClick={props.onCloseButtonClick}
+          src={closeButton}
+        />
       </div>
-      <NavItems className='flex-col mt-24 text-center gap-24 text-4xl'></NavItems>
+      <NavItems className="flex-col mt-24 text-center gap-24 text-4xl"></NavItems>
       <div className="grow flex flex-col justify-center items-center my-16 gap-4">
         {props.enableMainnet && (
           <div className="w-full max-w-52">
             <NetworkSwitch
               className="w-full text-2xl p-8"
               networks={props.networks}
-              selectedNetwork={props.selectedNetwork ?? props.networks[0]}
               selectNetwork={props.selectNetwork}
+              selectedNetwork={props.selectedNetwork ?? props.networks[0]}
             />
           </div>
         )}
@@ -44,7 +51,7 @@ export const NavMenu = function (props: {
           <JoinCommunityButton className="w-full text-2xl p-8" />
         </div>
       </div>
-      <Social large className='justify-center'></Social>
+      <Social className="justify-center" large></Social>
     </div>
-  )
-}
+  );
+};

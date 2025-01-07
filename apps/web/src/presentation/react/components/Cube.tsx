@@ -1,12 +1,13 @@
 export const Cube = function (props: {
-  className?: string
-  style?: React.CSSProperties
-  centerPositioning?: boolean
-  color: string
-  mirrored?: boolean
+  className?: string;
+  style?: React.CSSProperties;
+  centerPositioning?: boolean;
+  color: string;
+  mirrored?: boolean;
 }) {
   return (
-    <img src={`/image/cube/${props.color}.png`}
+    <img
+      src={`/image/cube/${props.color}.png`}
       className={`absolute 
                   bottom-0
                   w-[10vw]
@@ -17,5 +18,5 @@ export const Cube = function (props: {
                 `}
       style={props.style}
     />
-  )
-}
+  );
+};

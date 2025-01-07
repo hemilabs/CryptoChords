@@ -3,69 +3,69 @@
 # which can be found in the LICENSE file.
 
 # GitHub Actions workflow to deploy to the staging environment.
-name: "Staging"
+name: 'Staging'
 on:
   push:
-    branches: [ "master" ]
+    branches: ['master']
   workflow_dispatch:
 
 concurrency:
-  group: "staging-deploy-${{ github.event.number || github.ref }}"
+  group: 'staging-deploy-${{ github.event.number || github.ref }}'
   cancel-in-progress: false
 
 jobs:
   # Build and push Docker image
   docker:
-    name: "Docker (${{ matrix.component }})"
+    name: 'Docker (${{ matrix.component }})'
     uses: hemilabs/actions/.github/workflows/docker.yml@main
     permissions:
       contents: read
       packages: write # Needed to push to the GitHub Container Registry
     strategy:
       matrix:
-        component: [ "api", "web" ]
+        component: ['api', 'web']
     with:
-      version: "${{ github.sha }}"
-      context: "."
-      file: "./Dockerfile.${{ matrix.component }}"
+      version: '${{ github.sha }}'
+      context: '.'
+      file: './Dockerfile.${{ matrix.component }}'
       dockerhub: true
       tags: |
         hemilabs/cryptochords-${{ matrix.component }}:${{ github.sha }}
         ghcr.io/hemilabs/cryptochords-${{ matrix.component }}:${{ github.sha }}
     secrets:
-      DOCKERHUB_USERNAME: "${{ secrets.DOCKER_USERNAME }}"
-      DOCKERHUB_PASSWORD: "${{ secrets.DOCKER_PASSWORD }}"
+      DOCKERHUB_USERNAME: '${{ secrets.DOCKER_USERNAME }}'
+      DOCKERHUB_PASSWORD: '${{ secrets.DOCKER_PASSWORD }}'
 
   deploy-registry:
-    name: "Deploy registry secret"
+    name: 'Deploy registry secret'
     uses: hemilabs/actions/.github/workflows/docker-registry-secret.yml@main
     permissions:
       contents: read
     with:
-      secret-name: "dockerhub-secret"
-      namespace: "cryptochords"
+      secret-name: 'dockerhub-secret'
+      namespace: 'cryptochords'
     secrets:
-      KUBECONFIG: "${{ secrets.VKE_STAGING_KUBECONFIG }}"
-      KUBECONFIG_CONTEXT: "${{ secrets.VKE_STAGING_KUBECONFIG_CONTEXT }}"
-      DOCKER_USERNAME: "${{ secrets.DOCKER_USERNAME }}"
-      DOCKER_PASSWORD: "${{ secrets.DOCKER_PASSWORD }}"
-      DOCKER_EMAIL: "${{ secrets.DOCKER_EMAIL }}"
+      KUBECONFIG: '${{ secrets.VKE_STAGING_KUBECONFIG }}'
+      KUBECONFIG_CONTEXT: '${{ secrets.VKE_STAGING_KUBECONFIG_CONTEXT }}'
+      DOCKER_USERNAME: '${{ secrets.DOCKER_USERNAME }}'
+      DOCKER_PASSWORD: '${{ secrets.DOCKER_PASSWORD }}'
+      DOCKER_EMAIL: '${{ secrets.DOCKER_EMAIL }}'
 
   # Deploy to Kubernetes cluster
   deploy:
-    name: "Deploy to staging"
+    name: 'Deploy to staging'
     uses: hemilabs/actions/.github/workflows/deploy-kustomize.yml@main
-    needs: [ "docker", "deploy-registry" ]
+    needs: ['docker', 'deploy-registry']
     permissions:
       contents: read
     with:
-      namespace: "cryptochords"
-      kustomize: "./infrastructure/kustomize/overlays/staging/"
-      environment-name: "staging"
-      environment-url: "https://cryptochords.letshamsterdance.xyz/"
+      namespace: 'cryptochords'
+      kustomize: './infrastructure/kustomize/overlays/staging/'
+      environment-name: 'staging'
+      environment-url: 'https://cryptochords.letshamsterdance.xyz/'
       image: |
         hemilabs/cryptochords-api:${{ github.sha }}
         hemilabs/cryptochords-web:${{ github.sha }}
     secrets:
-      KUBECONFIG: "${{ secrets.VKE_STAGING_KUBECONFIG }}"
-      KUBECONFIG_CONTEXT: "${{ secrets.VKE_STAGING_KUBECONFIG_CONTEXT }}"
+      KUBECONFIG: '${{ secrets.VKE_STAGING_KUBECONFIG }}'
+      KUBECONFIG_CONTEXT: '${{ secrets.VKE_STAGING_KUBECONFIG_CONTEXT }}'

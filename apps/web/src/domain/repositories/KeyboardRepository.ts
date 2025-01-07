@@ -1,6 +1,6 @@
-import { Keyboard } from '../valueObjects/Keyboard'
+import { Keyboard } from '../valueObjects/Keyboard';
 
 export interface KeyboardRepository {
-  setKeyboard: (keyboard: Keyboard) => void
-  getKeyboard: () => Keyboard | undefined
+  setKeyboard: (keyboard: Keyboard) => void;
+  getKeyboard: () => Keyboard | undefined;
 }

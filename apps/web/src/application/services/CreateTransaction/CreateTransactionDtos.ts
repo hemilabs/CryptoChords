@@ -1,6 +1,6 @@
 export interface CreateTransactionRequest {
-  txType: string
-  address: string
-  network: string
-  timestamp: number
+  txType: string;
+  address: string;
+  network: string;
+  timestamp: number;
 }

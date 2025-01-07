@@ -1,20 +1,20 @@
-import { ValueObject } from '@cryptochords/shared'
-import { KeyShapeEnum } from '../enum/KeyShapeEnum'
+import { ValueObject } from '@cryptochords/shared';
+import { KeyShapeEnum } from '../enum/KeyShapeEnum';
 
 interface KeyShapeProps {
-  value: KeyShapeEnum
+  value: KeyShapeEnum;
 }
 
-export class KeyShape extends ValueObject<KeyShapeProps>{
+export class KeyShape extends ValueObject<KeyShapeProps> {
   private constructor(shape: KeyShapeEnum) {
-    super({ value: shape })
+    super({ value: shape });
   }
 
   static create(shape: KeyShapeEnum) {
-    return new KeyShape(shape)
+    return new KeyShape(shape);
   }
 
   get value() {
-    return this.props.value
+    return this.props.value;
   }
 }

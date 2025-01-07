@@ -7,22 +7,22 @@ import { Timestamp } from '@cryptochords/shared';
 
 describe('Transaction', () => {
   const mockNetwork = Network.create({
-    name: NetworkEnum.MAINNET,
     explorerUrl: 'https://explorer.mainnet.com',
-    wsUrl: 'wss://mainnet.ws.com'
+    name: NetworkEnum.MAINNET,
+    wsUrl: 'wss://mainnet.ws.com',
   });
 
   const mockAddress = { value: '0x1234567890abcdef' } as Address;
-  const mockTimestamp = Timestamp.create(new Date().getTime())
+  const mockTimestamp = Timestamp.create(new Date().getTime());
 
   it('should create a Transaction instance', () => {
     const txType = { isBlock: false } as TxType;
 
     const transaction = Transaction.create({
-      txType,
       address: mockAddress,
       network: mockNetwork,
-      timestamp: mockTimestamp
+      timestamp: mockTimestamp,
+      txType,
     });
 
     expect(transaction).toBeInstanceOf(Transaction);
@@ -36,10 +36,10 @@ describe('Transaction', () => {
     const txType = { isBlock: true } as TxType;
 
     const transaction = Transaction.create({
-      txType,
       address: mockAddress,
       network: mockNetwork,
-      timestamp: mockTimestamp
+      timestamp: mockTimestamp,
+      txType,
     });
 
     const expectedUrl = `${mockNetwork.blockUrl}/${mockAddress.value}`;
@@ -50,10 +50,10 @@ describe('Transaction', () => {
     const txType = { isBlock: false } as TxType;
 
     const transaction = Transaction.create({
-      txType,
       address: mockAddress,
       network: mockNetwork,
-      timestamp: mockTimestamp
+      timestamp: mockTimestamp,
+      txType,
     });
 
     const expectedUrl = `${mockNetwork.transactionUrl}/${mockAddress.value}`;

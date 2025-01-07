@@ -1,44 +1,44 @@
-import { TxTypesEnum, ValueObject } from '@cryptochords/shared'
-import { TransactionColorEnum } from '../enum/TransactionColorEnum'
+import { TxTypesEnum, ValueObject } from '@cryptochords/shared';
+import { TransactionColorEnum } from '../enum/TransactionColorEnum';
 
 interface TransactionColorProps {
-  value: TransactionColorEnum
+  value: TransactionColorEnum;
 }
 
 export class TransactionColor extends ValueObject<TransactionColorProps> {
   private constructor(color: TransactionColorEnum) {
-    super({ value: color })
+    super({ value: color });
   }
 
   static createByTxType(txType: string) {
     if (txType === TxTypesEnum.Btc)
-      return this.create(TransactionColorEnum.Orange)
+      return this.create(TransactionColorEnum.Orange);
 
     if (txType === TxTypesEnum.Eth)
-      return this.create(TransactionColorEnum.Blue)
+      return this.create(TransactionColorEnum.Blue);
 
     if (txType === TxTypesEnum.Pop)
-      return this.create(TransactionColorEnum.Purple)
+      return this.create(TransactionColorEnum.Purple);
 
-    return this.create(TransactionColorEnum.Green)
+    return this.create(TransactionColorEnum.Green);
   }
 
   static create(color: TransactionColorEnum) {
-    return new TransactionColor(color)
+    return new TransactionColor(color);
   }
 
   static random() {
-    return this.create(TransactionColor.randomColorValue())
+    return this.create(TransactionColor.randomColorValue());
   }
 
   private static randomColorValue(): TransactionColorEnum {
-    const enumValues = Object.values(TransactionColorEnum)
-    const randomIndex = Math.floor(Math.random() * enumValues.length)
-    const randomEnumValue = enumValues[randomIndex]
-    return randomEnumValue as TransactionColorEnum
+    const enumValues = Object.values(TransactionColorEnum);
+    const randomIndex = Math.floor(Math.random() * enumValues.length);
+    const randomEnumValue = enumValues[randomIndex];
+    return randomEnumValue as TransactionColorEnum;
   }
 
   get value() {
-    return this.props.value
+    return this.props.value;
   }
 }

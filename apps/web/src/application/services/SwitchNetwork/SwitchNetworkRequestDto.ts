@@ -1,3 +1,3 @@
 export interface SwitchNetworkRequestDto {
-  networkName: string
+  networkName: string;
 }

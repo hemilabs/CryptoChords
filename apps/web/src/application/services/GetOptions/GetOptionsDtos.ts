@@ -1,4 +1,4 @@
 export interface GetOptionsResponseDto {
-  muted: boolean
-  instrument: string
+  muted: boolean;
+  instrument: string;
 }

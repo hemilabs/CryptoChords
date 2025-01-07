@@ -1,4 +1,4 @@
-import { ComponentProps } from 'react'
+import { ComponentProps } from 'react';
 
 export const CheckMarkIcon = (props: ComponentProps<'svg'>) => (
   <svg
@@ -16,4 +16,4 @@ export const CheckMarkIcon = (props: ComponentProps<'svg'>) => (
       strokeWidth={1.5}
     />
   </svg>
-)
+);

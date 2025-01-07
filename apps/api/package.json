@@ -9,14 +9,13 @@
     "test:watch": "vitest watch src",
     "dev": "nodemon",
     "build": "tsc -p tsconfig.build.json",
-    "lint": "eslint . --ext ts --report-unused-disable-directives --max-warnings 0",
+    "lint": "eslint . --ext ts",
     "start:api": "node dist/server.js"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
     "@cryptochords/shared": "*",
-    "@typescript-eslint/eslint-plugin": "8.18.0",
     "dotenv": "16.4.7",
     "express": "4.21.2",
     "web3": "4.16.0"
@@ -27,8 +26,12 @@
     "@types/node": "22.10.2",
     "@types/ws": "8.5.13",
     "@vitest/coverage-v8": "2.1.8",
-    "eslint": "8.56.0",
+    "@typescript-eslint/eslint-plugin": "8.18.2",
+    "@typescript-eslint/parser": "8.18.2",
+    "eslint": "8.57.1",
+    "eslint-config-bloq": "4.4.1",
     "nodemon": "3.1.9",
+    "prettier": "3.3.3",
     "ts-node": "10.9.2",
     "typescript": "5.3.3",
     "vitest": "2.1.8"

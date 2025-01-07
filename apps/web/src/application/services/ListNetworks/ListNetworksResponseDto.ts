@@ -1,6 +1,5 @@
-import { NetworkDto } from './NetworkDto'
+import { NetworkDto } from './NetworkDto';
 
 export interface ListNetworksResponseDto {
-  networks: NetworkDto[]
+  networks: NetworkDto[];
 }
-

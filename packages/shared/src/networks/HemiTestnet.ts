@@ -1,3 +1,3 @@
-import { hemiSepolia } from 'hemi-viem'
+import { hemiSepolia } from 'hemi-viem';
 
-export const HemiTestnet = hemiSepolia
+export const HemiTestnet = hemiSepolia;

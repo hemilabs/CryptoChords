@@ -1,6 +1,5 @@
-
 export interface NetworkDto {
-  name: string
-  wsUrl: string
-  selected: boolean
+  name: string;
+  wsUrl: string;
+  selected: boolean;
 }

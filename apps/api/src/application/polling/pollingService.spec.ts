@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { WebSocketServer } from 'ws';
 import { EventEmitter } from 'events';
-import BroadcastToClients from '../helpers/BroadcastToClients';
+import broadcastToClients from '../helpers/BroadcastToClients';
 import { TxTypesEnum } from '@cryptochords/shared';
 import { PollingService } from './pollingService';
 
@@ -38,8 +38,8 @@ describe('PollingService', () => {
     mockBlockRepository.emit(TxTypesEnum.Block, mockL2Block);
     mockBlockRepository.emit(TxTypesEnum.Eth, mockL2Block);
 
-    expect(BroadcastToClients).toHaveBeenCalledWith(mockWss, mockL2Block);
-    expect(BroadcastToClients).toHaveBeenCalledTimes(2);
+    expect(broadcastToClients).toHaveBeenCalledWith(mockWss, mockL2Block);
+    expect(broadcastToClients).toHaveBeenCalledTimes(2);
   });
 
   it('should stop the repository on stop', () => {

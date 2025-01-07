@@ -1,16 +1,16 @@
-import { ComponentProps, MutableRefObject, useState } from 'react'
-import { Menu } from './Menu'
-import { useOnClickOutside } from '../hooks/useOnClickOutside'
-import { CheckMarkIcon } from './icons/CheckMark'
-import { Chevron } from './icons/Chevron'
-import React from 'react'
+import { ComponentProps, MutableRefObject, useState } from 'react';
+import { Menu } from './Menu';
+import { useOnClickOutside } from '../hooks/useOnClickOutside';
+import { CheckMarkIcon } from './icons/CheckMark';
+import { Chevron } from './icons/Chevron';
+import React from 'react';
 
 type Props = {
-  className?: string
-  networks: string[]
-  selectedNetwork: string
-  selectNetwork: (value: string) => void
-}
+  className?: string;
+  networks: string[];
+  selectedNetwork: string;
+  selectNetwork: (value: string) => void;
+};
 
 const MenuContainer = ({
   children,
@@ -29,9 +29,7 @@ const MenuContainer = ({
   </div>
 );
 
-const ItemText = ({
-  selected = false,
-  text = ''}) => (
+const ItemText = ({ selected = false, text = '' }) => (
   <span
     className={`text-base font-medium capitalize transition-colors duration-300
       group-hover/item:text-[#1A1B23] ${
@@ -40,25 +38,25 @@ const ItemText = ({
   >
     {text}
   </span>
-)
+);
 
 const Row = (props: ComponentProps<'div'>) => (
   <div className="flex items-center gap-x-2" {...props} />
-)
+);
 
 export const NetworkSwitch = function ({
   className,
   networks,
   selectedNetwork,
-  selectNetwork
+  selectNetwork,
 }: Props) {
-  const [isOpen, setIsOpen] = useState(false)
-  const ref = useOnClickOutside<HTMLDivElement>(() => setIsOpen(false))
+  const [isOpen, setIsOpen] = useState(false);
+  const ref = useOnClickOutside<HTMLDivElement>(() => setIsOpen(false));
 
   const onChange = function (network: string) {
-    selectNetwork(network)
-    setIsOpen(false)
-  }
+    selectNetwork(network);
+    setIsOpen(false);
+  };
 
   return (
     <MenuContainer
@@ -79,7 +77,7 @@ export const NetworkSwitch = function ({
           <div className="absolute right-0 top-0 z-50 translate-x-2 translate-y-9">
             <Menu
               items={networks.map(function (network) {
-                const selected = network === selectedNetwork
+                const selected = network === selectedNetwork;
                 return {
                   content: (
                     <button
@@ -88,8 +86,8 @@ export const NetworkSwitch = function ({
                       }`}
                       disabled={selected}
                       onClick={function (e) {
-                        e.stopPropagation()
-                        onChange(network)
+                        e.stopPropagation();
+                        onChange(network);
                       }}
                     >
                       <span className="capitalize">{network}</span>
@@ -99,12 +97,12 @@ export const NetworkSwitch = function ({
                     </button>
                   ),
                   id: network,
-                }
+                };
               })}
             />
           </div>
         )}
       </div>
     </MenuContainer>
-  )
-}
+  );
+};

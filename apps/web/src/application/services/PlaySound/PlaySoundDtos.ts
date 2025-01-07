@@ -1,8 +1,8 @@
 export interface PlaySoundRequest {
-  pitchClass: string
-  octave: number
+  pitchClass: string;
+  octave: number;
 }
 
 export interface PlaySoundResponse {
-  instrument?: string
+  instrument?: string;
 }

@@ -1,26 +1,28 @@
-import { describe, expect, it } from 'vitest'
-import { KeyboardPresenter } from './KeyboardPresenter'
-import { InMemoryKeyboardRepository } from '../../../../infrastructure/repositories/InMemoryKeyboardRepository'
-import { CreateKeyboardService } from '../../../../application/services/CreateKeyboard/CreateKeyboardService'
-import { GetKeyboardService } from '../../../../application/services/GetKeyboard/GetKeyboardService'
+import { describe, expect, it } from 'vitest';
+import { KeyboardPresenter } from './KeyboardPresenter';
+import { InMemoryKeyboardRepository } from '../../../../infrastructure/repositories/InMemoryKeyboardRepository';
+import { CreateKeyboardService } from '../../../../application/services/CreateKeyboard/CreateKeyboardService';
+import { GetKeyboardService } from '../../../../application/services/GetKeyboard/GetKeyboardService';
 
-const keyboardRepository = new InMemoryKeyboardRepository()
-const createKeyboardService = new CreateKeyboardService(keyboardRepository)
+const keyboardRepository = new InMemoryKeyboardRepository();
+const createKeyboardService = new CreateKeyboardService(keyboardRepository);
 await createKeyboardService.execute({
-  numberOfKeys: 88,
+  initialOctave: 1,
   initialPitchClass: 'A',
-  initialOctave: 1
-})
-const getKeyboardService = new GetKeyboardService(keyboardRepository)
-const keyboardPresenter = new KeyboardPresenter(createKeyboardService, getKeyboardService)
+  numberOfKeys: 88,
+});
+const getKeyboardService = new GetKeyboardService(keyboardRepository);
+const keyboardPresenter = new KeyboardPresenter(
+  createKeyboardService,
+  getKeyboardService,
+);
 
 describe('src/presentation/common/presenter/keyboard/KeyboardPresenter', () => {
   it('should be defined', () => {
-    expect(keyboardPresenter).toBeDefined()
-  })
+    expect(keyboardPresenter).toBeDefined();
+  });
 
   it('should have 88 keys', () => {
-    expect(keyboardPresenter.state.keys.length).toBe(88)
-  })
-
-})
+    expect(keyboardPresenter.state.keys.length).toBe(88);
+  });
+});

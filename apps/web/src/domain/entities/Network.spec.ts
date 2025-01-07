@@ -5,8 +5,8 @@ import { Uuid } from '../../../../../packages/shared/src/domain/valueObjects/Uui
 
 describe('Network', () => {
   const mockProps = {
-    name: NetworkEnum.MAINNET,
     explorerUrl: 'https://explorer.mainnet.com',
+    name: NetworkEnum.MAINNET,
     wsUrl: 'wss://mainnet.ws.com',
   };
 
