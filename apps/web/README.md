@@ -107,6 +107,16 @@ The environment variables are defined in the `.env` file. The following variable
 
 - `VITE_LOGO_URL`: The URL of the logo. If it is not defined, the logo will point to the root of the web app and will not display the pointer cursor.
 
+### URL Parameter: networkType
+
+The web application supports a URL parameter called networkType, which allows users to specify the desired network (mainnet or testnet).
+
+Supported values:
+
+- `mainnet`: Connects the application to the main network.
+
+- `testnet`: Connects the application to the test network.
+
 ## Contribution
 
 If you want to contribute to this project and make it better, your help is very welcome.
