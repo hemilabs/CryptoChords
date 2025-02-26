@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { BlockTypesEnum } from '../../domain/enums/BlockTypesEnum';
 import { BlockWebsocketRepository } from './blockWebsocket';
 
@@ -21,6 +21,15 @@ vi.mock('web3', () => ({
         }),
       ),
     },
+    removeAllListeners: vi.fn(),
+  })),
+  WebSocketProvider: vi.fn().mockImplementation(() => ({
+    once: vi.fn((event, callback) => {
+      if (event === 'connect') {
+        setTimeout(() => callback(), 0);
+      }
+    }),
+    removeAllListeners: vi.fn(),
   })),
 }));
 
