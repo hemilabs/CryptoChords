@@ -1,6 +1,6 @@
 # CryptoChords Web App
 
-This is the web application of the CryptoChords project. It is a front-end application that allows users to visualize activities on the [Hemi network](https://hemi.xyz).
+This is the web application of the CryptoChords project. It is a front-end application that allows users to visualize activities on [Hemi](https://hemi.xyz).
 
 ## Architecture
 

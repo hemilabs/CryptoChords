@@ -1,12 +1,12 @@
 # CryptoChords
 
-CryptoChords is a tool for visualizing activities on the [Hemi network](https://hemi.xyz). It features a web application that enables users to explore the network and visualize transactions in a user-friendly manner.
+CryptoChords is a tool for visualizing activities on [Hemi](https://hemi.xyz). It features a web application that enables users to explore the network and visualize transactions in a user-friendly manner.
 
 This document provides instructions on how to set up, run, and contribute to the project.
 
 ## Visual Representation of the Network
 
-CryptoChords provides a visual representation of the Hemi network using a piano keyboard as a metaphor. Every time a new transaction is added to the network, a cube appears on a piano key, representing the transaction. The transaction details are displayed on the screen, and if sound is enabled, the corresponding piano note is played simultaneously.
+CryptoChords provides a visual representation of Hemi using a piano keyboard as a metaphor. Every time a new transaction is added to the network, a cube appears on a piano key, representing the transaction. The transaction details are displayed on the screen, and if sound is enabled, the corresponding piano note is played simultaneously.
 
 There are four types of transactions, each represented by a different color and associated with a different quadrant of the piano keyboard:
 
