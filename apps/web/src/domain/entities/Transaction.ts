@@ -40,6 +40,6 @@ export class Transaction {
       return `${this.props.network.blockUrl}/${this.props.address.value}`;
     }
 
-    return `${this.props.network.transactionUrl}/${this.props.address.value}`;
+    return `${this.props.network.addressUrl}/${this.props.address.value}`;
   }
 }
