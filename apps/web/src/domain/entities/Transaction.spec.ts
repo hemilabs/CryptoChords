@@ -56,7 +56,7 @@ describe('Transaction', () => {
       txType,
     });
 
-    const expectedUrl = `${mockNetwork.transactionUrl}/${mockAddress.value}`;
+    const expectedUrl = `${mockNetwork.addressUrl}/${mockAddress.value}`;
     expect(transaction.url).toBe(expectedUrl);
   });
 });

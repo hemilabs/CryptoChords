@@ -34,6 +34,10 @@ export class Network extends Entity<NetworkProps> {
     return `${this.explorerUrl}/block`;
   }
 
+  get addressUrl() {
+    return `${this.explorerUrl}/address`;
+  }
+
   get wsUrl() {
     return this.props.wsUrl;
   }
