@@ -1,7 +1,7 @@
 {
   "name": "crypto-chords-web",
   "private": true,
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "CryptoChords Web",
   "type": "module",
   "scripts": {
@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@cryptochords/shared": "*",
+    "hemi-socials": "1.0.0",
     "qs": "6.13.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
