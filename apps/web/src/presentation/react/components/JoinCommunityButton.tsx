@@ -1,3 +1,5 @@
+import { discordUrl } from 'hemi-socials';
+
 export const JoinCommunityButton = (props: { className?: string }) => {
   return (
     <a
@@ -15,7 +17,7 @@ export const JoinCommunityButton = (props: { className?: string }) => {
       bg-white
       pointer
       `}
-      href={import.meta.env.VITE_DISCORD_URL}
+      href={discordUrl}
       target="_blank"
     >
       Join Community

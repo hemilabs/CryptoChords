@@ -1,7 +1,8 @@
 import logo from '/image/crypto-chords.svg';
+import { twitterUrl } from 'hemi-socials';
 
 export const Logo = function () {
-  const url = import.meta.env.VITE_LOGO_URL;
+  const url = twitterUrl;
   return (
     <a
       href={url ?? '#'}

@@ -1,6 +1,6 @@
 {
   "name": "crypto-chords-api",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "CryptoChords API",
   "main": "src/server.ts",
   "scripts": {
